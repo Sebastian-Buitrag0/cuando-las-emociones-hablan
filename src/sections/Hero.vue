@@ -10,7 +10,7 @@ function scrollToSection(id: string) {
 
 <template>
   <section
-    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-16 lg:pt-20"
   >
     <!-- Floating decorative elements (CSS infinite animations) -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
