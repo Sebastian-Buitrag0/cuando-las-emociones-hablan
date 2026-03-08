@@ -1,0 +1,67 @@
+/* Estilos específicos de la aplicación */
+
+/* Asegurar que las secciones ocupen el ancho completo */
+section {
+  width: 100%;
+}
+
+/* Mejorar la apariencia de los acordeones */
+[data-state="open"] > .accordion-trigger {
+  background-color: rgba(91, 141, 238, 0.05);
+}
+
+/* Animaciones suaves para tabs */
+[role="tabpanel"] {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejorar apariencia de botones */
+button {
+  transition: all 0.3s ease;
+}
+
+/* Estilos para el ejercicio de respiración */
+.breath-circle {
+  will-change: transform, opacity;
+}
+
+/* Mejorar contraste en cards */
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(91, 141, 238, 0.15);
+}
+
+/* Estilos para la rueda de emociones */
+.emotion-wheel-item {
+  will-change: transform;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Smooth scrolling para toda la página */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejorar la selección de texto */
+::selection {
+  background-color: rgba(91, 141, 238, 0.3);
+  color: #2D3748;
+}
