@@ -2,7 +2,8 @@
 import { computed, ref } from "vue";
 import { Heart, Sparkles, Lightbulb } from "lucide-vue-next";
 
-const BASE = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
+const BASE =
+  "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
 
 const emocionesRueda = [
   {
@@ -159,7 +160,11 @@ function selectEmotion(index: number) {
         :aria-label="`Seleccionar ${emocion.nombre}`"
         @click="selectEmotion(index)"
       >
-        <img :src="emocion.img" :alt="emocion.nombre" class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-sm" />
+        <img
+          :src="emocion.img"
+          :alt="emocion.nombre"
+          class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-sm"
+        />
       </button>
 
       <!-- Center -->
@@ -210,7 +215,11 @@ function selectEmotion(index: number) {
                 class="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/70 bg-white shadow-md"
                 :style="{ boxShadow: `0 14px 28px ${emocionActual.color}30` }"
               >
-                <img :src="emocionActual.img" :alt="emocionActual.nombre" class="w-12 h-12 drop-shadow-md" />
+                <img
+                  :src="emocionActual.img"
+                  :alt="emocionActual.nombre"
+                  class="w-12 h-12 drop-shadow-md"
+                />
               </div>
               <div>
                 <span
@@ -280,7 +289,11 @@ function selectEmotion(index: number) {
                 "
                 @click="selectEmotion(index)"
               >
-                <img :src="emocion.img" :alt="emocion.nombre" class="w-4 h-4 mr-1.5 inline-block" />{{ emocion.nombre }}
+                <img
+                  :src="emocion.img"
+                  :alt="emocion.nombre"
+                  class="w-4 h-4 mr-1.5 inline-block"
+                />{{ emocion.nombre }}
               </button>
             </div>
           </div>
@@ -297,7 +310,11 @@ function selectEmotion(index: number) {
             class="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl"
             :style="{ backgroundColor: `${emocion.color}20` }"
           >
-            <img :src="emocion.img" :alt="emocion.nombre" class="w-7 h-7 drop-shadow-sm" />
+            <img
+              :src="emocion.img"
+              :alt="emocion.nombre"
+              class="w-7 h-7 drop-shadow-sm"
+            />
           </div>
           <p class="text-xs font-semibold text-[#2D3748]">
             {{ emocion.nombre }}

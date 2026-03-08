@@ -169,7 +169,11 @@ function toggle(title: string) {
               :style="{ color: habilidad.color }"
               @click.stop="toggle(habilidad.title)"
             >
-              <span>{{ expandido === habilidad.title ? 'Ocultar tips' : `Tips prácticos ${habilidad.emoji}` }}</span>
+              <span>{{
+                expandido === habilidad.title
+                  ? "Ocultar tips"
+                  : `Tips prácticos ${habilidad.emoji}`
+              }}</span>
               <ChevronDown
                 class="w-4 h-4 transition-transform duration-300"
                 :class="expandido === habilidad.title ? 'rotate-180' : ''"
@@ -177,16 +181,17 @@ function toggle(title: string) {
             </button>
 
             <Transition name="tip-slide">
-              <ul
-                v-if="expandido === habilidad.title"
-                class="mt-3 space-y-2"
-              >
+              <ul v-if="expandido === habilidad.title" class="mt-3 space-y-2">
                 <li
                   v-for="(tip, i) in habilidad.tips"
                   :key="i"
                   class="flex items-start gap-2 text-sm text-[#4A5568]"
                 >
-                  <span class="mt-0.5 flex-shrink-0 font-bold" :style="{ color: habilidad.color }">›</span>
+                  <span
+                    class="mt-0.5 flex-shrink-0 font-bold"
+                    :style="{ color: habilidad.color }"
+                    >›</span
+                  >
                   {{ tip }}
                 </li>
               </ul>
@@ -216,46 +221,83 @@ function toggle(title: string) {
       <div
         v-motion
         :initial="{ opacity: 0, y: 20 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800, delay: 1200 } }"
+        :visibleOnce="{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 800, delay: 1200 },
+        }"
         class="mt-12 rounded-3xl bg-white border border-gray-100 shadow-soft p-6 sm:p-8 max-w-4xl mx-auto"
       >
-        <h3 class="text-lg font-bold text-[#2D3748] mb-6 text-center">Marco de referencia</h3>
+        <h3 class="text-lg font-bold text-[#2D3748] mb-6 text-center">
+          Marco de referencia
+        </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <p class="text-xs font-semibold text-[#5B8DEE] uppercase tracking-wide mb-3">Referentes teóricos</p>
+            <p
+              class="text-xs font-semibold text-[#5B8DEE] uppercase tracking-wide mb-3"
+            >
+              Referentes teóricos
+            </p>
             <ul class="space-y-2">
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#5B8DEE] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Daniel Goleman</strong> — Modelo de inteligencia emocional</span>
+                <span
+                  ><strong class="text-[#2D3748]">Daniel Goleman</strong> —
+                  Modelo de inteligencia emocional</span
+                >
               </li>
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#BC6C8A] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Rafael Bisquerra</strong> — Educación emocional y competencias</span>
+                <span
+                  ><strong class="text-[#2D3748]">Rafael Bisquerra</strong> —
+                  Educación emocional y competencias</span
+                >
               </li>
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#F4A259] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Natalio Kisnerman</strong> — Método de grupo en trabajo social</span>
+                <span
+                  ><strong class="text-[#2D3748]">Natalio Kisnerman</strong> —
+                  Método de grupo en trabajo social</span
+                >
               </li>
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#81E6D9] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Carl Rogers</strong> — Enfoque humanista y autoconocimiento</span>
+                <span
+                  ><strong class="text-[#2D3748]">Carl Rogers</strong> — Enfoque
+                  humanista y autoconocimiento</span
+                >
               </li>
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#F6E05E] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">William J. Reid</strong> — Modelo centrado en la tarea</span>
+                <span
+                  ><strong class="text-[#2D3748]">William J. Reid</strong> —
+                  Modelo centrado en la tarea</span
+                >
               </li>
             </ul>
           </div>
           <div>
-            <p class="text-xs font-semibold text-[#BC6C8A] uppercase tracking-wide mb-3">Marco legal colombiano</p>
+            <p
+              class="text-xs font-semibold text-[#BC6C8A] uppercase tracking-wide mb-3"
+            >
+              Marco legal colombiano
+            </p>
             <ul class="space-y-2">
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#BC6C8A] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Ley 1620 de 2013</strong> — Sistema Nacional de Convivencia Escolar y formación para el ejercicio de los Derechos Humanos</span>
+                <span
+                  ><strong class="text-[#2D3748]">Ley 1620 de 2013</strong> —
+                  Sistema Nacional de Convivencia Escolar y formación para el
+                  ejercicio de los Derechos Humanos</span
+                >
               </li>
               <li class="flex items-start gap-2 text-sm text-[#718096]">
                 <span class="text-[#5B8DEE] font-bold flex-shrink-0">›</span>
-                <span><strong class="text-[#2D3748]">Ley 2383 de 2024</strong> — Integración de la educación socioemocional en el sistema educativo colombiano</span>
+                <span
+                  ><strong class="text-[#2D3748]">Ley 2383 de 2024</strong> —
+                  Integración de la educación socioemocional en el sistema
+                  educativo colombiano</span
+                >
               </li>
             </ul>
           </div>
