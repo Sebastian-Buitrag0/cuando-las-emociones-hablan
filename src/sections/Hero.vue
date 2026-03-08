@@ -10,7 +10,7 @@ function scrollToSection(id: string) {
 
 <template>
   <section
-    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-16 lg:pt-20"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero"
   >
     <!-- Floating decorative elements (CSS infinite animations) -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -29,7 +29,7 @@ function scrollToSection(id: string) {
     </div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-4xl mx-auto text-center">
+      <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0">
         <!-- Animated icon -->
         <div
           v-motion

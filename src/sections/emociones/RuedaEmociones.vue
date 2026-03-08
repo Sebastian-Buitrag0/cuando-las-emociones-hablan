@@ -1,60 +1,62 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Heart, Sparkles } from "lucide-vue-next";
+import { Heart, Sparkles, Lightbulb } from "lucide-vue-next";
+
+const BASE = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
 
 const emocionesRueda = [
   {
     nombre: "Alegría",
-    emoji: "😊",
+    img: `${BASE}/Smiling%20face%20with%20smiling%20eyes/3D/smiling_face_with_smiling_eyes_3d.png`,
     color: "#F6E05E",
     definicion: "Estado de bienestar y satisfacción.",
     tip: "Comparte tu alegría con otros.",
   },
   {
     nombre: "Tristeza",
-    emoji: "😢",
+    img: `${BASE}/Crying%20face/3D/crying_face_3d.png`,
     color: "#90CDF4",
     definicion: "Respuesta natural a una pérdida o decepción.",
     tip: "Permítete sentir y expresar tu tristeza.",
   },
   {
     nombre: "Ira",
-    emoji: "😠",
+    img: `${BASE}/Angry%20face/3D/angry_face_3d.png`,
     color: "#F6AD55",
     definicion: "Respuesta a una amenaza o injusticia.",
     tip: "Respira profundo antes de reaccionar.",
   },
   {
     nombre: "Miedo",
-    emoji: "😨",
+    img: `${BASE}/Fearful%20face/3D/fearful_face_3d.png`,
     color: "#B794F4",
     definicion: "Respuesta ante una amenaza percibida.",
     tip: "Identifica qué te asusta y busca apoyo.",
   },
   {
     nombre: "Sorpresa",
-    emoji: "😮",
+    img: `${BASE}/Face%20with%20open%20mouth/3D/face_with_open_mouth_3d.png`,
     color: "#81E6D9",
     definicion: "Reacción ante algo inesperado.",
     tip: "Aprovecha la novedad para aprender.",
   },
   {
     nombre: "Asco",
-    emoji: "🤢",
+    img: `${BASE}/Nauseated%20face/3D/nauseated_face_3d.png`,
     color: "#9AE6B4",
     definicion: "Rechazo ante algo desagradable.",
     tip: "Respeta tus límites personales.",
   },
   {
     nombre: "Confianza",
-    emoji: "😌",
+    img: `${BASE}/Relieved%20face/3D/relieved_face_3d.png`,
     color: "#5B8DEE",
     definicion: "Seguridad en ti mismo o en otros.",
     tip: "Cultiva relaciones basadas en confianza.",
   },
   {
     nombre: "Anticipación",
-    emoji: "🤩",
+    img: `${BASE}/Star-struck/3D/star-struck_3d.png`,
     color: "#F4A259",
     definicion: "Expectativa positiva hacia el futuro.",
     tip: "Usa la anticipación para motivarte.",
@@ -157,7 +159,7 @@ function selectEmotion(index: number) {
         :aria-label="`Seleccionar ${emocion.nombre}`"
         @click="selectEmotion(index)"
       >
-        {{ emocion.emoji }}
+        <img :src="emocion.img" :alt="emocion.nombre" class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-sm" />
       </button>
 
       <!-- Center -->
@@ -205,10 +207,10 @@ function selectEmotion(index: number) {
           >
             <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-5">
               <div
-                class="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/70 bg-white text-4xl shadow-md"
+                class="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/70 bg-white shadow-md"
                 :style="{ boxShadow: `0 14px 28px ${emocionActual.color}30` }"
               >
-                {{ emocionActual.emoji }}
+                <img :src="emocionActual.img" :alt="emocionActual.nombre" class="w-12 h-12 drop-shadow-md" />
               </div>
               <div>
                 <span
@@ -244,10 +246,10 @@ function selectEmotion(index: number) {
                 :style="{ backgroundColor: `${emocionActual.color}14` }"
               >
                 <p
-                  class="text-sm font-semibold mb-2"
+                  class="text-sm font-semibold mb-2 flex items-center gap-1.5"
                   :style="{ color: emocionActual.color }"
                 >
-                  💡 Acción sugerida
+                  <Lightbulb class="w-4 h-4" /> Acción sugerida
                 </p>
                 <p class="text-[#2D3748] leading-relaxed">
                   {{ emocionActual.tip }}
@@ -278,8 +280,7 @@ function selectEmotion(index: number) {
                 "
                 @click="selectEmotion(index)"
               >
-                <span class="mr-1">{{ emocion.emoji }}</span
-                >{{ emocion.nombre }}
+                <img :src="emocion.img" :alt="emocion.nombre" class="w-4 h-4 mr-1.5 inline-block" />{{ emocion.nombre }}
               </button>
             </div>
           </div>
@@ -293,10 +294,10 @@ function selectEmotion(index: number) {
           class="rounded-2xl border border-white/80 bg-white/80 px-3 py-3 text-center shadow-sm"
         >
           <div
-            class="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl text-xl"
+            class="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl"
             :style="{ backgroundColor: `${emocion.color}20` }"
           >
-            {{ emocion.emoji }}
+            <img :src="emocion.img" :alt="emocion.nombre" class="w-7 h-7 drop-shadow-sm" />
           </div>
           <p class="text-xs font-semibold text-[#2D3748]">
             {{ emocion.nombre }}

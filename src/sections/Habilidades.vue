@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Eye, Shield, Heart, Users, Star } from "lucide-vue-next";
+import { Eye, Shield, Heart, Users, Star, ChevronDown } from "lucide-vue-next";
+import { ref } from "vue";
 
 const habilidades = [
   {
@@ -9,6 +10,12 @@ const habilidades = [
       "Reconocer y comprender nuestras propias emociones, fortalezas, limitaciones y cómo afectan nuestro comportamiento.",
     color: "#5B8DEE",
     bgColor: "bg-[#5B8DEE]/10",
+    emoji: "🔎",
+    tips: [
+      "Pregúntate: ¿Qué estoy sintiendo en este momento?",
+      "Identifica en qué parte del cuerpo sientes esa emoción.",
+      "Escribe 3 pensamientos que acompañan esa emoción.",
+    ],
   },
   {
     icon: Shield,
@@ -17,6 +24,12 @@ const habilidades = [
       "Gestionar las emociones de manera saludable, controlar impulsos y adaptarse a los cambios con flexibilidad.",
     color: "#81E6D9",
     bgColor: "bg-[#81E6D9]/20",
+    emoji: "🌊",
+    tips: [
+      "Respira profundo durante 4 segundos antes de reaccionar.",
+      "Cuenta hasta 10 cuando sientas que pierdes el control.",
+      "Cambia el pensamiento negativo por uno más realista.",
+    ],
   },
   {
     icon: Heart,
@@ -25,6 +38,12 @@ const habilidades = [
       "Comprender los sentimientos de los demás, ponerse en su lugar y responder con compasión.",
     color: "#BC6C8A",
     bgColor: "bg-[#BC6C8A]/10",
+    emoji: "❤️",
+    tips: [
+      "Ponte en el lugar del otro antes de juzgar.",
+      "Pregunta: ¿Cómo te sientes? y escucha de verdad.",
+      "Escucha sin interrumpir ni dar consejos inmediatos.",
+    ],
   },
   {
     icon: Users,
@@ -33,6 +52,12 @@ const habilidades = [
       "Establecer y mantener relaciones saludables, comunicarse asertivamente y trabajar en equipo.",
     color: "#F4A259",
     bgColor: "bg-[#F4A259]/10",
+    emoji: "🗣",
+    tips: [
+      'Usa frases como: "Yo siento… cuando…" para expresarte.',
+      "Mantén contacto visual durante las conversaciones.",
+      "Practica el respeto incluso en los desacuerdos.",
+    ],
   },
   {
     icon: Star,
@@ -41,8 +66,20 @@ const habilidades = [
       "Orientar las emociones hacia objetivos personales, mantener la perseverancia y la actitud positiva.",
     color: "#F6E05E",
     bgColor: "bg-[#F6E05E]/20",
+    emoji: "💡",
+    tips: [
+      "Define una meta clara y divídela en pasos pequeños.",
+      "Celebra tus logros, por pequeños que sean.",
+      "Rodéate de personas que te inspiren y apoyen.",
+    ],
   },
 ];
+
+const expandido = ref<string | null>(null);
+
+function toggle(title: string) {
+  expandido.value = expandido.value === title ? null : title;
+}
 </script>
 
 <template>
@@ -122,9 +159,38 @@ const habilidades = [
 
             <!-- Visual indicator -->
             <div
-              class="mt-6 h-1 rounded-full w-12 group-hover:w-full transition-all duration-500"
+              class="mt-4 h-1 rounded-full w-12 group-hover:w-full transition-all duration-500"
               :style="{ backgroundColor: habilidad.color }"
             />
+
+            <!-- Tips toggle -->
+            <button
+              class="mt-4 flex items-center gap-1.5 text-sm font-semibold transition-colors"
+              :style="{ color: habilidad.color }"
+              @click.stop="toggle(habilidad.title)"
+            >
+              <span>{{ expandido === habilidad.title ? 'Ocultar tips' : `Tips prácticos ${habilidad.emoji}` }}</span>
+              <ChevronDown
+                class="w-4 h-4 transition-transform duration-300"
+                :class="expandido === habilidad.title ? 'rotate-180' : ''"
+              />
+            </button>
+
+            <Transition name="tip-slide">
+              <ul
+                v-if="expandido === habilidad.title"
+                class="mt-3 space-y-2"
+              >
+                <li
+                  v-for="(tip, i) in habilidad.tips"
+                  :key="i"
+                  class="flex items-start gap-2 text-sm text-[#4A5568]"
+                >
+                  <span class="mt-0.5 flex-shrink-0 font-bold" :style="{ color: habilidad.color }">›</span>
+                  {{ tip }}
+                </li>
+              </ul>
+            </Transition>
           </div>
         </div>
       </div>
@@ -145,6 +211,76 @@ const habilidades = [
           Daniel Goleman
         </p>
       </div>
+
+      <!-- Marco teórico y legal -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 20 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800, delay: 1200 } }"
+        class="mt-12 rounded-3xl bg-white border border-gray-100 shadow-soft p-6 sm:p-8 max-w-4xl mx-auto"
+      >
+        <h3 class="text-lg font-bold text-[#2D3748] mb-6 text-center">Marco de referencia</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs font-semibold text-[#5B8DEE] uppercase tracking-wide mb-3">Referentes teóricos</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#5B8DEE] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Daniel Goleman</strong> — Modelo de inteligencia emocional</span>
+              </li>
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#BC6C8A] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Rafael Bisquerra</strong> — Educación emocional y competencias</span>
+              </li>
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#F4A259] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Natalio Kisnerman</strong> — Método de grupo en trabajo social</span>
+              </li>
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#81E6D9] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Carl Rogers</strong> — Enfoque humanista y autoconocimiento</span>
+              </li>
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#F6E05E] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">William J. Reid</strong> — Modelo centrado en la tarea</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-[#BC6C8A] uppercase tracking-wide mb-3">Marco legal colombiano</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#BC6C8A] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Ley 1620 de 2013</strong> — Sistema Nacional de Convivencia Escolar y formación para el ejercicio de los Derechos Humanos</span>
+              </li>
+              <li class="flex items-start gap-2 text-sm text-[#718096]">
+                <span class="text-[#5B8DEE] font-bold flex-shrink-0">›</span>
+                <span><strong class="text-[#2D3748]">Ley 2383 de 2024</strong> — Integración de la educación socioemocional en el sistema educativo colombiano</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.tip-slide-enter-active,
+.tip-slide-leave-active {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.tip-slide-enter-from,
+.tip-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+  max-height: 0;
+}
+.tip-slide-enter-to,
+.tip-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+}
+</style>

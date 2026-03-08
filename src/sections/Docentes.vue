@@ -8,6 +8,7 @@ import {
   Target,
   HeartHandshake,
   BrainCircuit,
+  Shield,
 } from "lucide-vue-next";
 import AppCard from "@/components/ui/card.vue";
 import AppCardHeader from "@/components/ui/card-header.vue";
@@ -346,6 +347,49 @@ const recursos = [
             conocimiento, sino también las herramientas para gestionar sus
             emociones y construir relaciones saludables."
           </p>
+        </div>
+      </div>
+
+      <!-- Funciones del proyecto y marco legal -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800, delay: 900 } }"
+        class="mt-12 rounded-3xl border border-[#F4A259]/20 bg-gradient-to-br from-[#FEFBF7] to-white p-6 sm:p-8"
+      >
+        <p class="text-xs font-semibold text-[#F4A259] uppercase tracking-wide mb-2 text-center">Sobre este proyecto</p>
+        <h3 class="text-xl font-bold text-[#2D3748] text-center mb-6">
+          Una herramienta con 4 funciones clave
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
+            <div class="w-12 h-12 rounded-2xl bg-[#5B8DEE]/10 flex items-center justify-center mx-auto mb-3">
+              <BookOpen class="w-6 h-6 text-[#5B8DEE]" />
+            </div>
+            <p class="font-semibold text-[#2D3748] text-sm mb-1">Educativa</p>
+            <p class="text-xs text-[#718096] leading-relaxed">Refuerza los contenidos de los talleres sobre autoconciencia, autorregulación, empatía y habilidades sociales.</p>
+          </div>
+          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
+            <div class="w-12 h-12 rounded-2xl bg-[#BC6C8A]/10 flex items-center justify-center mx-auto mb-3">
+              <Shield class="w-6 h-6 text-[#BC6C8A]" />
+            </div>
+            <p class="font-semibold text-[#2D3748] text-sm mb-1">Preventiva</p>
+            <p class="text-xs text-[#718096] leading-relaxed">Previene conflictos, desmotivación y aislamiento. Alineada con la <strong>Ley 1620 de 2013</strong> de convivencia escolar.</p>
+          </div>
+          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
+            <div class="w-12 h-12 rounded-2xl bg-[#F4A259]/10 flex items-center justify-center mx-auto mb-3">
+              <HeartHandshake class="w-6 h-6 text-[#F4A259]" />
+            </div>
+            <p class="font-semibold text-[#2D3748] text-sm mb-1">Acompañamiento</p>
+            <p class="text-xs text-[#718096] leading-relaxed">Amplía el acompañamiento grupal con test, guías y actividades de reflexión accesibles en todo momento.</p>
+          </div>
+          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
+            <div class="w-12 h-12 rounded-2xl bg-[#81E6D9]/20 flex items-center justify-center mx-auto mb-3">
+              <GraduationCap class="w-6 h-6 text-[#5B8DEE]" />
+            </div>
+            <p class="font-semibold text-[#2D3748] text-sm mb-1">Institucional</p>
+            <p class="text-xs text-[#718096] leading-relaxed">Apoya el PEI y se articula con la misión del colegio y la <strong>Ley 2383 de 2024</strong> de educación socioemocional.</p>
+          </div>
         </div>
       </div>
     </div>
