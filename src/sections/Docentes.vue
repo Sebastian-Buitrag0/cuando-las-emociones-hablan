@@ -15,6 +15,7 @@ import AppCardHeader from "@/components/ui/card-header.vue";
 import AppCardTitle from "@/components/ui/card-title.vue";
 import AppCardContent from "@/components/ui/card-content.vue";
 import AppBadge from "@/components/ui/badge.vue";
+import bgDocentes from "@/img/estudiantes_video_educativo.jpeg";
 
 const estrategias = [
   {
@@ -122,8 +123,16 @@ const recursos = [
 </script>
 
 <template>
-  <section id="docentes" class="py-20 lg:py-32 bg-[#FEFBF7]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="docentes" class="py-20 lg:py-32 relative bg-[#FEFBF7]">
+    <div class="absolute inset-0 z-0 opacity-[0.03]">
+      <img
+        :src="bgDocentes"
+        alt="Estudiantes viendo video educativo"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion

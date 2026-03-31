@@ -13,6 +13,7 @@ import AppCardHeader from "@/components/ui/card-header.vue";
 import AppCardTitle from "@/components/ui/card-title.vue";
 import AppCardContent from "@/components/ui/card-content.vue";
 import AppButton from "@/components/ui/button.vue";
+import bgFamilias from "@/img/votacion_personero.jpeg";
 
 const recursos = [
   {
@@ -79,8 +80,16 @@ const consejosRapidos = [
 </script>
 
 <template>
-  <section id="familias" class="py-20 lg:py-32 bg-[#F5F0E8]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="familias" class="py-20 lg:py-32 relative bg-[#F5F0E8]">
+    <div class="absolute inset-0 z-0 opacity-[0.04]">
+      <img
+        :src="bgFamilias"
+        alt="Votación de personero"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion

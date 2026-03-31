@@ -6,11 +6,20 @@ import AppTabsContent from "@/components/ui/tabs-content.vue";
 import TestEmociones from "./emociones/TestEmociones.vue";
 import RuedaEmociones from "./emociones/RuedaEmociones.vue";
 import EjercicioRespiracion from "./emociones/EjercicioRespiracion.vue";
+import bgEmociones from "@/img/actividades_patio.jpeg";
 </script>
 
 <template>
-  <section id="emociones" class="py-20 lg:py-32 bg-[#F5F0E8]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="emociones" class="py-20 lg:py-32 relative bg-[#F5F0E8]">
+    <div class="absolute inset-0 z-0 opacity-[0.03]">
+      <img
+        :src="bgEmociones"
+        alt="Actividades de patio"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion

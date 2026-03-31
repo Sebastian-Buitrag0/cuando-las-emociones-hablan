@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Eye, Shield, Heart, Users, Star, ChevronDown } from "lucide-vue-next";
 import { ref } from "vue";
+import bgHabilidades from "@/img/trabajo_equipo_piso.jpeg";
 
 const habilidades = [
   {
@@ -83,8 +84,16 @@ function toggle(title: string) {
 </script>
 
 <template>
-  <section id="habilidades" class="py-20 lg:py-32 bg-[#FEFBF7]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="habilidades" class="py-20 lg:py-32 relative bg-[#FEFBF7]">
+    <div class="absolute inset-0 z-0 opacity-[0.03]">
+      <img
+        :src="bgHabilidades"
+        alt="Trabajo en equipo en el piso"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion

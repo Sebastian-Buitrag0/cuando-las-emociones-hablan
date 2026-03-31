@@ -10,6 +10,7 @@ import AppAccordion from "@/components/ui/accordion.vue";
 import AppAccordionItem from "@/components/ui/accordion-item.vue";
 import AppAccordionTrigger from "@/components/ui/accordion-trigger.vue";
 import AppAccordionContent from "@/components/ui/accordion-content.vue";
+import bgImage from "@/img/charla_ruta_convivencia.jpeg";
 
 const temas = [
   {
@@ -76,8 +77,17 @@ const temas = [
 </script>
 
 <template>
-  <section id="convivencia" class="py-20 lg:py-32 bg-[#FEFBF7]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="convivencia" class="py-20 lg:py-32 relative overflow-hidden bg-[#FEFBF7]">
+    <!-- Background Image overlay -->
+    <div class="absolute inset-0 z-0 opacity-[0.03]">
+      <img
+        :src="bgImage"
+        alt="Estudiantes en convivencia"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion
