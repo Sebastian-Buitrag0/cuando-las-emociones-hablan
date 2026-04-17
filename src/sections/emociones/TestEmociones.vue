@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Smile, RefreshCw, Sparkles, ChevronRight } from "lucide-vue-next";
+import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
 const preguntas = [
@@ -44,7 +44,13 @@ const preguntas = [
 
 const resultados: Record<
   string,
-  { titulo: string; descripcion: string; consejo: string; color: string }
+  {
+    titulo: string;
+    descripcion: string;
+    consejo: string;
+    color: string;
+    regulacionTab: string;
+  }
 > = {
   alegria: {
     titulo: "Alegría",
@@ -52,12 +58,14 @@ const resultados: Record<
     consejo:
       "Aprovecha esta energía para compartirla con otros y trabajar en tus metas.",
     color: "#F6E05E",
+    regulacionTab: "respiracion",
   },
   calma: {
     titulo: "Calma",
     descripcion: "Te encuentras en equilibrio y serenidad.",
     consejo: "Mantén esta paz interior practicando mindfulness o meditación.",
     color: "#81E6D9",
+    regulacionTab: "respiracion",
   },
   ansiedad: {
     titulo: "Ansiedad",
@@ -65,6 +73,7 @@ const resultados: Record<
     consejo:
       "Practica respiración profunda y divide tus tareas en pasos pequeños.",
     color: "#B794F4",
+    regulacionTab: "ansiedad",
   },
   ira: {
     titulo: "Ira o Frustración",
@@ -72,6 +81,7 @@ const resultados: Record<
     consejo:
       "Tómate un momento, respira y expresa tus sentimientos de manera asertiva.",
     color: "#F6AD55",
+    regulacionTab: "ira",
   },
   tristeza: {
     titulo: "Tristeza",
@@ -79,12 +89,14 @@ const resultados: Record<
     consejo:
       "Es válido sentir así. Habla con alguien de confianza sobre tus emociones.",
     color: "#90CDF4",
+    regulacionTab: "tristeza",
   },
   conexion: {
     titulo: "Conexión",
     descripcion: "Buscas cercanía con los demás.",
     consejo: "Contacta a un amigo o familiar. Las relaciones nos fortalecen.",
     color: "#BC6C8A",
+    regulacionTab: "respiracion",
   },
 };
 
@@ -121,6 +133,16 @@ function reiniciar() {
   preguntaActual.value = 0;
   respuestas.value = [];
   mostrarResultado.value = false;
+}
+
+function irARegulacion() {
+  const tab = resultadoActual.value?.regulacionTab;
+  if (tab) {
+    window.dispatchEvent(
+      new CustomEvent("preset-regulacion-tab", { detail: tab }),
+    );
+  }
+  document.getElementById("regulacion")?.scrollIntoView({ behavior: "smooth" });
 }
 </script>
 
@@ -187,10 +209,19 @@ function reiniciar() {
         </p>
       </div>
 
-      <AppButton variant="outline" class="rounded-full px-6" @click="reiniciar">
-        <RefreshCw class="w-4 h-4 mr-2" />
-        Volver a hacer el test
-      </AppButton>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <AppButton
+          class="rounded-full px-6 bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white"
+          @click="irARegulacion"
+        >
+          Ver técnicas para esto
+          <ArrowRight class="w-4 h-4 ml-2" />
+        </AppButton>
+        <AppButton variant="outline" class="rounded-full px-6" @click="reiniciar">
+          <RefreshCw class="w-4 h-4 mr-2" />
+          Repetir test
+        </AppButton>
+      </div>
     </div>
 
     <div class="border-t border-gray-100 bg-[#fcfaf8] p-5 text-left">

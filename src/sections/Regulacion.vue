@@ -1,0 +1,289 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from "vue";
+import AppTabs from "@/components/ui/tabs.vue";
+import AppTabsList from "@/components/ui/tabs-list.vue";
+import AppTabsTrigger from "@/components/ui/tabs-trigger.vue";
+import AppTabsContent from "@/components/ui/tabs-content.vue";
+import EjercicioRespiracion from "./emociones/EjercicioRespiracion.vue";
+import TecnicaRegulacion from "./regulacion/TecnicaRegulacion.vue";
+import bgRegulacion from "@/img/charla_ruta_convivencia.jpeg";
+
+const currentTab = ref("respiracion");
+
+function handlePreset(e: Event) {
+  const evt = e as CustomEvent<string>;
+  if (typeof evt.detail === "string") {
+    currentTab.value = evt.detail;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("preset-regulacion-tab", handlePreset);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("preset-regulacion-tab", handlePreset);
+});
+
+const tecnicas = {
+  ansiedad: {
+    titulo: "Ansiedad",
+    subtitulo:
+      "Esa sensación de alerta, nudo en el estómago o la mente acelerada. Es normal y se puede regular.",
+    color: "#B794F4",
+    emoji: "😰",
+    prevencion: [
+      "Duerme al menos 8 horas y reduce la cafeína.",
+      "Haz actividad física 3 veces por semana: el cuerpo descarga la ansiedad.",
+      "Escribe en un diario lo que te preocupa antes de dormir.",
+      "Limita el tiempo en redes sociales a 1 hora al día.",
+    ],
+    inmediato: [
+      "Haz la técnica 4-4-4: inhala 4s, sostén 4s, exhala 4s.",
+      "Nombra 5 cosas que veas, 4 que toques, 3 que oigas, 2 que huelas, 1 que saborees.",
+      "Pon hielo en tus manos o mójalas con agua fría — activa el nervio vago.",
+      "Dite en voz baja: “esto pasará, ya lo he sentido antes y se ha calmado”.",
+    ],
+    musica: {
+      titulo: "Weightless",
+      artista: "Marconi Union",
+      url: "https://www.youtube.com/watch?v=UfcAVejslrU",
+    },
+    video: {
+      titulo: "Qué es la ansiedad y cómo manejarla (explicación para jóvenes)",
+      url: "https://www.youtube.com/watch?v=WWloIAQpMcQ",
+    },
+    reto: {
+      titulo: "Diario de preocupaciones · 5 días",
+      descripcion:
+        "Durante 5 días, dedica 10 minutos antes de dormir a este ritual. Ve marcando cada día:",
+      pasos: [
+        "Día 1 · Escribe 3 cosas que te preocuparon hoy y valóralas del 1 al 10.",
+        "Día 2 · Junto a cada preocupación, anota ¿depende de ti o no?",
+        "Día 3 · Para las que dependen de ti, escribe el primer paso pequeño.",
+        "Día 4 · Para las que no dependen de ti, escribe una frase para soltarlas.",
+        "Día 5 · Relee los 4 días y escribe qué cambió en tu cuerpo.",
+      ],
+    },
+  },
+  ira: {
+    titulo: "Ira o Estrés",
+    subtitulo:
+      "Cuando algo te desborda, te frustra o sientes que vas a estallar. La ira da información — no te define.",
+    color: "#F6AD55",
+    emoji: "😤",
+    prevencion: [
+      "Identifica tus detonantes: ¿qué personas o situaciones suelen activarte?",
+      "Haz ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
+      "Aprende a decir “no” sin sentir culpa — el estrés crónico viene de cargar más de la cuenta.",
+      "Crea rutinas de descanso: 10 min sin pantalla entre clases o tareas.",
+    ],
+    inmediato: [
+      "Aléjate físicamente del lugar o la persona durante al menos 5 minutos.",
+      "Cuenta hacia atrás desde 20 en voz baja.",
+      "Aprieta los puños 10 segundos y luego suéltalos — repite 3 veces.",
+      'Usa frases en primera persona: "Yo me siento… cuando pasa X, necesito Y".',
+    ],
+    musica: {
+      titulo: "Playlist Lo-fi para calmarte",
+      artista: "Lofi Girl",
+      url: "https://www.youtube.com/watch?v=jfKfPfyJRdk",
+    },
+    video: {
+      titulo: "Cómo controlar la ira — técnicas efectivas",
+      url: "https://www.youtube.com/watch?v=BsVq5R_F6RA",
+    },
+    reto: {
+      titulo: "El semáforo emocional · 1 semana",
+      descripcion:
+        "Cada vez que sientas que estás a punto de estallar, aplica los 3 colores:",
+      pasos: [
+        "🔴 PARO: me detengo y respiro 3 veces antes de hablar.",
+        "🟡 PIENSO: ¿qué estoy sintiendo y qué lo causó?",
+        "🟢 ACTÚO: elijo una respuesta con la que me sienta bien después.",
+        "Registra en tu celular cuántas veces lo usaste en la semana.",
+        "Al final: ¿qué situación manejaste mejor gracias al semáforo?",
+      ],
+    },
+  },
+  tristeza: {
+    titulo: "Tristeza",
+    subtitulo:
+      "Sentirse decaído, sin ganas, con ganas de llorar. La tristeza también se cuida, no se esconde.",
+    color: "#90CDF4",
+    emoji: "😔",
+    prevencion: [
+      "Mantén contacto frecuente con al menos 2 personas que te hagan sentir bien.",
+      "Sal a caminar 20 minutos al día — la luz natural regula el ánimo.",
+      "Cuida lo que consumes: reduce contenido que te hace comparar o sentir peor.",
+      "Duerme y come con horarios regulares: el cuerpo influye en la mente.",
+    ],
+    inmediato: [
+      "Permítete llorar si lo necesitas — es una liberación, no una debilidad.",
+      "Envía un mensaje a alguien de confianza: “Necesito hablar un rato”.",
+      "Haz una actividad que antes disfrutabas, aunque no tengas ganas (10 min mínimo).",
+      "Escribe una carta a la tristeza: “¿Qué me estás tratando de decir?”",
+    ],
+    musica: {
+      titulo: "Playlist para sentirte acompañado",
+      artista: "Spotify · abrazo sonoro",
+      url: "https://www.youtube.com/watch?v=4N3N1MlvVc4",
+    },
+    video: {
+      titulo: "La tristeza no es tu enemiga — charla TED para jóvenes",
+      url: "https://www.youtube.com/watch?v=VQKWt5eKwJE",
+    },
+    reto: {
+      titulo: "3 cosas buenas · 7 días",
+      descripcion:
+        "Probado en estudios de psicología positiva: reduce la tristeza y mejora el sueño.",
+      pasos: [
+        "Cada noche escribe 3 cosas buenas que te pasaron hoy (pueden ser pequeñas).",
+        "Junto a cada una, anota por qué crees que pasó.",
+        "Si no se te ocurre nada grande, sirve “un café rico”, “un mensaje”, “una canción”.",
+        "Repite durante 7 días sin saltarte ninguno.",
+        "Al final: relee los 7 días del tirón y observa cómo te sientes.",
+      ],
+    },
+  },
+  bullying: {
+    titulo: "Bullying o Acoso",
+    subtitulo:
+      "Si alguien te hace daño de forma repetida, no es tu culpa y no tienes que resolverlo solo/a.",
+    color: "#BC6C8A",
+    emoji: "🛡️",
+    prevencion: [
+      "Guarda evidencia (capturas, mensajes) desde el primer incidente.",
+      "Identifica al menos 1 adulto de confianza (docente, orientador, familiar) al que puedas acudir.",
+      "Rodéate de grupos donde te sientas seguro/a: un amigo de verdad vale más que 20 de apariencia.",
+      "Conoce tus derechos: en Colombia la Ley 1620 de 2013 te protege.",
+    ],
+    inmediato: [
+      "No respondas con agresión — es lo que el agresor busca para justificarse.",
+      "Aléjate físicamente si es presencial; bloquea y reporta si es digital.",
+      "Habla hoy mismo con alguien: orientador, docente, familiar o amistad cercana.",
+      "Si te sientes en peligro, llama a la Línea 106 (Bogotá) o al 141 (ICBF) — ver sección Apoyo.",
+    ],
+    musica: {
+      titulo: "Brave",
+      artista: "Sara Bareilles",
+      url: "https://www.youtube.com/watch?v=QUQsqBqxoR4",
+    },
+    video: {
+      titulo: "Qué hacer si sufres bullying — guía práctica",
+      url: "https://www.youtube.com/watch?v=vfpXD5taPxk",
+    },
+    reto: {
+      titulo: "Red de protección · hoy mismo",
+      descripcion:
+        "No puedes detenerlo tú solo/a — pero sí puedes activar tu red de protección hoy:",
+      pasos: [
+        "Escribe en una nota 3 personas adultas en las que confías.",
+        "Elige UNA y envíale un mensaje pidiendo hablar hoy o mañana.",
+        "Guarda en una carpeta capturas o evidencias del acoso.",
+        "Revisa la sección “Apoyo” de esta página y guarda 1 número de emergencia.",
+        "Recuérdate: pedir ayuda es un acto de fuerza, no de debilidad.",
+      ],
+    },
+  },
+};
+</script>
+
+<template>
+  <section id="regulacion" class="py-20 lg:py-32 relative bg-[#FEFBF7]">
+    <div class="absolute inset-0 z-0 opacity-[0.03]">
+      <img
+        :src="bgRegulacion"
+        alt="Charla de convivencia"
+        class="w-full h-full object-cover grayscale"
+      />
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <!-- Header -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
+        class="text-center mb-12"
+      >
+        <span
+          class="inline-block px-4 py-2 rounded-full bg-[#5B8DEE]/10 text-[#5B8DEE] text-sm font-semibold mb-4"
+        >
+          Paso 2 · Regulación
+        </span>
+        <h2
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6"
+        >
+          Técnicas para&nbsp;
+          <span
+            class="bg-gradient-to-r from-[#5B8DEE] to-[#81E6D9] bg-clip-text text-transparent"
+          >
+            regular lo que sientes
+          </span>
+        </h2>
+        <p class="text-lg text-[#718096] max-w-2xl mx-auto">
+          Ya pusiste nombre a tu emoción. Elige tu situación y encuentra
+          técnicas, música, videos y retos diseñados para ti.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visibleOnce="{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 800, delay: 200 },
+        }"
+      >
+        <AppTabs v-model="currentTab" class="max-w-5xl mx-auto">
+          <AppTabsList
+            class="grid w-full grid-cols-2 md:grid-cols-5 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft"
+          >
+            <AppTabsTrigger value="respiracion" class="rounded-full py-3 text-sm"
+              >🫁 Respiración</AppTabsTrigger
+            >
+            <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm"
+              >😰 Ansiedad</AppTabsTrigger
+            >
+            <AppTabsTrigger value="ira" class="rounded-full py-3 text-sm"
+              >😤 Ira/Estrés</AppTabsTrigger
+            >
+            <AppTabsTrigger value="tristeza" class="rounded-full py-3 text-sm"
+              >😔 Tristeza</AppTabsTrigger
+            >
+            <AppTabsTrigger value="bullying" class="rounded-full py-3 text-sm"
+              >🛡️ Bullying</AppTabsTrigger
+            >
+          </AppTabsList>
+
+          <AppTabsContent value="respiracion" class="mt-6">
+            <div
+              class="bg-gradient-to-br from-white to-[#f6fffd] rounded-3xl p-6 sm:p-8 shadow-soft border border-white/70"
+            >
+              <EjercicioRespiracion />
+            </div>
+          </AppTabsContent>
+
+          <AppTabsContent value="ansiedad" class="mt-6">
+            <TecnicaRegulacion v-bind="tecnicas.ansiedad" />
+          </AppTabsContent>
+
+          <AppTabsContent value="ira" class="mt-6">
+            <TecnicaRegulacion v-bind="tecnicas.ira" />
+          </AppTabsContent>
+
+          <AppTabsContent value="tristeza" class="mt-6">
+            <TecnicaRegulacion v-bind="tecnicas.tristeza" />
+          </AppTabsContent>
+
+          <AppTabsContent value="bullying" class="mt-6">
+            <TecnicaRegulacion v-bind="tecnicas.bullying" />
+          </AppTabsContent>
+        </AppTabs>
+      </div>
+    </div>
+  </section>
+</template>

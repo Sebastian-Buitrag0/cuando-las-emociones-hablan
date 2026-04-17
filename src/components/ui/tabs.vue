@@ -1,17 +1,35 @@
 <script setup lang="ts">
-import { ref, provide } from "vue";
+import { ref, provide, watch } from "vue";
 
 const props = withDefaults(
-  defineProps<{ defaultValue?: string; class?: string }>(),
+  defineProps<{
+    defaultValue?: string;
+    modelValue?: string;
+    class?: string;
+  }>(),
   {
     defaultValue: "",
+    modelValue: undefined,
   },
 );
 
-const activeTab = ref(props.defaultValue);
+const emit = defineEmits<{ (e: "update:modelValue", value: string): void }>();
+
+const activeTab = ref(props.modelValue ?? props.defaultValue);
+
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (val !== undefined && val !== activeTab.value) {
+      activeTab.value = val;
+    }
+  },
+);
+
 provide("activeTab", activeTab);
 provide("setActiveTab", (val: string) => {
   activeTab.value = val;
+  emit("update:modelValue", val);
 });
 </script>
 

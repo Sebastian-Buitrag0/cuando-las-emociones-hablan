@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Heart, Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
+import { Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 
@@ -8,6 +8,7 @@ import img2 from "@/img/charla_ruta_convivencia.jpeg";
 import img3 from "@/img/estudiantes_video_educativo.jpeg";
 import img4 from "@/img/trabajo_equipo_piso.jpeg";
 import img5 from "@/img/votacion_personero.jpeg";
+import logoPagina from "@/img/logo-pagina.png";
 
 const images = [
   { src: img1, alt: "Actividades en el patio" },
@@ -237,9 +238,13 @@ function scrollToSection(id: string) {
               class="pulse-ring absolute inset-0 bg-[#5B8DEE]/20 rounded-full blur-xl"
             />
             <div
-              class="relative w-24 h-24 bg-gradient-to-br from-[#5B8DEE] to-[#BC6C8A] rounded-full flex items-center justify-center shadow-lg"
+              class="relative w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden border-4 border-white"
             >
-              <Heart class="w-12 h-12 text-white" />
+              <img
+                :src="logoPagina"
+                alt="Logo Gimnasio Pedagógico Thomas Paine"
+                class="w-[88%] h-[88%] object-contain"
+              />
             </div>
             <div class="absolute -top-2 -right-2 sparkle-rotate">
               <Sparkles class="w-8 h-8 text-[#F4A259]" />

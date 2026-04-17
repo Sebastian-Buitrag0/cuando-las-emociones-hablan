@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import { Menu, X, Heart } from "lucide-vue-next";
+import { Menu, X } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
+import logoPagina from "@/img/logo-pagina.png";
 
 const navLinks = [
   { href: "#habilidades", label: "Habilidades" },
-  { href: "#emociones", label: "Emociones" },
+  { href: "#emociones", label: "Reconocimiento" },
+  { href: "#regulacion", label: "Regulación" },
+  { href: "#apoyo", label: "Apoyo" },
   { href: "#convivencia", label: "Convivencia" },
   { href: "#familias", label: "Familias" },
   { href: "#docentes", label: "Docentes" },
@@ -52,9 +55,13 @@ function scrollToTop() {
           @click.prevent="scrollToTop"
         >
           <div
-            class="w-10 h-10 bg-gradient-to-br from-[#5B8DEE] to-[#BC6C8A] rounded-xl flex items-center justify-center group-hover:shadow-lg transition-shadow flex-shrink-0"
+            class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 bg-white group-hover:shadow-lg transition-shadow overflow-hidden"
           >
-            <Heart class="w-5 h-5 text-white" />
+            <img
+              :src="logoPagina"
+              alt="Logo Gimnasio Pedagógico Thomas Paine"
+              class="w-full h-full object-contain"
+            />
           </div>
           <div class="flex flex-col leading-tight">
             <span
@@ -66,11 +73,11 @@ function scrollToTop() {
         </a>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center gap-1">
+        <div class="hidden xl:flex items-center gap-1">
           <button
             v-for="link in navLinks"
             :key="link.href"
-            class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-[#718096] hover:text-[#5B8DEE] hover:bg-[#5B8DEE]/10"
+            class="px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 text-[#718096] hover:text-[#5B8DEE] hover:bg-[#5B8DEE]/10"
             @click="scrollToSection(link.href)"
           >
             {{ link.label }}
@@ -78,7 +85,7 @@ function scrollToTop() {
         </div>
 
         <!-- CTA Button -->
-        <div class="hidden lg:block">
+        <div class="hidden xl:block">
           <AppButton
             class="bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white rounded-full px-6"
             @click="scrollToSection('#emociones')"
@@ -89,7 +96,7 @@ function scrollToTop() {
 
         <!-- Mobile Menu Button -->
         <button
-          class="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
+          class="xl:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
         >
           <X v-if="isMobileMenuOpen" class="w-6 h-6 text-[#2D3748]" />
@@ -101,7 +108,7 @@ function scrollToTop() {
 
   <!-- Mobile Menu -->
   <Transition name="mobile-menu">
-    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 lg:hidden">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 xl:hidden">
       <div
         class="absolute inset-0 bg-black/20 backdrop-blur-sm"
         @click="isMobileMenuOpen = false"

@@ -1,0 +1,161 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { MessageSquare, Ear, Users, Handshake, ChevronRight } from "lucide-vue-next";
+
+const subHabilidades = [
+  {
+    id: "asertiva",
+    titulo: "Comunicación asertiva",
+    icon: MessageSquare,
+    color: "#5B8DEE",
+    resumen:
+      "Expresar lo que piensas y sientes con claridad y respeto, sin agredir ni someterte.",
+    claves: [
+      'Usa la fórmula: "Yo siento… cuando pasa X… necesito Y".',
+      "Habla en primera persona: evita acusaciones tipo “tú siempre…”.",
+      "Mantén un tono firme pero tranquilo — el grito no es asertividad.",
+      "Escucha la respuesta antes de insistir en tu punto.",
+    ],
+    practica:
+      "Hoy, piensa en una situación que te molesta y escribe qué le dirías usando la fórmula.",
+  },
+  {
+    id: "escucha",
+    titulo: "Escucha activa",
+    icon: Ear,
+    color: "#81E6D9",
+    resumen:
+      "Entender de verdad lo que la otra persona quiere decir, no solo esperar tu turno para hablar.",
+    claves: [
+      "Guarda el celular y haz contacto visual durante la conversación.",
+      "No interrumpas ni termines las frases del otro.",
+      'Repite lo que entendiste: "Entonces lo que te pasa es…".',
+      "Pregunta antes de dar consejo: “¿quieres que te escuche o que te dé una idea?”",
+    ],
+    practica:
+      "En tu próxima conversación, propon­te no interrumpir ni una sola vez. Observa cómo cambia.",
+  },
+  {
+    id: "equipo",
+    titulo: "Trabajo en equipo",
+    icon: Users,
+    color: "#F4A259",
+    resumen:
+      "Colaborar con otros reconociendo tus fortalezas y las de los demás, hacia un objetivo común.",
+    claves: [
+      "Define con el grupo qué vamos a lograr y con qué tiempo.",
+      "Reparte tareas según fortalezas, no por quedar bien.",
+      "Comunica si te atrasas: el equipo prefiere saber a que lo sorprendan.",
+      "Celebra el logro colectivo: no lo personalices.",
+    ],
+    practica:
+      "En el próximo trabajo en grupo, propón una “minireunión” de 5 min al inicio para repartir roles.",
+  },
+  {
+    id: "conflictos",
+    titulo: "Resolución de conflictos",
+    icon: Handshake,
+    color: "#BC6C8A",
+    resumen:
+      "Abordar los desacuerdos buscando acuerdos, no ganadores ni perdedores.",
+    claves: [
+      "Separa a la persona del problema: no ataques quién es.",
+      "Busca intereses (lo que cada uno necesita), no posiciones (lo que cada uno exige).",
+      "Propón al menos 2 soluciones antes de cerrar el tema.",
+      "Si la emoción está muy alta, pausa y retoma en 30 min o al día siguiente.",
+    ],
+    practica:
+      "Recuerda un conflicto reciente. ¿Cuál era el interés del otro? ¿Y el tuyo?",
+  },
+];
+
+const seleccionada = ref(subHabilidades[0].id);
+const activa = () =>
+  subHabilidades.find((s) => s.id === seleccionada.value) ?? subHabilidades[0];
+</script>
+
+<template>
+  <div class="mt-4">
+    <p class="mb-3 text-xs font-semibold text-[#F4A259] uppercase tracking-wide">
+      Sub-habilidades para trabajar
+    </p>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button
+        v-for="sub in subHabilidades"
+        :key="sub.id"
+        class="flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-all"
+        :class="
+          seleccionada === sub.id
+            ? 'text-white shadow-sm'
+            : 'bg-white text-[#4A5568] border border-gray-200 hover:border-gray-300'
+        "
+        :style="
+          seleccionada === sub.id
+            ? { backgroundColor: sub.color }
+            : {}
+        "
+        @click.stop="seleccionada = sub.id"
+      >
+        <component :is="sub.icon" class="h-3.5 w-3.5" />
+        {{ sub.titulo }}
+      </button>
+    </div>
+
+    <Transition name="sub-fade" mode="out-in">
+      <div
+        :key="seleccionada"
+        class="rounded-2xl p-4 border"
+        :style="{
+          backgroundColor: `${activa().color}10`,
+          borderColor: `${activa().color}25`,
+        }"
+      >
+        <p class="text-sm text-[#4A5568] mb-3 leading-relaxed">
+          {{ activa().resumen }}
+        </p>
+        <ul class="space-y-1.5 mb-3">
+          <li
+            v-for="(clave, i) in activa().claves"
+            :key="i"
+            class="flex items-start gap-2 text-xs text-[#4A5568]"
+          >
+            <ChevronRight
+              class="h-3.5 w-3.5 mt-0.5 flex-shrink-0"
+              :style="{ color: activa().color }"
+            />
+            <span>{{ clave }}</span>
+          </li>
+        </ul>
+        <div
+          class="rounded-xl bg-white/80 p-3 border"
+          :style="{ borderColor: `${activa().color}30` }"
+        >
+          <p
+            class="text-xs font-semibold mb-0.5"
+            :style="{ color: activa().color }"
+          >
+            💪 Práctica de hoy
+          </p>
+          <p class="text-xs text-[#4A5568] leading-relaxed">
+            {{ activa().practica }}
+          </p>
+        </div>
+      </div>
+    </Transition>
+  </div>
+</template>
+
+<style scoped>
+.sub-fade-enter-active,
+.sub-fade-leave-active {
+  transition: all 0.25s ease;
+}
+.sub-fade-enter-from {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.sub-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+</style>

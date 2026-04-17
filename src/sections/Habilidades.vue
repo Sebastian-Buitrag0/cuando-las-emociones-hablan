@@ -2,6 +2,7 @@
 import { Eye, Shield, Heart, Users, Star, ChevronDown } from "lucide-vue-next";
 import { ref } from "vue";
 import bgHabilidades from "@/img/trabajo_equipo_piso.jpeg";
+import HabilidadesSociales from "./habilidades/HabilidadesSociales.vue";
 
 const habilidades = [
   {
@@ -17,6 +18,7 @@ const habilidades = [
       "Identifica en qué parte del cuerpo sientes esa emoción.",
       "Escribe 3 pensamientos que acompañan esa emoción.",
     ],
+    hasSubSkills: false,
   },
   {
     icon: Shield,
@@ -31,6 +33,7 @@ const habilidades = [
       "Cuenta hasta 10 cuando sientas que pierdes el control.",
       "Cambia el pensamiento negativo por uno más realista.",
     ],
+    hasSubSkills: false,
   },
   {
     icon: Heart,
@@ -45,20 +48,18 @@ const habilidades = [
       "Pregunta: ¿Cómo te sientes? y escucha de verdad.",
       "Escucha sin interrumpir ni dar consejos inmediatos.",
     ],
+    hasSubSkills: false,
   },
   {
     icon: Users,
     title: "Habilidades Sociales",
     description:
-      "Establecer y mantener relaciones saludables, comunicarse asertivamente y trabajar en equipo.",
+      "Competencias específicas para relacionarte con otros: comunicar, escuchar, cooperar y resolver desacuerdos.",
     color: "#F4A259",
     bgColor: "bg-[#F4A259]/10",
     emoji: "🗣",
-    tips: [
-      'Usa frases como: "Yo siento… cuando…" para expresarte.',
-      "Mantén contacto visual durante las conversaciones.",
-      "Practica el respeto incluso en los desacuerdos.",
-    ],
+    tips: [],
+    hasSubSkills: true,
   },
   {
     icon: Star,
@@ -73,6 +74,7 @@ const habilidades = [
       "Celebra tus logros, por pequeños que sean.",
       "Rodéate de personas que te inspiren y apoyen.",
     ],
+    hasSubSkills: false,
   },
 ];
 
@@ -180,8 +182,10 @@ function toggle(title: string) {
             >
               <span>{{
                 expandido === habilidad.title
-                  ? "Ocultar tips"
-                  : `Tips prácticos ${habilidad.emoji}`
+                  ? "Ocultar"
+                  : habilidad.hasSubSkills
+                    ? `Ver sub-habilidades ${habilidad.emoji}`
+                    : `Tips prácticos ${habilidad.emoji}`
               }}</span>
               <ChevronDown
                 class="w-4 h-4 transition-transform duration-300"
@@ -190,20 +194,23 @@ function toggle(title: string) {
             </button>
 
             <Transition name="tip-slide">
-              <ul v-if="expandido === habilidad.title" class="mt-3 space-y-2">
-                <li
-                  v-for="(tip, i) in habilidad.tips"
-                  :key="i"
-                  class="flex items-start gap-2 text-sm text-[#4A5568]"
-                >
-                  <span
-                    class="mt-0.5 flex-shrink-0 font-bold"
-                    :style="{ color: habilidad.color }"
-                    >›</span
+              <div v-if="expandido === habilidad.title">
+                <HabilidadesSociales v-if="habilidad.hasSubSkills" />
+                <ul v-else class="mt-3 space-y-2">
+                  <li
+                    v-for="(tip, i) in habilidad.tips"
+                    :key="i"
+                    class="flex items-start gap-2 text-sm text-[#4A5568]"
                   >
-                  {{ tip }}
-                </li>
-              </ul>
+                    <span
+                      class="mt-0.5 flex-shrink-0 font-bold"
+                      :style="{ color: habilidad.color }"
+                      >›</span
+                    >
+                    {{ tip }}
+                  </li>
+                </ul>
+              </div>
             </Transition>
           </div>
         </div>
@@ -332,6 +339,6 @@ function toggle(title: string) {
 .tip-slide-leave-from {
   opacity: 1;
   transform: translateY(0);
-  max-height: 200px;
+  max-height: 1200px;
 }
 </style>
