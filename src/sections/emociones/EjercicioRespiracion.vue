@@ -3,6 +3,9 @@ import { computed, ref, onUnmounted } from "vue";
 import { Play, Pause, Wind, TimerReset } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
+const EMOJI_BASE =
+  "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
+
 const activo = ref(false);
 const fase = ref<"inhala" | "exhala">("inhala");
 const segundosRestantes = ref(4);
@@ -213,7 +216,8 @@ function reiniciar() {
         <!-- Cycles counter -->
         <Transition name="fade">
           <p v-if="ciclosCompletados > 0" class="text-xs text-[#718096] mb-4">
-            🔄 {{ ciclosCompletados }} ciclo{{
+            <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Counterclockwise%20arrows%20button/3D/counterclockwise_arrows_button_3d.png`" alt="Ciclos" />
+            {{ ciclosCompletados }} ciclo{{
               ciclosCompletados > 1 ? "s" : ""
             }}
             completado{{ ciclosCompletados > 1 ? "s" : "" }}

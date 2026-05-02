@@ -77,7 +77,7 @@ const temas = [
 </script>
 
 <template>
-  <section id="convivencia" class="py-20 lg:py-32 relative overflow-hidden bg-[#FEFBF7]">
+  <section id="convivencia" class="py-20 lg:py-32 relative overflow-hidden bg-[#FEFBF7] scroll-mt-24">
     <!-- Background Image overlay -->
     <div class="absolute inset-0 z-0 opacity-[0.03]">
       <img

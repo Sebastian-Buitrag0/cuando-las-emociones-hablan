@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import AppTabs from "@/components/ui/tabs.vue";
 import AppTabsList from "@/components/ui/tabs-list.vue";
 import AppTabsTrigger from "@/components/ui/tabs-trigger.vue";
@@ -7,6 +7,10 @@ import AppTabsContent from "@/components/ui/tabs-content.vue";
 import EjercicioRespiracion from "./emociones/EjercicioRespiracion.vue";
 import TecnicaRegulacion from "./regulacion/TecnicaRegulacion.vue";
 import bgRegulacion from "@/img/charla_ruta_convivencia.jpeg";
+import gsap from "gsap";
+
+const EMOJI_BASE =
+  "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
 
 const currentTab = ref("respiracion");
 
@@ -25,13 +29,24 @@ onUnmounted(() => {
   window.removeEventListener("preset-regulacion-tab", handlePreset);
 });
 
+watch(currentTab, () => {
+  nextTick(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+    const content = document.querySelector(".regulacion-tab-content");
+    if (content) {
+      gsap.fromTo(content, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
+    }
+  });
+});
+
 const tecnicas = {
   ansiedad: {
     titulo: "Ansiedad",
     subtitulo:
       "Esa sensación de alerta, nudo en el estómago o la mente acelerada. Es normal y se puede regular.",
     color: "#B794F4",
-    emoji: "😰",
+    emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`,
     prevencion: [
       "Duerme al menos 8 horas y reduce la cafeína.",
       "Haz actividad física 3 veces por semana: el cuerpo descarga la ansiedad.",
@@ -49,10 +64,12 @@ const tecnicas = {
       artista: "Marconi Union",
       url: "https://www.youtube.com/watch?v=UfcAVejslrU",
     },
-    video: {
-      titulo: "Qué es la ansiedad y cómo manejarla (explicación para jóvenes)",
-      url: "https://www.youtube.com/watch?v=WWloIAQpMcQ",
-    },
+    videos: [
+      {
+        titulo: "Qué es la ansiedad y cómo manejarla (explicación para jóvenes)",
+        url: "https://www.youtube.com/watch?v=WWloIAQpMcQ",
+      },
+    ],
     reto: {
       titulo: "Diario de preocupaciones · 5 días",
       descripcion:
@@ -71,7 +88,7 @@ const tecnicas = {
     subtitulo:
       "Cuando algo te desborda, te frustra o sientes que vas a estallar. La ira da información — no te define.",
     color: "#F6AD55",
-    emoji: "😤",
+    emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`,
     prevencion: [
       "Identifica tus detonantes: ¿qué personas o situaciones suelen activarte?",
       "Haz ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
@@ -89,18 +106,28 @@ const tecnicas = {
       artista: "Lofi Girl",
       url: "https://www.youtube.com/watch?v=jfKfPfyJRdk",
     },
-    video: {
-      titulo: "Cómo controlar la ira — técnicas efectivas",
-      url: "https://www.youtube.com/watch?v=BsVq5R_F6RA",
-    },
+    videos: [
+      {
+        titulo: "Cómo manejar el estrés — video 1",
+        url: "https://www.youtube.com/watch?v=SB6VCPDFeiw",
+      },
+      {
+        titulo: "Cómo manejar el estrés — video 2",
+        url: "https://www.youtube.com/watch?v=ihLiNXyaHoM",
+      },
+      {
+        titulo: "Cómo controlar la ira — técnicas efectivas",
+        url: "https://www.youtube.com/shorts/RCGmD1Fwzd8",
+      },
+    ],
     reto: {
       titulo: "El semáforo emocional · 1 semana",
       descripcion:
         "Cada vez que sientas que estás a punto de estallar, aplica los 3 colores:",
       pasos: [
-        "🔴 PARO: me detengo y respiro 3 veces antes de hablar.",
-        "🟡 PIENSO: ¿qué estoy sintiendo y qué lo causó?",
-        "🟢 ACTÚO: elijo una respuesta con la que me sienta bien después.",
+        { texto: "PARO: me detengo y respiro 3 veces antes de hablar.", emojiImg: `${EMOJI_BASE}/Red%20circle/3D/red_circle_3d.png`, emojiAlt: "PARO" },
+        { texto: "PIENSO: ¿qué estoy sintiendo y qué lo causó?", emojiImg: `${EMOJI_BASE}/Yellow%20circle/3D/yellow_circle_3d.png`, emojiAlt: "PIENSO" },
+        { texto: "ACTÚO: elijo una respuesta con la que me sienta bien después.", emojiImg: `${EMOJI_BASE}/Green%20circle/3D/green_circle_3d.png`, emojiAlt: "ACTÚO" },
         "Registra en tu celular cuántas veces lo usaste en la semana.",
         "Al final: ¿qué situación manejaste mejor gracias al semáforo?",
       ],
@@ -111,7 +138,7 @@ const tecnicas = {
     subtitulo:
       "Sentirse decaído, sin ganas, con ganas de llorar. La tristeza también se cuida, no se esconde.",
     color: "#90CDF4",
-    emoji: "😔",
+    emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`,
     prevencion: [
       "Mantén contacto frecuente con al menos 2 personas que te hagan sentir bien.",
       "Sal a caminar 20 minutos al día — la luz natural regula el ánimo.",
@@ -129,10 +156,12 @@ const tecnicas = {
       artista: "Spotify · abrazo sonoro",
       url: "https://www.youtube.com/watch?v=4N3N1MlvVc4",
     },
-    video: {
-      titulo: "La tristeza no es tu enemiga — charla TED para jóvenes",
-      url: "https://www.youtube.com/watch?v=VQKWt5eKwJE",
-    },
+    videos: [
+      {
+        titulo: "La tristeza no es tu enemiga — video para jóvenes",
+        url: "https://www.youtube.com/watch?v=hnfdgrsfVYg",
+      },
+    ],
     reto: {
       titulo: "3 cosas buenas · 7 días",
       descripcion:
@@ -151,7 +180,7 @@ const tecnicas = {
     subtitulo:
       "Si alguien te hace daño de forma repetida, no es tu culpa y no tienes que resolverlo solo/a.",
     color: "#BC6C8A",
-    emoji: "🛡️",
+    emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
     prevencion: [
       "Guarda evidencia (capturas, mensajes) desde el primer incidente.",
       "Identifica al menos 1 adulto de confianza (docente, orientador, familiar) al que puedas acudir.",
@@ -169,10 +198,12 @@ const tecnicas = {
       artista: "Sara Bareilles",
       url: "https://www.youtube.com/watch?v=QUQsqBqxoR4",
     },
-    video: {
-      titulo: "Qué hacer si sufres bullying — guía práctica",
-      url: "https://www.youtube.com/watch?v=vfpXD5taPxk",
-    },
+    videos: [
+      {
+        titulo: "Qué hacer si sufres bullying — guía práctica",
+        url: "https://www.youtube.com/watch?v=6jF71Z_dyxo",
+      },
+    ],
     reto: {
       titulo: "Red de protección · hoy mismo",
       descripcion:
@@ -190,7 +221,7 @@ const tecnicas = {
 </script>
 
 <template>
-  <section id="regulacion" class="py-20 lg:py-32 relative bg-[#FEFBF7]">
+  <section id="regulacion" class="py-20 lg:py-32 relative bg-[#FEFBF7] scroll-mt-24">
     <div class="absolute inset-0 z-0 opacity-[0.03]">
       <img
         :src="bgRegulacion"
@@ -240,26 +271,41 @@ const tecnicas = {
       >
         <AppTabs v-model="currentTab" class="max-w-5xl mx-auto">
           <AppTabsList
-            class="grid w-full grid-cols-2 md:grid-cols-5 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft"
+            class="flex w-full overflow-x-auto md:grid md:grid-cols-5 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
           >
-            <AppTabsTrigger value="respiracion" class="rounded-full py-3 text-sm"
-              >🫁 Respiración</AppTabsTrigger
-            >
-            <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm"
-              >😰 Ansiedad</AppTabsTrigger
-            >
-            <AppTabsTrigger value="ira" class="rounded-full py-3 text-sm"
-              >😤 Ira/Estrés</AppTabsTrigger
-            >
-            <AppTabsTrigger value="tristeza" class="rounded-full py-3 text-sm"
-              >😔 Tristeza</AppTabsTrigger
-            >
-            <AppTabsTrigger value="bullying" class="rounded-full py-3 text-sm"
-              >🛡️ Bullying</AppTabsTrigger
-            >
+            <AppTabsTrigger value="respiracion" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1">
+                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Lungs/3D/lungs_3d.png" alt="Respiración" />
+                Respiración
+              </span>
+            </AppTabsTrigger>
+            <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1">
+                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png" alt="Ansiedad" />
+                Ansiedad
+              </span>
+            </AppTabsTrigger>
+            <AppTabsTrigger value="ira" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1">
+                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png" alt="Ira" />
+                Ira/Estrés
+              </span>
+            </AppTabsTrigger>
+            <AppTabsTrigger value="tristeza" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1">
+                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Pensive%20face/3D/pensive_face_3d.png" alt="Tristeza" />
+                Tristeza
+              </span>
+            </AppTabsTrigger>
+            <AppTabsTrigger value="bullying" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1">
+                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Shield/3D/shield_3d.png" alt="Bullying" />
+                Bullying
+              </span>
+            </AppTabsTrigger>
           </AppTabsList>
 
-          <AppTabsContent value="respiracion" class="mt-6">
+          <AppTabsContent value="respiracion" class="mt-6 regulacion-tab-content">
             <div
               class="bg-gradient-to-br from-white to-[#f6fffd] rounded-3xl p-6 sm:p-8 shadow-soft border border-white/70"
             >
@@ -267,19 +313,19 @@ const tecnicas = {
             </div>
           </AppTabsContent>
 
-          <AppTabsContent value="ansiedad" class="mt-6">
+          <AppTabsContent value="ansiedad" class="mt-6 regulacion-tab-content">
             <TecnicaRegulacion v-bind="tecnicas.ansiedad" />
           </AppTabsContent>
 
-          <AppTabsContent value="ira" class="mt-6">
+          <AppTabsContent value="ira" class="mt-6 regulacion-tab-content">
             <TecnicaRegulacion v-bind="tecnicas.ira" />
           </AppTabsContent>
 
-          <AppTabsContent value="tristeza" class="mt-6">
+          <AppTabsContent value="tristeza" class="mt-6 regulacion-tab-content">
             <TecnicaRegulacion v-bind="tecnicas.tristeza" />
           </AppTabsContent>
 
-          <AppTabsContent value="bullying" class="mt-6">
+          <AppTabsContent value="bullying" class="mt-6 regulacion-tab-content">
             <TecnicaRegulacion v-bind="tecnicas.bullying" />
           </AppTabsContent>
         </AppTabs>

@@ -2,6 +2,7 @@
 import { Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 import { ref, onMounted, onUnmounted } from "vue";
+import gsap from "gsap";
 
 import img1 from "@/img/actividades_patio.jpeg";
 import img2 from "@/img/charla_ruta_convivencia.jpeg";
@@ -11,11 +12,11 @@ import img5 from "@/img/votacion_personero.jpeg";
 import logoPagina from "@/img/logo-pagina.png";
 
 const images = [
-  { src: img1, alt: "Actividades en el patio" },
-  { src: img2, alt: "Charla ruta de convivencia" },
-  { src: img3, alt: "Estudiantes viendo video educativo" },
-  { src: img4, alt: "Trabajo en equipo en el piso" },
-  { src: img5, alt: "Votación personero" },
+  { src: img1, alt: "Actividades en el patio", width: 1200, height: 800 },
+  { src: img2, alt: "Charla ruta de convivencia", width: 1200, height: 800 },
+  { src: img3, alt: "Estudiantes viendo video educativo", width: 1200, height: 800 },
+  { src: img4, alt: "Trabajo en equipo en el piso", width: 1200, height: 800 },
+  { src: img5, alt: "Votación personero", width: 1200, height: 800 },
 ];
 
 const currentIndex = ref(0);
@@ -51,7 +52,7 @@ let resetTimeout: number | null = null;
 function hideText() {
   isInteracting.value = true;
   pauseAutoPlay();
-  
+
   if (resetTimeout) clearTimeout(resetTimeout);
   resetTimeout = window.setTimeout(() => {
     showText();
@@ -97,6 +98,20 @@ function handleSwipe() {
 
 onMounted(() => {
   startAutoPlay();
+
+  // GSAP entrance timeline
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!prefersReduced) {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.from(".hero-logo", { scale: 0.6, opacity: 0, duration: 0.9 })
+      .from(".hero-logo-ring", { scale: 0, opacity: 0, duration: 0.6 }, "<0.2")
+      .from(".hero-title-word", { y: 40, opacity: 0, duration: 0.7, stagger: 0.08 }, "-=0.4")
+      .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.6 }, "-=0.3")
+      .from(".hero-desc", { y: 20, opacity: 0, duration: 0.6 }, "-=0.35")
+      .from(".hero-cta", { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, "-=0.3")
+      .from(".hero-scroll", { y: -10, opacity: 0, duration: 0.5 }, "-=0.2");
+  }
 });
 
 onUnmounted(() => {
@@ -118,7 +133,8 @@ function scrollToSection(id: string) {
     <!-- Background Carousel -->
     <div class="absolute inset-0 z-0">
       <div
-        class="absolute inset-0 flex transition-transform duration-1000 ease-in-out"
+        class="absolute inset-0 flex transition-transform duration-1000 ease-in-out motion-safe:duration-1000"
+        :class="{ 'motion-reduce:transition-none': true }"
         :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
       >
         <div
@@ -129,62 +145,65 @@ function scrollToSection(id: string) {
           <img
             :src="img.src"
             :alt="img.alt"
+            :width="img.width"
+            :height="img.height"
             class="w-full h-full object-cover opacity-90"
             style="object-position: center;"
+            loading="eager"
           />
         </div>
       </div>
     </div>
 
-    <!-- Overlay Layer (Fades out when interacting) -->
-    <div 
-      class="absolute inset-0 bg-white/75 backdrop-blur-[2px] transition-all duration-700 pointer-events-none z-0"
-      :class="isInteracting ? 'opacity-0' : 'opacity-100'"
+    <!-- Overlay Layer (Dims when interacting but never fully hides) -->
+    <div
+      class="absolute inset-0 bg-white/75 backdrop-blur-[2px] transition-opacity duration-700 pointer-events-none z-0"
+      :class="isInteracting ? 'opacity-30' : 'opacity-100'"
     ></div>
 
-    <!-- Desktop Hover triggers on the sides -->
-    <div 
-      class="hidden md:flex absolute left-0 top-0 bottom-0 w-24 md:w-32 z-20 group cursor-pointer items-center justify-start pl-4"
+    <!-- Desktop navigation arrows (always visible) -->
+    <div
+      class="hidden md:flex absolute left-0 top-0 bottom-0 w-24 md:w-32 z-20 cursor-pointer items-center justify-start pl-4"
       @mouseenter="hideText"
       @mouseleave="showText"
       @click="prev"
     >
       <button
-        class="w-12 h-12 flex items-center justify-center bg-white/30 hover:bg-white/80 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+        class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
         aria-label="Anterior"
       >
         <ChevronLeft class="w-6 h-6" />
       </button>
     </div>
 
-    <div 
-      class="hidden md:flex absolute right-0 top-0 bottom-0 w-24 md:w-32 z-20 group cursor-pointer items-center justify-end pr-4"
+    <div
+      class="hidden md:flex absolute right-0 top-0 bottom-0 w-24 md:w-32 z-20 cursor-pointer items-center justify-end pr-4"
       @mouseenter="hideText"
       @mouseleave="showText"
       @click="next"
     >
       <button
-        class="w-12 h-12 flex items-center justify-center bg-white/30 hover:bg-white/80 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+        class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
         aria-label="Siguiente"
       >
         <ChevronRight class="w-6 h-6" />
       </button>
     </div>
 
-    <!-- Indicators & manual hide button -->
-    <div 
+    <!-- Indicators & mobile hint -->
+    <div
       class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-30 w-full px-4"
     >
-      <!-- "View Gallery" mobile helper icon -->
-      <div 
-        class="md:hidden flex items-center gap-2 bg-black/60 text-white px-5 py-2.5 rounded-full text-sm backdrop-blur-md transition-all shadow-lg mx-auto pointer-events-none"
+      <!-- Mobile swipe hint -->
+      <div
+        class="md:hidden flex items-center gap-2 bg-black/60 text-white px-5 py-2.5 rounded-full text-sm backdrop-blur-md transition-opacity duration-500 shadow-lg mx-auto pointer-events-none"
         :class="isInteracting ? 'opacity-0' : 'opacity-100'"
       >
         <Eye class="w-4 h-4" />
         <span class="font-medium">Desliza para ver fotos</span>
       </div>
 
-      <div 
+      <div
         class="flex space-x-3 mt-2 md:mt-0"
         @mouseenter="hideText"
         @mouseleave="showText"
@@ -193,19 +212,20 @@ function scrollToSection(id: string) {
           v-for="(_, index) in images"
           :key="index"
           @click="setSlide(index)"
-          class="w-3 h-3 rounded-full transition-all duration-300 shadow-sm"
+          class="w-3 h-3 rounded-full transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
           :class="[
             currentIndex === index
               ? 'bg-white scale-125'
               : 'bg-white/50 hover:bg-white/80'
           ]"
           :aria-label="`Ir a la imagen ${index + 1}`"
+          :aria-current="currentIndex === index ? 'true' : undefined"
         />
       </div>
     </div>
 
-    <!-- Floating decorative elements (fade out when interacting) -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700" :class="isInteracting ? 'opacity-0' : 'opacity-100'">
+    <!-- Floating decorative elements (dim when interacting) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700" :class="isInteracting ? 'opacity-20' : 'opacity-100'">
       <div
         class="float-1 absolute top-20 left-10 w-20 h-20 rounded-full bg-[#5B8DEE]/10"
       />
@@ -220,22 +240,17 @@ function scrollToSection(id: string) {
       />
     </div>
 
-    <!-- Main Content Container (Fades out and moves down when interacting) -->
-    <div 
+    <!-- Main Content Container (dims but stays readable when interacting) -->
+    <div
       class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-700 pointer-events-none"
-      :class="isInteracting ? 'opacity-0 translate-y-12 scale-95' : 'opacity-100 translate-y-0 scale-100'"
+      :class="isInteracting ? 'opacity-40 translate-y-4 scale-[0.98]' : 'opacity-100 translate-y-0 scale-100'"
     >
       <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0 pointer-events-auto">
           <!-- Animated icon -->
-          <div
-            v-motion
-            :initial="{ opacity: 0, scale: 0.5 }"
-            :enter="{ opacity: 1, scale: 1, transition: { duration: 800 } }"
-            class="mb-8 flex justify-center"
-          >
+          <div class="mb-8 flex justify-center hero-logo">
           <div class="relative">
             <div
-              class="pulse-ring absolute inset-0 bg-[#5B8DEE]/20 rounded-full blur-xl"
+              class="hero-logo-ring absolute inset-0 bg-[#5B8DEE]/20 rounded-full blur-xl"
             />
             <div
               class="relative w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden border-4 border-white"
@@ -244,6 +259,8 @@ function scrollToSection(id: string) {
                 :src="logoPagina"
                 alt="Logo Gimnasio Pedagógico Thomas Paine"
                 class="w-[88%] h-[88%] object-contain"
+                width="120"
+                height="120"
               />
             </div>
             <div class="absolute -top-2 -right-2 sparkle-rotate">
@@ -254,46 +271,27 @@ function scrollToSection(id: string) {
 
         <!-- Title -->
         <h1
-          v-motion
-          :initial="{ opacity: 0, y: 30 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 800, delay: 200 },
-          }"
           class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D3748] mb-6 leading-tight"
         >
-          Cuando las&nbsp;
+          <span class="hero-title-word inline-block">Cuando</span>
+          <span class="hero-title-word inline-block">las</span>
           <span
-            class="bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
+            class="hero-title-word inline-block bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
           >
-            emociones hablan
+            emociones
           </span>
+          <span class="hero-title-word inline-block bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">hablan</span>
         </h1>
 
         <!-- Subtitle -->
         <p
-          v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 800, delay: 400 },
-          }"
-          class="text-xl sm:text-2xl text-[#718096] mb-4"
+          class="hero-subtitle text-xl sm:text-2xl text-[#718096] mb-4"
         >
           Gimnasio Pedagógico Thomas Paine
         </p>
 
         <p
-          v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 800, delay: 500 },
-          }"
-          class="text-lg text-[#718096]/80 mb-10 max-w-2xl mx-auto hidden sm:block"
+          class="hero-desc text-lg text-[#718096]/80 mb-10 max-w-2xl mx-auto hidden sm:block"
         >
           Un espacio digital para escuchar, comprender y transformar las
           emociones en herramientas de crecimiento personal y convivencia
@@ -302,18 +300,11 @@ function scrollToSection(id: string) {
 
         <!-- CTA Buttons -->
         <div
-          v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 800, delay: 600 },
-          }"
           class="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <AppButton
             size="lg"
-            class="bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white rounded-full px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            class="hero-cta bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white rounded-full px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
             @click="scrollToSection('emociones')"
           >
             <Brain class="w-5 h-5 mr-2" />
@@ -322,7 +313,7 @@ function scrollToSection(id: string) {
           <AppButton
             size="lg"
             variant="outline"
-            class="border-2 border-[#BC6C8A] text-[#BC6C8A] hover:bg-[#BC6C8A] hover:text-white rounded-full px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 bg-white/50 sm:bg-transparent"
+            class="hero-cta border-2 border-[#BC6C8A] text-[#BC6C8A] hover:bg-[#BC6C8A] hover:text-white rounded-full px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 bg-white/50 sm:bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BC6C8A] focus-visible:ring-offset-2"
             @click="scrollToSection('habilidades')"
           >
             Saber más
@@ -330,14 +321,9 @@ function scrollToSection(id: string) {
         </div>
 
         <!-- Scroll indicator -->
-        <div
-          v-motion
-          :initial="{ opacity: 0 }"
-          :enter="{ opacity: 1, transition: { duration: 800, delay: 1000 } }"
-          class="mt-10 mb-4"
-        >
+        <div class="mt-10 mb-4 hero-scroll">
           <button
-            class="text-[#718096] hover:text-[#5B8DEE] transition-colors bounce-arrow"
+            class="text-[#718096] hover:text-[#5B8DEE] transition-colors bounce-arrow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:rounded-full"
             @click="scrollToSection('habilidades')"
           >
             <ArrowDown class="w-8 h-8 mx-auto" />
@@ -435,6 +421,18 @@ function scrollToSection(id: string) {
   }
   50% {
     transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-1,
+  .float-2,
+  .float-3,
+  .float-4,
+  .pulse-ring,
+  .sparkle-rotate,
+  .bounce-arrow {
+    animation: none;
   }
 }
 </style>

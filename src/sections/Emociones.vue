@@ -7,14 +7,29 @@ import TestEmociones from "./emociones/TestEmociones.vue";
 import RuedaEmociones from "./emociones/RuedaEmociones.vue";
 import { ArrowDown } from "lucide-vue-next";
 import bgEmociones from "@/img/actividades_patio.jpeg";
+import gsap from "gsap";
+import { ref, watch, nextTick } from "vue";
+
+const activeTab = ref("test");
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
+
+watch(activeTab, () => {
+  nextTick(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+    const content = document.querySelector(".emociones-tab-content");
+    if (content) {
+      gsap.fromTo(content, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
+    }
+  });
+});
 </script>
 
 <template>
-  <section id="emociones" class="py-20 lg:py-32 relative bg-[#F5F0E8]">
+  <section id="emociones" class="py-20 lg:py-32 relative bg-[#F5F0E8] scroll-mt-24">
     <div class="absolute inset-0 z-0 opacity-[0.03]">
       <img
         :src="bgEmociones"
@@ -63,7 +78,7 @@ function scrollTo(id: string) {
           transition: { duration: 800, delay: 200 },
         }"
       >
-        <AppTabs default-value="test" class="max-w-4xl mx-auto">
+        <AppTabs v-model="activeTab" class="max-w-4xl mx-auto">
           <AppTabsList
             class="grid w-full grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-0 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl sm:rounded-full p-2 sm:p-1 h-auto shadow-soft"
           >
@@ -75,11 +90,11 @@ function scrollTo(id: string) {
             >
           </AppTabsList>
 
-          <AppTabsContent value="test" class="mt-6">
+          <AppTabsContent value="test" class="mt-6 emociones-tab-content">
             <TestEmociones />
           </AppTabsContent>
 
-          <AppTabsContent value="rueda" class="mt-6">
+          <AppTabsContent value="rueda" class="mt-6 emociones-tab-content">
             <div
               class="bg-gradient-to-br from-white to-[#fff8f3] rounded-3xl p-6 sm:p-8 shadow-soft border border-white/70"
             >

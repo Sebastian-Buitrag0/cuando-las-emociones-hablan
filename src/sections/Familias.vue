@@ -80,7 +80,7 @@ const consejosRapidos = [
 </script>
 
 <template>
-  <section id="familias" class="py-20 lg:py-32 relative bg-[#F5F0E8]">
+  <section id="familias" class="py-20 lg:py-32 relative bg-[#F5F0E8] scroll-mt-24">
     <div class="absolute inset-0 z-0 opacity-[0.04]">
       <img
         :src="bgFamilias"

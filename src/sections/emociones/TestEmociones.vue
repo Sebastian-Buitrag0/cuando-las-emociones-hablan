@@ -3,41 +3,44 @@ import { computed, ref } from "vue";
 import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
+const EMOJI_BASE =
+  "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
+
 const preguntas = [
   {
     pregunta: "¿Cómo te sientes al despertar?",
     opciones: [
-      { emoji: "😊", texto: "Con energía y optimismo", valor: "alegria" },
-      { emoji: "😴", texto: "Cansado/a pero tranquilo/a", valor: "calma" },
-      { emoji: "😰", texto: "Ansioso/a o preocupado/a", valor: "ansiedad" },
-      { emoji: "😤", texto: "Irritable o molesto/a", valor: "ira" },
+      { emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20smiling%20eyes/3D/smiling_face_with_smiling_eyes_3d.png`, texto: "Con energía y optimismo", valor: "alegria" },
+      { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Cansado/a pero tranquilo/a", valor: "calma" },
+      { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Ansioso/a o preocupado/a", valor: "ansiedad" },
+      { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Irritable o molesto/a", valor: "ira" },
     ],
   },
   {
     pregunta: "Cuando enfrentas un problema, tú...",
     opciones: [
-      { emoji: "🤔", texto: "Busco soluciones calmadamente", valor: "calma" },
-      { emoji: "😤", texto: "Me frustro rápidamente", valor: "ira" },
-      { emoji: "🤝", texto: "Pido ayuda a otros", valor: "conexion" },
-      { emoji: "😔", texto: "Me siento abrumado/a", valor: "tristeza" },
+      { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Busco soluciones calmadamente", valor: "calma" },
+      { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Me frustro rápidamente", valor: "ira" },
+      { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Pido ayuda a otros", valor: "conexion" },
+      { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Me siento abrumado/a", valor: "tristeza" },
     ],
   },
   {
     pregunta: "En una reunión social, tú...",
     opciones: [
-      { emoji: "🎉", texto: "Disfruto conociendo gente", valor: "alegria" },
-      { emoji: "👂", texto: "Prefiero escuchar y observar", valor: "calma" },
-      { emoji: "😰", texto: "Me siento incómodo/a", valor: "ansiedad" },
-      { emoji: "💝", texto: "Me conecto profundamente", valor: "conexion" },
+      { emojiImg: `${EMOJI_BASE}/Party%20popper/3D/party_popper_3d.png`, texto: "Disfruto conociendo gente", valor: "alegria" },
+      { emojiImg: `${EMOJI_BASE}/Ear/3D/ear_3d.png`, texto: "Prefiero escuchar y observar", valor: "calma" },
+      { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Me siento incómodo/a", valor: "ansiedad" },
+      { emojiImg: `${EMOJI_BASE}/Heart%20with%20ribbon/3D/heart_with_ribbon_3d.png`, texto: "Me conecto profundamente", valor: "conexion" },
     ],
   },
   {
     pregunta: "¿Qué necesitas más en este momento?",
     opciones: [
-      { emoji: "⚡", texto: "Energía y motivación", valor: "alegria" },
-      { emoji: "🧘", texto: "Paz y tranquilidad", valor: "calma" },
-      { emoji: "🤗", texto: "Apoyo y comprensión", valor: "conexion" },
-      { emoji: "💪", texto: "Fuerza para seguir", valor: "ira" },
+      { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "Energía y motivación", valor: "alegria" },
+      { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Paz y tranquilidad", valor: "calma" },
+      { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Apoyo y comprensión", valor: "conexion" },
+      { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Fuerza para seguir", valor: "ira" },
     ],
   },
 ];
@@ -202,7 +205,8 @@ function irARegulacion() {
         class="bg-white/80 rounded-2xl p-5 mb-6 max-w-xl mx-auto border border-gray-100 text-left"
       >
         <p class="text-sm font-semibold text-[#2D3748] mb-2">
-          💡 Consejo para hoy
+          <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Light%20bulb/3D/light_bulb_3d.png`" alt="Consejo" />
+          Consejo para hoy
         </p>
         <p class="text-[#718096] leading-relaxed">
           {{ resultadoActual?.consejo }}
@@ -297,7 +301,11 @@ function irARegulacion() {
                 <div
                   class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FEFBF7] text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
                 >
-                  {{ opcion.emoji }}
+                  <img
+                    :src="opcion.emojiImg"
+                    alt=""
+                    class="w-7 h-7 drop-shadow-sm"
+                  />
                 </div>
                 <div>
                   <p class="text-[#2D3748] font-medium leading-relaxed">

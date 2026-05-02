@@ -123,7 +123,7 @@ const recursos = [
 </script>
 
 <template>
-  <section id="docentes" class="py-20 lg:py-32 relative bg-[#FEFBF7]">
+  <section id="docentes" class="py-20 lg:py-32 relative bg-[#FEFBF7] scroll-mt-24">
     <div class="absolute inset-0 z-0 opacity-[0.03]">
       <img
         :src="bgDocentes"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Phone, Mail, MessageCircle, AlertTriangle, Shield, Heart } from "lucide-vue-next";
 import bgApoyo from "@/img/estudiantes_video_educativo.jpeg";
+import RedApoyoVirtual from "./apoyo/RedApoyoVirtual.vue";
 
 const emergencias = [
   {
@@ -67,7 +68,7 @@ const institucional = [
 </script>
 
 <template>
-  <section id="apoyo" class="py-20 lg:py-32 relative bg-[#F5F0E8]">
+  <section id="apoyo" class="py-20 lg:py-32 relative bg-[#F5F0E8] scroll-mt-24">
     <div class="absolute inset-0 z-0 opacity-[0.03]">
       <img
         :src="bgApoyo"
@@ -258,6 +259,9 @@ const institucional = [
           </div>
         </div>
       </div>
+
+      <!-- Red de apoyo virtual -->
+      <RedApoyoVirtual />
 
       <!-- Closing message -->
       <div

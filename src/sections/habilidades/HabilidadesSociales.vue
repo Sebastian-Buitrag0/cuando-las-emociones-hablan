@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import { MessageSquare, Ear, Users, Handshake, ChevronRight } from "lucide-vue-next";
 
+const EMOJI_BASE =
+  "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
+
 const subHabilidades = [
   {
     id: "asertiva",
@@ -134,12 +137,14 @@ const activa = () =>
             class="text-xs font-semibold mb-0.5"
             :style="{ color: activa().color }"
           >
-            💪 Práctica de hoy
+            <img class="w-4 h-4 inline-block" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/3D/flexed_biceps_3d.png" alt="Práctica" />
+            Práctica de hoy
           </p>
           <p class="text-xs text-[#4A5568] leading-relaxed">
             {{ activa().practica }}
           </p>
         </div>
+
       </div>
     </Transition>
   </div>

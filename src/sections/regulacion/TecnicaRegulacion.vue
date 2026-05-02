@@ -10,17 +10,27 @@ import {
   Circle,
 } from "lucide-vue-next";
 
+type Paso = string | { texto: string; emojiImg?: string; emojiAlt?: string };
+
 type Props = {
   titulo: string;
   subtitulo: string;
   color: string;
-  emoji: string;
+  emojiImg: string;
   prevencion: string[];
   inmediato: string[];
   musica: { titulo: string; artista: string; url: string };
-  video: { titulo: string; url: string };
-  reto: { titulo: string; descripcion: string; pasos: string[] };
+  videos: { titulo: string; url: string }[];
+  reto: { titulo: string; descripcion: string; pasos: Paso[] };
 };
+
+function getPasoTexto(paso: Paso): string {
+  return typeof paso === "string" ? paso : paso.texto;
+}
+
+function getPasoEmoji(paso: Paso): { img?: string; alt?: string } {
+  return typeof paso === "string" ? {} : { img: paso.emojiImg, alt: paso.emojiAlt };
+}
 
 defineProps<Props>();
 
@@ -50,7 +60,11 @@ function toggleReto(idx: number) {
           class="flex h-14 w-14 items-center justify-center rounded-2xl text-3xl shadow-md flex-shrink-0"
           :style="{ backgroundColor: `${color}25` }"
         >
-          {{ emoji }}
+          <img
+            :src="emojiImg"
+            alt=""
+            class="w-9 h-9 drop-shadow-sm"
+          />
         </div>
         <div>
           <h3 class="text-xl sm:text-2xl font-bold text-[#2D3748]">
@@ -123,7 +137,7 @@ function toggleReto(idx: number) {
       </div>
     </div>
 
-    <!-- Media row: música + video -->
+    <!-- Media row: música + video(s) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <a
         :href="musica.url"
@@ -146,25 +160,29 @@ function toggleReto(idx: number) {
         </p>
       </a>
 
-      <a
-        :href="video.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#f6fffd] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover"
-      >
-        <div class="flex items-center gap-2 mb-2">
-          <div
-            class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5B8DEE]/15"
-          >
-            <Youtube class="h-4 w-4 text-[#5B8DEE]" />
+      <div :class="videos.length === 1 ? '' : 'md:col-span-1 flex flex-col gap-4'">
+        <a
+          v-for="(vid, i) in videos"
+          :key="i"
+          :href="vid.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#f6fffd] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover"
+        >
+          <div class="flex items-center gap-2 mb-2">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5B8DEE]/15"
+            >
+              <Youtube class="h-4 w-4 text-[#5B8DEE]" />
+            </div>
+            <h4 class="font-bold text-[#2D3748]">Video recomendado</h4>
           </div>
-          <h4 class="font-bold text-[#2D3748]">Video recomendado</h4>
-        </div>
-        <p class="text-sm font-semibold text-[#2D3748]">{{ video.titulo }}</p>
-        <p class="text-xs text-[#5B8DEE] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
-          Ver video →
-        </p>
-      </a>
+          <p class="text-sm font-semibold text-[#2D3748]">{{ vid.titulo }}</p>
+          <p class="text-xs text-[#5B8DEE] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
+            Ver video →
+          </p>
+        </a>
+      </div>
     </div>
 
     <!-- Reto -->
@@ -201,14 +219,20 @@ function toggleReto(idx: number) {
             class="h-5 w-5 mt-0.5 flex-shrink-0 text-gray-300"
           />
           <span
-            class="text-sm leading-relaxed"
+            class="text-sm leading-relaxed flex items-center gap-2"
             :class="
               retosCompletados.has(i)
                 ? 'text-[#A0AEC0] line-through'
                 : 'text-[#2D3748]'
             "
           >
-            {{ paso }}
+            <img
+              v-if="getPasoEmoji(paso).img"
+              :src="getPasoEmoji(paso).img"
+              :alt="getPasoEmoji(paso).alt || ''"
+              class="w-4 h-4 flex-shrink-0"
+            />
+            {{ getPasoTexto(paso) }}
           </span>
         </li>
       </ul>
