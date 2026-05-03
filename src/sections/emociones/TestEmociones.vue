@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight } from "lucide-vue-next";
+import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight, BotMessageSquare } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
 const EMOJI_BASE =
@@ -147,6 +147,16 @@ function irARegulacion() {
   }
   document.getElementById("regulacion")?.scrollIntoView({ behavior: "smooth" });
 }
+
+function hablarConEmilio() {
+  const r = resultadoActual.value;
+  if (!r) return;
+  window.dispatchEvent(new CustomEvent("emilio:open", {
+    detail: {
+      contexto: `Acabo de hacer el test emocional y mi resultado fue: ${r.titulo}. ${r.descripcion} ${r.consejo} Me gustaría explorar esto contigo.`,
+    },
+  }));
+}
 </script>
 
 <template>
@@ -225,6 +235,13 @@ function irARegulacion() {
           <RefreshCw class="w-4 h-4 mr-2" />
           Repetir test
         </AppButton>
+        <button
+          @click="hablarConEmilio"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <BotMessageSquare class="w-4 h-4" />
+          Hablar con Emilio
+        </button>
       </div>
     </div>
 

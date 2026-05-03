@@ -24,6 +24,7 @@ const estrategias = [
     duracion: "5 minutos",
     descripcion:
       "Inicia la clase con una actividad breve de conexión emocional.",
+    cuando: "Al inicio de cada sesión, especialmente después de recreos largos, exámenes o situaciones de conflicto reciente en el grupo.",
     pasos: [
       "Saludo personalizado a cada estudiante.",
       'Pregunta del día: "¿Cómo te sientes en una palabra?"',
@@ -37,6 +38,7 @@ const estrategias = [
     duracion: "3-5 minutos",
     descripcion:
       "Interrupciones programadas para regular la atención y energía.",
+    cuando: "Cuando notes dispersión generalizada, después de 45+ minutos de trabajo sostenido, o cuando el grupo esté visiblemente agitado o ansioso.",
     pasos: [
       "Estiramientos suaves en el lugar.",
       "Ejercicios de respiración coordinada.",
@@ -49,6 +51,7 @@ const estrategias = [
     title: "Círculo de Confianza",
     duracion: "10-15 minutos",
     descripcion: "Espacio seguro para que los estudiantes se expresen.",
+    cuando: "Tras un conflicto entre pares, cuando notes aislamiento de algún estudiante, o como cierre de semana para procesar lo vivido en el grupo.",
     pasos: [
       "Sentarse en círculo a la altura de los ojos.",
       "Objeto que da la palabra (solo quien lo tiene habla).",
@@ -61,6 +64,7 @@ const estrategias = [
     title: "Rincón de Calma",
     duracion: "Permanente",
     descripcion: "Espacio en el aula para autorregularse.",
+    cuando: "Cuando un estudiante llega alterado, después de un conflicto puntual, o cuando alguien necesita procesar algo antes de reintegrarse a la clase.",
     pasos: [
       "Ubicación tranquila y visible.",
       "Materiales: cojines, libros, crayolas.",
@@ -221,9 +225,13 @@ const recursos = [
                 }}</AppCardTitle>
               </AppCardHeader>
               <AppCardContent>
-                <p class="text-[#718096] text-sm mb-4">
+                <p class="text-[#718096] text-sm mb-3">
                   {{ estrategia.descripcion }}
                 </p>
+                <div class="rounded-xl p-3 mb-3" :style="{ backgroundColor: estrategia.color + '10' }">
+                  <p class="text-[10px] font-bold uppercase tracking-wider mb-1" :style="{ color: estrategia.color }">Úsala cuando…</p>
+                  <p class="text-xs text-[#4A5568] leading-relaxed">{{ estrategia.cuando }}</p>
+                </div>
                 <div class="space-y-2">
                   <p class="text-xs font-semibold text-[#2D3748]">Pasos:</p>
                   <ol class="space-y-1">

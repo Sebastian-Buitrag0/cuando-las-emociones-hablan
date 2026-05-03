@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown, BotMessageSquare } from "lucide-vue-next";
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
 import bgHabilidades from "@/img/trabajo_equipo_piso.jpeg";
@@ -12,67 +12,97 @@ const EMOJI_BASE =
 const habilidades = [
   {
     title: "Autoconciencia",
+    conector: "Es el punto de partida: sin reconocer lo que sentimos, no podemos gestionarlo.",
     description:
       "Reconocer y comprender nuestras propias emociones, fortalezas, limitaciones y cómo afectan nuestro comportamiento.",
     color: "#5B8DEE",
     bgColor: "bg-[#5B8DEE]/10",
     emojiImg: `${EMOJI_BASE}/Face%20in%20clouds/3D/face_in_clouds_3d.png`,
+    señales: [
+      "No sabes con certeza por qué reaccionas de cierta manera ante situaciones concretas.",
+      "Tus emociones te sorprenden y te desbordan con frecuencia.",
+      "Te cuesta responder honestamente '¿cómo estoy?' más allá de 'bien' o 'mal'.",
+    ],
     tips: [
       "Pregúntate: ¿Qué estoy sintiendo en este momento?",
       "Identifica en qué parte del cuerpo sientes esa emoción.",
       "Escribe 3 pensamientos que acompañan esa emoción.",
+      "Practica el 'check-in' diario: antes de dormir, nombra 3 emociones que sentiste hoy.",
     ],
     hasSubSkills: false,
   },
   {
     title: "Autorregulación",
+    conector: "Reconocer es el primer paso; autorregularse es expresar esa emoción sin que nos controle.",
     description:
       "Gestionar las emociones de manera saludable, controlar impulsos y adaptarse a los cambios con flexibilidad.",
     color: "#81E6D9",
     bgColor: "bg-[#81E6D9]/20",
     emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
+    señales: [
+      "Reaccionas de formas que después lamentas, y el ciclo se repite.",
+      "Sientes que las emociones 'te explotan' antes de que puedas pensar.",
+      "Te cuesta calmarte después de enojarte, asustarte o sentirte herido/a.",
+    ],
     tips: [
       "Respira profundo durante 4 segundos antes de reaccionar.",
       "Cuenta hasta 10 cuando sientas que pierdes el control.",
-      "Cambia el pensamiento negativo por uno más realista.",
+      "Cambia el pensamiento negativo por uno más realista: ¿qué evidencia tengo de esto?",
+      "Practica la pausa: aléjate 5 minutos antes de responder en caliente.",
     ],
     hasSubSkills: false,
   },
   {
     title: "Empatía",
+    conector: "La empatía convierte la convivencia en algo más que coexistir: es la base de las relaciones reales.",
     description:
       "Comprender los sentimientos de los demás, ponerse en su lugar y responder con compasión.",
     color: "#BC6C8A",
     bgColor: "bg-[#BC6C8A]/10",
     emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20hearts/3D/smiling_face_with_hearts_3d.png`,
+    señales: [
+      "Sientes que nadie te entiende, pero tampoco logras entender a otros.",
+      "Juzgas rápidamente sin esperar escuchar el contexto completo.",
+      "Te cuesta reconocer cuándo alguien cercano está mal si no te lo dice directamente.",
+    ],
     tips: [
       "Ponte en el lugar del otro antes de juzgar.",
-      "Pregunta: ¿Cómo te sientes? y escucha de verdad.",
-      "Escucha sin interrumpir ni dar consejos inmediatos.",
+      "Pregunta: '¿Cómo te sientes?' y escucha sin interrumpir.",
+      "Escucha sin dar consejos inmediatos — a veces solo necesitan ser escuchados.",
+      "Antes de responder en un conflicto, repite con tus palabras lo que la otra persona dijo.",
     ],
     hasSubSkills: false,
   },
   {
     title: "Habilidades Sociales",
+    conector: "Son las herramientas concretas para poner en práctica todo lo anterior en tus relaciones.",
     description:
       "Competencias específicas para relacionarte con otros: comunicar, escuchar, cooperar y resolver desacuerdos.",
     color: "#F4A259",
     bgColor: "bg-[#F4A259]/10",
     emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`,
+    señales: [],
     tips: [],
     hasSubSkills: true,
   },
   {
     title: "Motivación",
+    conector: "La motivación no es un estado fijo: es una habilidad que se entrena para sostener el esfuerzo cuando la emoción decae.",
     description:
       "Orientar las emociones hacia objetivos personales, mantener la perseverancia y la actitud positiva.",
     color: "#F6E05E",
     bgColor: "bg-[#F6E05E]/20",
     emojiImg: `${EMOJI_BASE}/Star-struck/3D/star-struck_3d.png`,
+    señales: [
+      "Empiezas muchos proyectos pero los abandonas cuando se vuelven difíciles.",
+      "Necesitas que alguien más te empuje para hacer lo que tú mismo/a quieres.",
+      "El aburrimiento o la apatía son tu estado habitual, no una excepción.",
+    ],
     tips: [
       "Define una meta clara y divídela en pasos pequeños.",
       "Celebra tus logros, por pequeños que sean.",
       "Rodéate de personas que te inspiren y apoyen.",
+      "Define un 'para qué' personal: no solo '¿qué quiero hacer?' sino '¿por qué me importa?'",
     ],
     hasSubSkills: false,
   },
@@ -82,6 +112,14 @@ const expandido = ref<string | null>(null);
 
 function toggle(title: string) {
   expandido.value = expandido.value === title ? null : title;
+}
+
+function hablarConEmilio(habilidad: typeof habilidades[number]) {
+  window.dispatchEvent(new CustomEvent("emilio:open", {
+    detail: {
+      contexto: `Estoy explorando la habilidad de "${habilidad.title}". ${habilidad.conector} ${habilidad.description} ¿Puedes ayudarme a desarrollarla?`,
+    },
+  }));
 }
 
 // GSAP stagger animation for cards
@@ -158,6 +196,12 @@ onMounted(() => {
           emociones, establecer relaciones positivas y tomar decisiones
           responsables.
         </p>
+        <p class="mt-4 text-sm text-[#A0AEC0] max-w-xl mx-auto">
+          Estas 5 habilidades no son emociones en sí mismas, sino las
+          <span class="font-semibold text-[#718096]">herramientas internas</span>
+          que nos permiten reconocer, comprender y regular lo que sentimos.
+          Cada una se desarrolla con práctica, y cada una se conecta con la siguiente.
+        </p>
       </div>
 
       <!-- Cards Grid -->
@@ -197,10 +241,13 @@ onMounted(() => {
 
             <!-- Content -->
             <h3
-              class="text-lg font-bold text-[#2D3748] mb-2 group-hover:text-[#5B8DEE] transition-colors"
+              class="text-lg font-bold text-[#2D3748] mb-1 group-hover:text-[#5B8DEE] transition-colors"
             >
               {{ habilidad.title }}
             </h3>
+            <p class="text-xs font-semibold mb-2" :style="{ color: habilidad.color }">
+              {{ habilidad.conector }}
+            </p>
             <p class="text-[#718096] leading-relaxed text-sm">
               {{ habilidad.description }}
             </p>
@@ -233,20 +280,52 @@ onMounted(() => {
             <Transition name="tip-slide">
               <div v-if="expandido === habilidad.title" class="mt-3">
                 <HabilidadesSociales v-if="habilidad.hasSubSkills" />
-                <ul v-else class="space-y-2">
-                  <li
-                    v-for="(tip, i) in habilidad.tips"
-                    :key="i"
-                    class="flex items-start gap-2 text-sm text-[#4A5568]"
+                <div v-else class="space-y-4">
+                  <!-- Señales -->
+                  <div v-if="habilidad.señales.length">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-[#A0AEC0] mb-2">
+                      Señales de que me falta trabajarla
+                    </p>
+                    <ul class="space-y-1.5">
+                      <li
+                        v-for="(s, i) in habilidad.señales"
+                        :key="'s' + i"
+                        class="flex items-start gap-2 text-sm text-[#4A5568]"
+                      >
+                        <span class="mt-0.5 flex-shrink-0 text-[#C05621] font-bold">›</span>
+                        {{ s }}
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Tips -->
+                  <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-[#A0AEC0] mb-2">
+                      Cómo desarrollarla
+                    </p>
+                    <ul class="space-y-1.5">
+                      <li
+                        v-for="(tip, i) in habilidad.tips"
+                        :key="'t' + i"
+                        class="flex items-start gap-2 text-sm text-[#4A5568]"
+                      >
+                        <span
+                          class="mt-0.5 flex-shrink-0 font-bold"
+                          :style="{ color: habilidad.color }"
+                          >›</span
+                        >
+                        {{ tip }}
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Emilio CTA -->
+                  <button
+                    @click.stop="hablarConEmilio(habilidad)"
+                    class="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   >
-                    <span
-                      class="mt-0.5 flex-shrink-0 font-bold"
-                      :style="{ color: habilidad.color }"
-                      >›</span
-                    >
-                    {{ tip }}
-                  </li>
-                </ul>
+                    <BotMessageSquare class="w-4 h-4" />
+                    Practicar con Emilio
+                  </button>
+                </div>
               </div>
             </Transition>
           </div>

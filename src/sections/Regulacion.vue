@@ -4,7 +4,6 @@ import AppTabs from "@/components/ui/tabs.vue";
 import AppTabsList from "@/components/ui/tabs-list.vue";
 import AppTabsTrigger from "@/components/ui/tabs-trigger.vue";
 import AppTabsContent from "@/components/ui/tabs-content.vue";
-import EjercicioRespiracion from "./emociones/EjercicioRespiracion.vue";
 import TecnicaRegulacion from "./regulacion/TecnicaRegulacion.vue";
 import bgRegulacion from "@/img/charla_ruta_convivencia.jpeg";
 import gsap from "gsap";
@@ -12,7 +11,7 @@ import gsap from "gsap";
 const EMOJI_BASE =
   "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
 
-const currentTab = ref("respiracion");
+const currentTab = ref("ansiedad");
 
 function handlePreset(e: Event) {
   const evt = e as CustomEvent<string>;
@@ -47,6 +46,13 @@ const tecnicas = {
       "Esa sensación de alerta, nudo en el estómago o la mente acelerada. Es normal y se puede regular.",
     color: "#B794F4",
     emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`,
+    sintomas: [
+      "Sientes el corazón acelerado o el pecho apretado sin causa física clara.",
+      "Tu mente produce pensamientos repetitivos del tipo '¿y si pasa algo malo?'",
+      "Evitas situaciones que antes no te causaban problema (hablar en clase, estar en grupos).",
+      "Duermes mal o te despiertas con la sensación de que algo malo puede pasar.",
+    ],
+    tipos: "Ansiedad generalizada (preocupación constante por casi todo), ansiedad social (miedo intenso a ser juzgado), ansiedad por rendimiento (pánico ante exámenes) y crisis de pánico (episodios intensos y repentinos de miedo físico). Todas tienen solución.",
     prevencion: [
       "Duerme al menos 8 horas y reduce la cafeína.",
       "Haz actividad física 3 veces por semana: el cuerpo descarga la ansiedad.",
@@ -89,6 +95,13 @@ const tecnicas = {
       "Cuando algo te desborda, te frustra o sientes que vas a estallar. La ira da información — no te define.",
     color: "#F6AD55",
     emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`,
+    sintomas: [
+      "Sientes tensión muscular, mandíbula apretada o calor en la cara ante situaciones cotidianas.",
+      "Cualquier pequeño obstáculo te desborda de manera que parece desproporcionada.",
+      "Después de perder el control, sientes culpa o vergüenza profunda.",
+      "Duermes poco, te irrita el ruido o tienes dolores de cabeza frecuentes.",
+    ],
+    tipos: "Estrés crónico (tensión sostenida en el tiempo), frustración (cuando algo bloquea tus metas), rabia reactiva (explosiones rápidas) e ira pasiva (silencio, sarcasmo, 'hacerse el indiferente'). Reconocer tu patrón es el primer paso.",
     prevencion: [
       "Identifica tus detonantes: ¿qué personas o situaciones suelen activarte?",
       "Haz ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
@@ -139,6 +152,13 @@ const tecnicas = {
       "Sentirse decaído, sin ganas, con ganas de llorar. La tristeza también se cuida, no se esconde.",
     color: "#90CDF4",
     emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`,
+    sintomas: [
+      "Tienes pocas ganas de hacer cosas que antes disfrutabas, aunque intentes forzarte.",
+      "Sientes un peso en el cuerpo, lentitud o ganas de llorar sin una razón clara.",
+      "Te aíslas de amigos o familia y prefieres estar solo/a sin saber bien por qué.",
+      "Tienes pensamientos recurrentes de que 'nada tiene sentido' o 'no sirvo para nada'.",
+    ],
+    tipos: "Tristeza situacional (ante una pérdida o decepción concreta), tristeza persistente (dura semanas sin mejorar) o depresión, que requiere acompañamiento profesional. Si llevas más de 2 semanas sintiéndote así, es importante buscar apoyo.",
     prevencion: [
       "Mantén contacto frecuente con al menos 2 personas que te hagan sentir bien.",
       "Sal a caminar 20 minutos al día — la luz natural regula el ánimo.",
@@ -181,6 +201,13 @@ const tecnicas = {
       "Si alguien te hace daño de forma repetida, no es tu culpa y no tienes que resolverlo solo/a.",
     color: "#BC6C8A",
     emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
+    sintomas: [
+      "No quieres ir al colegio y no puedes explicar exactamente por qué.",
+      "Llegas a casa con objetos perdidos, ropa dañada o sin explicación de lo que pasó.",
+      "Cambias de ánimo drásticamente antes o después de estar en ciertos grupos o espacios.",
+      "Evitas hablar de lo que pasa en el colegio o en redes sociales.",
+    ],
+    tipos: "Acoso físico (golpes, empujones), verbal (insultos, apodos hirientes), social/relacional (exclusión deliberada, rumores) y ciberbullying (acoso por redes o mensajes). Todos son igual de serios y todos tienen ruta de atención.",
     prevencion: [
       "Guarda evidencia (capturas, mensajes) desde el primer incidente.",
       "Identifica al menos 1 adulto de confianza (docente, orientador, familiar) al que puedas acudir.",
@@ -271,14 +298,8 @@ const tecnicas = {
       >
         <AppTabs v-model="currentTab" class="max-w-5xl mx-auto">
           <AppTabsList
-            class="flex w-full overflow-x-auto md:grid md:grid-cols-5 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
+            class="flex w-full overflow-x-auto md:grid md:grid-cols-4 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
           >
-            <AppTabsTrigger value="respiracion" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
-              <span class="inline-flex items-center gap-1">
-                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Lungs/3D/lungs_3d.png" alt="Respiración" />
-                Respiración
-              </span>
-            </AppTabsTrigger>
             <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">
                 <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png" alt="Ansiedad" />
@@ -304,14 +325,6 @@ const tecnicas = {
               </span>
             </AppTabsTrigger>
           </AppTabsList>
-
-          <AppTabsContent value="respiracion" class="mt-6 regulacion-tab-content">
-            <div
-              class="bg-gradient-to-br from-white to-[#f6fffd] rounded-3xl p-6 sm:p-8 shadow-soft border border-white/70"
-            >
-              <EjercicioRespiracion />
-            </div>
-          </AppTabsContent>
 
           <AppTabsContent value="ansiedad" class="mt-6 regulacion-tab-content">
             <TecnicaRegulacion v-bind="tecnicas.ansiedad" />

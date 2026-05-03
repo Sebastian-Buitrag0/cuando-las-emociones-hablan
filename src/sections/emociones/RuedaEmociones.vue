@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Heart, Sparkles, Lightbulb } from "lucide-vue-next";
+import { Heart, Sparkles, Lightbulb, BotMessageSquare } from "lucide-vue-next";
 
 const BASE =
   "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
@@ -93,6 +93,15 @@ function getPosition(index: number) {
 
 function selectEmotion(index: number) {
   emocionSeleccionada.value = index;
+}
+
+function hablarConEmilio() {
+  const e = emocionActual.value;
+  window.dispatchEvent(new CustomEvent("emilio:open", {
+    detail: {
+      contexto: `Seleccioné "${e.nombre}" en la rueda de emociones. ${e.definicion} Mi acción sugerida es: "${e.tip}" ¿Puedes ayudarme a entender y trabajar mejor esta emoción?`,
+    },
+  }));
 }
 </script>
 
@@ -264,6 +273,14 @@ function selectEmotion(index: number) {
                   {{ emocionActual.tip }}
                 </p>
               </div>
+
+              <button
+                @click="hablarConEmilio"
+                class="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              >
+                <BotMessageSquare class="w-4 h-4" />
+                Hablar con Emilio sobre {{ emocionActual.nombre }}
+              </button>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from "vue";
-import { RotateCcw, ChevronRight } from "lucide-vue-next";
+import { RotateCcw, ChevronRight, BotMessageSquare } from "lucide-vue-next";
 import gsap from "gsap";
 
 const EMOJI_BASE =
@@ -191,6 +191,14 @@ function siguiente() {
   }
 }
 
+function hablarConEmilio() {
+  window.dispatchEvent(new CustomEvent("emilio:open", {
+    detail: {
+      contexto: `Acabo de completar el simulador de comunicación asertiva y obtuve ${asertivas.value} de ${situaciones.length} respuestas asertivas. ¿Puedes ayudarme a seguir practicando y mejorar mis habilidades de comunicación?`,
+    },
+  }));
+}
+
 function reiniciar() {
   currentIndex.value = 0;
   seleccion.value = null;
@@ -248,14 +256,23 @@ function reiniciar() {
               : "La asertividad se aprende con la práctica. ¡Intenta de nuevo!"
         }}
       </p>
-      <button
-        class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#5B8DEE]"
-        style="background-color: #5b8dee"
-        @click="reiniciar"
-      >
-        <RotateCcw class="h-4 w-4" />
-        Volver a intentar
-      </button>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#5B8DEE]"
+          style="background-color: #5b8dee"
+          @click="reiniciar"
+        >
+          <RotateCcw class="h-4 w-4" />
+          Volver a intentar
+        </button>
+        <button
+          @click="hablarConEmilio"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <BotMessageSquare class="h-4 w-4" />
+          Seguir practicando con Emilio
+        </button>
+      </div>
     </div>
 
     <!-- Simulador activo -->

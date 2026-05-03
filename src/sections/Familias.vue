@@ -22,11 +22,16 @@ const recursos = [
     description:
       "Guía práctica para apoyar el desarrollo emocional de tu hijo/a en cada etapa.",
     color: "#BC6C8A",
+    cuando: [
+      "Tu hijo/a llega del colegio visiblemente alterado/a o en silencio inusual.",
+      "Después de una discusión o conflicto entre pares que menciona en casa.",
+      "Cuando atraviesan cambios importantes: inicio de año, cambio de curso, pubertad.",
+    ],
     puntos: [
       "Valida las emociones de tu hijo/a sin juzgar.",
-      "Crea espacios seguros para conversar.",
-      "Modela la gestión emocional saludable.",
-      "Establece rutinas que generen seguridad.",
+      "Crea espacios seguros para conversar sin distracción de pantallas.",
+      "Modela la gestión emocional saludable con tu propio ejemplo.",
+      "Establece rutinas que generen seguridad y previsibilidad.",
     ],
   },
   {
@@ -35,11 +40,16 @@ const recursos = [
     description:
       "Estrategias basadas en el respeto mutuo y el fortalecimiento de vínculos.",
     color: "#5B8DEE",
+    cuando: [
+      "Cuando los límites en casa no están funcionando y hay conflicto frecuente.",
+      "Si notas que tu hijo/a actúa por miedo al castigo más que por convicción propia.",
+      "Al establecer nuevas normas o rutinas familiares que necesitan acuerdo de todos.",
+    ],
     puntos: [
-      "Usa refuerzos positivos específicos.",
-      "Establece límites claros y consistentes.",
-      "Practica la disciplina conectiva.",
-      "Fomenta la autonomía gradual.",
+      "Usa refuerzos positivos específicos ('hiciste X muy bien' en vez de 'eres bueno').",
+      "Establece límites claros y consistentes explicando el por qué.",
+      "Practica la disciplina conectiva: primero conexión, luego corrección.",
+      "Fomenta la autonomía gradual acorde a su edad.",
     ],
   },
   {
@@ -48,11 +58,16 @@ const recursos = [
     description:
       "Identifica cuándo tu hijo/a puede necesitar apoyo profesional adicional.",
     color: "#F6AD55",
+    cuando: [
+      "Si llevan más de 2 semanas con cambios notorios sin mejora.",
+      "Cuando el rendimiento escolar baja abruptamente sin causa académica clara.",
+      "Si expresan frases como 'no sirvo para nada' o 'todo estaría mejor sin mí'.",
+    ],
     puntos: [
-      "Cambios significativos en el comportamiento.",
-      "Aislamiento social persistente.",
-      "Dificultades de sueño o alimentación.",
-      "Expresiones de tristeza o ansiedad frecuentes.",
+      "Cambios significativos en comportamiento o carácter sin causa obvia.",
+      "Aislamiento social persistente o pérdida de amistades cercanas.",
+      "Dificultades de sueño o alimentación por más de 2 semanas.",
+      "Expresiones frecuentes de tristeza, desesperanza o ansiedad.",
     ],
   },
 ];
@@ -152,7 +167,16 @@ const consejosRapidos = [
               }}</AppCardTitle>
             </AppCardHeader>
             <AppCardContent>
-              <p class="text-[#718096] mb-4">{{ recurso.description }}</p>
+              <p class="text-[#718096] mb-3">{{ recurso.description }}</p>
+              <div class="rounded-xl p-3 mb-4" :style="{ backgroundColor: recurso.color + '10' }">
+                <p class="text-[10px] font-bold uppercase tracking-wider mb-2" :style="{ color: recurso.color }">Aplícalo cuando…</p>
+                <ul class="space-y-1">
+                  <li v-for="(c, ci) in recurso.cuando" :key="ci" class="text-xs text-[#4A5568] flex items-start gap-1.5">
+                    <span class="mt-0.5 font-bold flex-shrink-0" :style="{ color: recurso.color }">›</span>
+                    {{ c }}
+                  </li>
+                </ul>
+              </div>
               <ul class="space-y-2">
                 <li
                   v-for="(punto, i) in recurso.puntos"

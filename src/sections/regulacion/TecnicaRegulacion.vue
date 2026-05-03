@@ -8,7 +8,12 @@ import {
   Sparkles,
   CheckCircle2,
   Circle,
+  AlertCircle,
+  Wind,
+  ChevronDown,
+  BotMessageSquare,
 } from "lucide-vue-next";
+import EjercicioRespiracion from "@/sections/emociones/EjercicioRespiracion.vue";
 
 type Paso = string | { texto: string; emojiImg?: string; emojiAlt?: string };
 
@@ -17,6 +22,8 @@ type Props = {
   subtitulo: string;
   color: string;
   emojiImg: string;
+  sintomas: string[];
+  tipos: string;
   prevencion: string[];
   inmediato: string[];
   musica: { titulo: string; artista: string; url: string };
@@ -32,9 +39,18 @@ function getPasoEmoji(paso: Paso): { img?: string; alt?: string } {
   return typeof paso === "string" ? {} : { img: paso.emojiImg, alt: paso.emojiAlt };
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-const retosCompletados = ref<Set<number>>(new Set());
+const retosCompletados   = ref<Set<number>>(new Set());
+const mostrarRespiracion = ref(false);
+
+function hablarConEmilio() {
+  window.dispatchEvent(new CustomEvent("emilio:open", {
+    detail: {
+      contexto: `Estoy pasando por ${props.titulo}. ${props.subtitulo} Me gustaría hablar sobre esto y recibir orientación personalizada.`,
+    },
+  }));
+}
 
 function toggleReto(idx: number) {
   if (retosCompletados.value.has(idx)) {
@@ -72,6 +88,34 @@ function toggleReto(idx: number) {
           </h3>
           <p class="mt-1 text-[#718096] leading-relaxed">{{ subtitulo }}</p>
         </div>
+      </div>
+    </div>
+
+    <!-- Síntomas + Tipos -->
+    <div class="rounded-2xl bg-white border border-gray-100 p-5 shadow-soft">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F6AD55]/15">
+          <AlertCircle class="h-4 w-4 text-[#C05621]" />
+        </div>
+        <h4 class="font-bold text-[#2D3748]">¿Cómo reconocerla?</h4>
+      </div>
+      <p class="text-xs text-[#718096] mb-3">
+        Algunas señales que pueden aparecer. Si identificas 3 o más durante más de 2 semanas, busca apoyo:
+      </p>
+      <ul class="space-y-2">
+        <li
+          v-for="(s, i) in sintomas"
+          :key="i"
+          class="flex items-start gap-2 text-sm text-[#4A5568]"
+        >
+          <span class="mt-0.5 flex-shrink-0 font-bold text-[#C05621]">›</span>
+          <span>{{ s }}</span>
+        </li>
+      </ul>
+      <div class="mt-4 pt-3 border-t border-gray-100">
+        <p class="text-xs text-[#718096]">
+          <span class="font-semibold text-[#2D3748]">Tipos: </span>{{ tipos }}
+        </p>
       </div>
     </div>
 
@@ -185,6 +229,33 @@ function toggleReto(idx: number) {
       </div>
     </div>
 
+    <!-- Respiración como herramienta -->
+    <div class="rounded-2xl border border-[#81E6D9]/40 bg-gradient-to-br from-[#81E6D9]/8 to-white p-5">
+      <button
+        class="w-full flex items-center justify-between gap-3 text-left"
+        @click="mostrarRespiracion = !mostrarRespiracion"
+      >
+        <div class="flex items-center gap-3">
+          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#81E6D9]/25">
+            <Wind class="h-4 w-4 text-[#0D9488]" />
+          </div>
+          <div>
+            <p class="font-bold text-[#2D3748] text-sm">Respiración como herramienta de regulación</p>
+            <p class="text-xs text-[#718096]">La respiración consciente baja el ritmo cardíaco en 60 s y calma el sistema nervioso.</p>
+          </div>
+        </div>
+        <ChevronDown
+          class="h-4 w-4 text-[#0D9488] flex-shrink-0 transition-transform duration-300"
+          :class="mostrarRespiracion ? 'rotate-180' : ''"
+        />
+      </button>
+      <Transition name="resp-slide">
+        <div v-if="mostrarRespiracion" class="mt-5 pt-4 border-t border-[#81E6D9]/30">
+          <EjercicioRespiracion />
+        </div>
+      </Transition>
+    </div>
+
     <!-- Reto -->
     <div
       class="rounded-2xl border p-5 sm:p-6"
@@ -237,5 +308,39 @@ function toggleReto(idx: number) {
         </li>
       </ul>
     </div>
+
+    <!-- Emilio CTA -->
+    <div class="rounded-2xl border border-[#5B8DEE]/20 bg-gradient-to-br from-[#EBF4FF] to-white p-5">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 text-xl shadow-sm select-none">
+          🧠
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-bold text-[#2D3748]">¿Quieres orientación personalizada?</p>
+          <p class="text-xs text-[#718096] mt-0.5">Emilio puede acompañarte con lo que sientes ahora mismo, a cualquier hora.</p>
+        </div>
+        <button
+          @click="hablarConEmilio"
+          class="flex-shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <BotMessageSquare class="w-4 h-4" />
+          Hablar con Emilio
+        </button>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.resp-slide-enter-active,
+.resp-slide-leave-active {
+  transition: opacity 0.3s ease, max-height 0.4s ease;
+  overflow: hidden;
+  max-height: 1200px;
+}
+.resp-slide-enter-from,
+.resp-slide-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+</style>

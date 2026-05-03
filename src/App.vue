@@ -9,6 +9,7 @@ import Convivencia from "./sections/Convivencia.vue";
 import Familias from "./sections/Familias.vue";
 import Docentes from "./sections/Docentes.vue";
 import Footer from "./sections/Footer.vue";
+import ChatBubble from "./components/ChatBubble.vue";
 </script>
 
 <template>
@@ -25,5 +26,6 @@ import Footer from "./sections/Footer.vue";
       <Docentes />
     </main>
     <Footer />
+    <ChatBubble />
   </div>
 </template>

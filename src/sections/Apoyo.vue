@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { Phone, Mail, MessageCircle, AlertTriangle, Shield, Heart } from "lucide-vue-next";
+import { Phone, Mail, MessageCircle, AlertTriangle, Shield, Heart, BotMessageSquare } from "lucide-vue-next";
+
+function abrirEmilio() {
+  window.dispatchEvent(new CustomEvent('emilio:open'));
+}
 import bgApoyo from "@/img/estudiantes_video_educativo.jpeg";
 import RedApoyoVirtual from "./apoyo/RedApoyoVirtual.vue";
 
@@ -257,6 +261,44 @@ const institucional = [
               {{ item.contacto }}
             </p>
           </div>
+        </div>
+      </div>
+
+      <!-- Emilio como voz adicional -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 20 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700, delay: 600 } }"
+        class="mt-10 max-w-4xl mx-auto rounded-3xl border border-[#5B8DEE]/20 bg-gradient-to-br from-[#EBF4FF] to-white p-6 sm:p-8 shadow-soft"
+      >
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 text-2xl shadow-md select-none">
+            🧠
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold text-[#5B8DEE] uppercase tracking-wider mb-1">
+              ¿Prefieres no hablar con nadie por ahora?
+            </p>
+            <h3 class="text-lg font-bold text-[#2D3748] mb-1">
+              Emilio está disponible como voz adicional
+            </h3>
+            <p class="text-sm text-[#718096] leading-relaxed">
+              Si en este momento no quieres llamar, ir al colegio ni hablar con ninguna persona,
+              es completamente válido. <span class="font-semibold text-[#2D3748]">Emilio</span>,
+              nuestro asistente emocional, puede acompañarte de forma confidencial, a cualquier hora,
+              sin juicios y sin que tengas que explicarte a nadie.
+            </p>
+            <p class="text-xs text-[#A0AEC0] mt-2">
+              No reemplaza la ayuda profesional — es un primer paso cuando no estás listo/a para ningún otro.
+            </p>
+          </div>
+          <button
+            @click="abrirEmilio"
+            class="flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+          >
+            <BotMessageSquare class="w-4 h-4" />
+            Hablar con Emilio
+          </button>
         </div>
       </div>
 
