@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { useWindowScroll } from "@vueuse/core";
 import gsap from "gsap";
 
 import img1 from "@/img/actividades_patio.jpeg";
@@ -22,6 +23,12 @@ const images = [
 const currentIndex = ref(0);
 let autoPlayInterval: number | null = null;
 const isInteracting = ref(false);
+
+const { y: scrollY } = useWindowScroll();
+const scrollProgress = computed(() => {
+  const heroHeight = window.innerHeight;
+  return Math.min(scrollY.value / (heroHeight * 0.5), 1);
+});
 
 const next = () => {
   currentIndex.value = (currentIndex.value + 1) % images.length;
@@ -155,10 +162,12 @@ function scrollToSection(id: string) {
       </div>
     </div>
 
-    <!-- Overlay Layer (Dims when interacting but never fully hides) -->
+    <!-- Overlay Layer (Dims when interacting or scrolling) -->
     <div
-      class="absolute inset-0 bg-white/75 backdrop-blur-[2px] transition-opacity duration-700 pointer-events-none z-0"
-      :class="isInteracting ? 'opacity-30' : 'opacity-100'"
+      class="absolute inset-0 backdrop-blur-[2px] transition-opacity duration-300 pointer-events-none z-0"
+      :style="{
+        backgroundColor: `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
+      }"
     ></div>
 
     <!-- Desktop navigation arrows (always visible) -->
@@ -240,10 +249,13 @@ function scrollToSection(id: string) {
       />
     </div>
 
-    <!-- Main Content Container (dims but stays readable when interacting) -->
+    <!-- Main Content Container (dims when interacting or scrolling) -->
     <div
-      class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-700 pointer-events-none"
-      :class="isInteracting ? 'opacity-40 translate-y-4 scale-[0.98]' : 'opacity-100 translate-y-0 scale-100'"
+      class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-300 pointer-events-none"
+      :style="{
+        opacity: isInteracting ? 0.15 : 1 - scrollProgress * 0.95,
+        transform: isInteracting ? 'translateY(16px) scale(0.98)' : `translateY(${scrollProgress * -20}px) scale(${1 - scrollProgress * 0.02})`,
+      }"
     >
       <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0 pointer-events-auto">
           <!-- Animated icon -->
