@@ -25,9 +25,11 @@ let autoPlayInterval: number | null = null;
 const isInteracting = ref(false);
 
 const { y: scrollY } = useWindowScroll();
+const isMobile = computed(() => window.innerWidth < 768);
 const scrollProgress = computed(() => {
   const heroHeight = window.innerHeight;
-  return Math.min(scrollY.value / (heroHeight * 0.5), 1);
+  const threshold = isMobile.value ? heroHeight * 0.2 : heroHeight * 0.5;
+  return Math.min(scrollY.value / threshold, 1);
 });
 
 const next = () => {
@@ -166,7 +168,9 @@ function scrollToSection(id: string) {
     <div
       class="absolute inset-0 backdrop-blur-[2px] transition-opacity duration-300 pointer-events-none z-0"
       :style="{
-        backgroundColor: `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
+        backgroundColor: isMobile
+          ? `rgba(255,255,255,${Math.max(0.75 - scrollProgress * 0.75, 0)})`
+          : `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
       }"
     ></div>
 
@@ -253,7 +257,7 @@ function scrollToSection(id: string) {
     <div
       class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-300 pointer-events-none"
       :style="{
-        opacity: isInteracting ? 0.15 : 1 - scrollProgress * 0.95,
+        opacity: isInteracting ? 0.15 : 1 - scrollProgress * (isMobile ? 1 : 0.95),
         transform: isInteracting ? 'translateY(16px) scale(0.98)' : `translateY(${scrollProgress * -20}px) scale(${1 - scrollProgress * 0.02})`,
       }"
     >
