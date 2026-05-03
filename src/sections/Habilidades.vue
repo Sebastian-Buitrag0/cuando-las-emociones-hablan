@@ -5,6 +5,7 @@ import gsap from "gsap";
 import bgHabilidades from "@/img/trabajo_equipo_piso.jpeg";
 import HabilidadesSociales from "./habilidades/HabilidadesSociales.vue";
 import SimuladorConversacion from "./habilidades/SimuladorConversacion.vue";
+import MindMapHabilidades from "./habilidades/MindMapHabilidades.vue";
 
 const EMOJI_BASE =
   "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
@@ -203,6 +204,9 @@ onMounted(() => {
           como eslabones de una cadena: comienzan en tu interior y se expanden hacia el mundo.
         </p>
       </div>
+
+      <!-- Animated Mind Map -->
+      <MindMapHabilidades />
 
       <!-- Cards Grid -->
       <div
