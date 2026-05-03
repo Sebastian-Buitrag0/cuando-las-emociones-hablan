@@ -14,7 +14,7 @@ interface Message {
   content: string
 }
 
-type PersonalityId = 'emilio' | 'sofia'
+type PersonalityId = 'emilio' | 'thalia'
 
 // ─── Personality definitions ──────────────────────────────────────────────────
 const personas = {
@@ -28,9 +28,9 @@ const personas = {
     userBubble: 'from-blue-500 to-indigo-500',
     sendBtn: 'from-blue-500 to-indigo-500',
   },
-  sofia: {
-    id: 'sofia' as PersonalityId,
-    name: 'Sofía',
+  thalia: {
+    id: 'thalia' as PersonalityId,
+    name: 'Thalía',
     emoji: '🌸',
     tagline: 'Cálida · Psicología positiva · Fortalezas',
     pitch: 'Te acompaña desde tus fortalezas con compasión y calidez, ayudándote a encontrar tu propio camino.',
@@ -70,7 +70,7 @@ const inputRef          = ref<HTMLInputElement | null>(null)
 const bubbleRef         = ref<HTMLButtonElement | null>(null)
 const chatPanelRef      = ref<HTMLElement | null>(null)
 const emilioGradRef     = ref<HTMLElement | null>(null)
-const sofiaGradRef      = ref<HTMLElement | null>(null)
+const thaliaGradRef      = ref<HTMLElement | null>(null)
 const pickerRef         = ref<HTMLElement | null>(null)
 
 // ─── Reduced-motion gate ──────────────────────────────────────────────────────
@@ -115,13 +115,13 @@ function animateHeaderIn() {
 
 // ─── Personality gradient crossfade ──────────────────────────────────────────
 function applyGradient(id: PersonalityId, animate = true) {
-  if (!emilioGradRef.value || !sofiaGradRef.value) return
+  if (!emilioGradRef.value || !thaliaGradRef.value) return
   const duration = animate && !reduceMotion ? 0.55 : 0
   if (id === 'emilio') {
     gsap.to(emilioGradRef.value, { opacity: 1, duration, ease: 'power2.inOut' })
-    gsap.to(sofiaGradRef.value,  { opacity: 0, duration, ease: 'power2.inOut' })
+    gsap.to(thaliaGradRef.value,  { opacity: 0, duration, ease: 'power2.inOut' })
   } else {
-    gsap.to(sofiaGradRef.value,  { opacity: 1, duration, ease: 'power2.inOut' })
+    gsap.to(thaliaGradRef.value,  { opacity: 1, duration, ease: 'power2.inOut' })
     gsap.to(emilioGradRef.value, { opacity: 0, duration, ease: 'power2.inOut' })
   }
   // Bubble pulse
@@ -131,10 +131,10 @@ function applyGradient(id: PersonalityId, animate = true) {
 }
 
 function fadeOutGradients(animate = true) {
-  if (!emilioGradRef.value || !sofiaGradRef.value) return
+  if (!emilioGradRef.value || !thaliaGradRef.value) return
   const duration = animate && !reduceMotion ? 0.35 : 0
   gsap.to(emilioGradRef.value, { opacity: 0, duration })
-  gsap.to(sofiaGradRef.value,  { opacity: 0, duration })
+  gsap.to(thaliaGradRef.value,  { opacity: 0, duration })
 }
 
 // ─── Picker card animations ───────────────────────────────────────────────────
@@ -190,7 +190,7 @@ function buildSystemPrompt(summary: string): string {
     ? `\n## Contexto de conversaciones anteriores con este estudiante\n${summary}\n`
     : ''
 
-  if (selectedPersonality.value === 'sofia') return buildSofiaPrompt(nameSection, summarySection)
+  if (selectedPersonality.value === 'thalia') return buildThaliaPrompt(nameSection, summarySection)
   return buildEmilioPrompt(nameSection, summarySection)
 }
 
@@ -272,9 +272,9 @@ Ayuda al estudiante a entender que puede regular sus emociones en distintos mome
 - No diagnostiques ni uses etiquetas clínicas para describir al estudiante.`
 }
 
-function buildSofiaPrompt(nameSection: string, summarySection: string): string {
+function buildThaliaPrompt(nameSection: string, summarySection: string): string {
   return `# Identidad y propósito
-Eres **Sofía**, la acompañante emocional del proyecto "Cuando las emociones hablan" del **Gimnasio Pedagógico Thomas Paine** (Colombia). Tu misión es acompañar a estudiantes de primaria y secundaria (8-18 años) a cultivar su bienestar emocional desde sus propias fortalezas, basándote en la psicología positiva de Seligman.
+Eres **Thalía**, la acompañante emocional del proyecto "Cuando las emociones hablan" del **Gimnasio Pedagógico Thomas Paine** (Colombia). Tu misión es acompañar a estudiantes de primaria y secundaria (8-18 años) a cultivar su bienestar emocional desde sus propias fortalezas, basándote en la psicología positiva de Seligman.
 
 ${nameSection}
 ${summarySection}
@@ -356,7 +356,7 @@ function loadFromStorage() {
   userName.value = localStorage.getItem(KEY_NAME) ?? ''
 
   const savedP = localStorage.getItem(KEY_PERSONALITY) as PersonalityId | null
-  if (savedP && (savedP === 'emilio' || savedP === 'sofia')) {
+  if (savedP && (savedP === 'emilio' || savedP === 'thalia')) {
     selectedPersonality.value = savedP
   }
 
@@ -670,7 +670,7 @@ watch(isLoading, async (loading) => {
         <div class="relative px-4 py-3 flex items-center gap-3 flex-shrink-0 overflow-hidden" style="background-color: #475569;">
           <!-- Gradient layers — crossfaded by GSAP -->
           <div ref="emilioGradRef" class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500" style="opacity:0;" />
-          <div ref="sofiaGradRef"  class="absolute inset-0 bg-gradient-to-r from-rose-500 to-purple-500" style="opacity:0;" />
+          <div ref="thaliaGradRef"  class="absolute inset-0 bg-gradient-to-r from-rose-500 to-purple-500" style="opacity:0;" />
 
           <!-- Header content -->
           <div class="relative z-10 flex items-center gap-3 w-full">
@@ -740,14 +740,14 @@ watch(isLoading, async (loading) => {
               </svg>
             </button>
 
-            <!-- Sofía card -->
+            <!-- Thalía card -->
             <button
-              @click="selectPersonality('sofia')"
+              @click="selectPersonality('thalia')"
               class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-gray-100 bg-white p-4 text-left hover:border-rose-300 hover:bg-rose-50/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
               <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-400 to-purple-500 flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🌸</div>
               <div class="flex-1 min-w-0">
-                <p class="font-bold text-gray-800 text-sm">Sofía</p>
+                <p class="font-bold text-gray-800 text-sm">Thalía</p>
                 <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">Cálida · Psicología positiva · Fortalezas</p>
               </div>
               <svg class="w-4 h-4 text-gray-300 group-hover:text-rose-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -783,7 +783,7 @@ watch(isLoading, async (loading) => {
             <div v-if="messages.length === 0" class="h-full flex flex-col items-center justify-center px-4 text-center">
               <div
                 class="w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3 select-none shadow-sm"
-                :class="selectedPersonality === 'sofia'
+                :class="selectedPersonality === 'thalia'
                   ? 'bg-gradient-to-br from-rose-400 to-purple-500'
                   : 'bg-gradient-to-br from-blue-400 to-indigo-500'"
               >{{ currentPersona.emoji }}</div>
@@ -806,7 +806,7 @@ watch(isLoading, async (loading) => {
               <div
                 v-if="msg.role === 'assistant'"
                 class="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0 mt-1 select-none"
-                :class="selectedPersonality === 'sofia'
+                :class="selectedPersonality === 'thalia'
                   ? 'bg-gradient-to-br from-rose-400 to-purple-500'
                   : 'bg-gradient-to-br from-blue-400 to-indigo-500'"
               >{{ currentPersona.emoji }}</div>
@@ -825,13 +825,13 @@ watch(isLoading, async (loading) => {
                 </template>
                 <span v-else class="flex gap-1 items-center h-4 px-1">
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'sofia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
                     style="animation-delay:0ms"></span>
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'sofia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
                     style="animation-delay:150ms"></span>
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'sofia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
                     style="animation-delay:300ms"></span>
                 </span>
               </div>
@@ -842,7 +842,7 @@ watch(isLoading, async (loading) => {
           <!-- Input -->
           <div class="px-3 pb-3 pt-2 border-t border-gray-100 bg-white flex-shrink-0">
             <div class="flex gap-2 items-center bg-gray-50 rounded-xl border border-gray-200 px-3 py-2 focus-within:border-blue-400 transition-colors"
-              :class="selectedPersonality === 'sofia' ? 'focus-within:!border-rose-400' : 'focus-within:border-blue-400'"
+              :class="selectedPersonality === 'thalia' ? 'focus-within:!border-rose-400' : 'focus-within:border-blue-400'"
             >
               <input
                 ref="inputRef"
@@ -883,9 +883,9 @@ watch(isLoading, async (loading) => {
     >
       <!-- Gradient layers for bubble -->
       <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-500 transition-opacity duration-500"
-        :style="{ opacity: selectedPersonality === 'sofia' ? 0 : 1 }" />
+        :style="{ opacity: selectedPersonality === 'thalia' ? 0 : 1 }" />
       <div class="absolute inset-0 bg-gradient-to-br from-rose-500 to-purple-500 transition-opacity duration-500"
-        :style="{ opacity: selectedPersonality === 'sofia' ? 1 : 0 }" />
+        :style="{ opacity: selectedPersonality === 'thalia' ? 1 : 0 }" />
 
       <div class="relative z-10">
         <Transition
