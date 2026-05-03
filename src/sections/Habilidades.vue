@@ -192,15 +192,15 @@ onMounted(() => {
           </span>
         </h2>
         <p class="text-lg text-[#718096] max-w-2xl mx-auto">
-          Son competencias que nos permiten conocer y gestionar nuestras
-          emociones, establecer relaciones positivas y tomar decisiones
-          responsables.
+          Son las <span class="font-semibold text-[#2D3748]">competencias que nos hacen humanos</span>:
+          la capacidad de entender lo que sentimos, responder con inteligencia en lugar de impulso,
+          construir relaciones que de verdad importen y tomar decisiones que nos acerquen a quienes queremos ser.
         </p>
         <p class="mt-4 text-sm text-[#A0AEC0] max-w-xl mx-auto">
-          Estas 5 habilidades no son emociones en sí mismas, sino las
-          <span class="font-semibold text-[#718096]">herramientas internas</span>
-          que nos permiten reconocer, comprender y regular lo que sentimos.
-          Cada una se desarrolla con práctica, y cada una se conecta con la siguiente.
+          No son emociones en sí mismas. Son las <span class="font-semibold text-[#718096]">cinco herramientas internas</span>
+          que transforman lo que sentimos en cómo actuamos.
+          Se entrenan con práctica, se fortalecen con cada decisión consciente y se conectan entre sí
+          como eslabones de una cadena: comienzan en tu interior y se expanden hacia el mundo.
         </p>
       </div>
 
