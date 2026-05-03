@@ -184,7 +184,7 @@ async function selectPersonality(id: PersonalityId) {
 function buildSystemPrompt(summary: string): string {
   const nameSection = userName.value
     ? `El nombre del estudiante con quien hablas es **${userName.value}**. Úsalo con naturalidad.`
-    : `Aún no conoces el nombre del estudiante. En tu primera respuesta de esta conversación, pregúntale amablemente cómo se llama para poder dirigirte a él/ella por su nombre.`
+    : `Aún no conoces el nombre del estudiante. Mientras no lo sepas, SIEMPRE debes preguntarle amablemente cómo se llama en cada una de tus respuestas. No continúes la conversación sin conocer su nombre.`
 
   const summarySection = summary
     ? `\n## Contexto de conversaciones anteriores con este estudiante\n${summary}\n`
