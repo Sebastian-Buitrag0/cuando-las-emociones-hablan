@@ -45,7 +45,7 @@ const SVG_SIZE = 360;
 // evenly spaced 60° apart, starting from top (−π/2)
 const NODE_DEFS = [
   { id: "familia",    label: "Familia",      emojiImg: `${EMOJI_BASE}/House/3D/house_3d.png`, color: "#BC6C8A", baseAngle: -Math.PI / 2,      question: "¿Cómo te apoya tu familia?" },
-  { id: "amigo",      label: "Amigo/a",      emojiImg: `${EMOJI_BASE}/People%20holding%20hands/3D/people_holding_hands_3d.png`, color: "#5B8DEE", baseAngle: -Math.PI / 6,      question: "¿Cómo te apoya tu amigo/a?" },
+  { id: "amigo",      label: "Amigo/a",      emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`, color: "#5B8DEE", baseAngle: -Math.PI / 6,      question: "¿Cómo te apoya tu amigo/a?" },
   { id: "profe",      label: "Profe",        emojiImg: `${EMOJI_BASE}/Open%20book/3D/open_book_3d.png`, color: "#F4A259", baseAngle:  Math.PI / 6,      question: "¿Cómo te apoya tu profe?" },
   { id: "orientador", label: "Orientador/a", emojiImg: `${EMOJI_BASE}/Compass/3D/compass_3d.png`, color: "#48BB78", baseAngle:  Math.PI / 2,      question: "¿Cómo te apoya el/la orientador/a?" },
   { id: "companero",  label: "Compañero/a",  emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, color: "#9F7AEA", baseAngle:  5 * Math.PI / 6,  question: "¿Cómo te apoya un/a compañero/a?" },
