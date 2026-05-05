@@ -133,31 +133,19 @@ const tecnicas = {
     },
     videos: [
       {
-        titulo: "Cómo manejar el estrés — video 1",
-        url: "https://www.youtube.com/watch?v=SB6VCPDFeiw",
-      },
-      {
-        titulo: "Cómo manejar el estrés — video 2",
-        url: "https://www.youtube.com/watch?v=ihLiNXyaHoM",
-      },
-      {
-        titulo: "Cómo controlar la ira — técnicas efectivas",
-        url: "https://www.youtube.com/shorts/RCGmD1Fwzd8",
-      },
-      {
-        titulo: "Ira y estrés — video 4",
+        titulo: "Ira y estrés — video 1",
         url: "https://www.youtube.com/watch?v=mgbALEwEEpE",
       },
       {
-        titulo: "Estrés — video 5",
+        titulo: "Estrés — video 2",
         url: "https://www.youtube.com/shorts/G5MiT-hpdOE",
       },
       {
-        titulo: "Ira — video 6",
+        titulo: "Ira — video 3",
         url: "https://www.youtube.com/shorts/P1ViW66rMic",
       },
       {
-        titulo: "Ira — video 7",
+        titulo: "Ira — video 4",
         url: "https://www.youtube.com/shorts/lzjWAKma3Ag",
       },
     ],

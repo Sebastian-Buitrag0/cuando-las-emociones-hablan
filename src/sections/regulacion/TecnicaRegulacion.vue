@@ -181,52 +181,47 @@ function toggleReto(idx: number) {
       </div>
     </div>
 
-    <!-- Media row: música + video(s) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Música -->
+    <a
+      :href="musica.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#fff8f3] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover block"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#BC6C8A]/15">
+          <Music class="h-4 w-4 text-[#BC6C8A]" />
+        </div>
+        <h4 class="font-bold text-[#2D3748]">Música sugerida</h4>
+      </div>
+      <p class="text-sm font-semibold text-[#2D3748]">{{ musica.titulo }}</p>
+      <p class="text-xs text-[#718096] mt-0.5">{{ musica.artista }}</p>
+      <p class="text-xs text-[#BC6C8A] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
+        Escuchar →
+      </p>
+    </a>
+
+    <!-- Videos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <a
-        :href="musica.url"
+        v-for="(vid, i) in videos"
+        :key="i"
+        :href="vid.url"
         target="_blank"
         rel="noopener noreferrer"
-        class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#fff8f3] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover"
+        class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#f6fffd] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover"
       >
         <div class="flex items-center gap-2 mb-2">
-          <div
-            class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#BC6C8A]/15"
-          >
-            <Music class="h-4 w-4 text-[#BC6C8A]" />
+          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5B8DEE]/15">
+            <Youtube class="h-4 w-4 text-[#5B8DEE]" />
           </div>
-          <h4 class="font-bold text-[#2D3748]">Música sugerida</h4>
+          <h4 class="font-bold text-[#2D3748]">Video recomendado</h4>
         </div>
-        <p class="text-sm font-semibold text-[#2D3748]">{{ musica.titulo }}</p>
-        <p class="text-xs text-[#718096] mt-0.5">{{ musica.artista }}</p>
-        <p class="text-xs text-[#BC6C8A] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
-          Escuchar →
+        <p class="text-sm font-semibold text-[#2D3748]">{{ vid.titulo }}</p>
+        <p class="text-xs text-[#5B8DEE] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
+          Ver video →
         </p>
       </a>
-
-      <div :class="videos.length === 1 ? '' : 'md:col-span-1 flex flex-col gap-4'">
-        <a
-          v-for="(vid, i) in videos"
-          :key="i"
-          :href="vid.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-[#f6fffd] p-5 hover:-translate-y-0.5 transition-all duration-300 hover:shadow-hover"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <div
-              class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5B8DEE]/15"
-            >
-              <Youtube class="h-4 w-4 text-[#5B8DEE]" />
-            </div>
-            <h4 class="font-bold text-[#2D3748]">Video recomendado</h4>
-          </div>
-          <p class="text-sm font-semibold text-[#2D3748]">{{ vid.titulo }}</p>
-          <p class="text-xs text-[#5B8DEE] font-semibold mt-3 group-hover:translate-x-1 transition-transform">
-            Ver video →
-          </p>
-        </a>
-      </div>
     </div>
 
     <!-- Respiración como herramienta -->
