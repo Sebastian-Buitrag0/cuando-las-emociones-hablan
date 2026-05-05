@@ -365,7 +365,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
           <circle cx="0" cy="0" r="52" class="center-pulse" />
           <circle cx="0" cy="0" r="46" fill="#F5F0E8" stroke="#E2D5C3" stroke-width="2" />
           <circle cx="0" cy="0" r="40" fill="white" />
-          <image x="-14" y="-24" width="28" height="28" :href="`${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`" />
+          <image x="-14" y="-24" width="28" height="28" :href="`${EMOJI_BASE}/Bust%20in%20silhouette/3D/bust_in_silhouette_3d.png`" />
           <text x="0" y="14" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#2D3748" font-weight="700">Yo</text>
         </g>
 
