@@ -83,6 +83,10 @@ const tecnicas = {
         titulo: "Ansiedad — video 3",
         url: "https://www.youtube.com/watch?v=h7KMioQbNFI",
       },
+      {
+        titulo: "Ansiedad — video 4",
+        url: "https://www.youtube.com/watch?v=2F8k0Vfy7cE",
+      },
     ],
     reto: {
       titulo: "Diario de preocupaciones · 5 días",
