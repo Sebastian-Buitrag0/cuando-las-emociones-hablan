@@ -33,13 +33,13 @@ interface Particle {
 }
 
 /* ─── constants ──────────────────────────────────────────── */
-const CX = 180;
-const CY = 180;
-const NODE_R   = 34;          // bigger nodes
-const ORBIT_R  = 130;         // orbit radius (wider)
-const ORBIT_SPEED = 0.0035;   // rad / normalised-frame  (~30s per revolution)
-const BOUNDARY_PAD = 40;
-const SVG_SIZE = 360;
+const CX = 200;
+const CY = 200;
+const NODE_R   = 34;
+const ORBIT_R  = 130;
+const ORBIT_SPEED = 0.0035;
+const BOUNDARY_PAD = 50;
+const SVG_SIZE = 400;
 
 /* ─── node definitions ───────────────────────────────────── */
 // evenly spaced 60° apart, starting from top (−π/2)
@@ -315,7 +315,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
     <div class="bg-white rounded-3xl shadow-soft border border-gray-100 p-3 sm:p-5 max-w-sm mx-auto relative overflow-hidden">
       <svg
         ref="svgRef"
-        viewBox="0 0 360 360"
+        viewBox="0 0 400 400"
         class="w-full touch-none select-none"
         @pointermove.prevent="onSvgMove"
         @pointerup.prevent="onSvgUp"
@@ -361,7 +361,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         />
 
         <!-- ── center "Yo" ── -->
-        <g transform="translate(180,180)" filter="url(#center-shadow)">
+        <g transform="translate(200,200)" filter="url(#center-shadow)">
           <circle cx="0" cy="0" r="52" class="center-pulse" />
           <circle cx="0" cy="0" r="46" fill="#F5F0E8" stroke="#E2D5C3" stroke-width="2" />
           <circle cx="0" cy="0" r="40" fill="white" />
@@ -427,7 +427,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
 
         <!-- ── hint ── -->
         <Transition name="hint-fade">
-          <foreignObject v-if="showHint" x="0" y="340" width="360" height="24">
+          <foreignObject v-if="showHint" x="0" y="375" width="400" height="24">
             <div xmlns="http://www.w3.org/1999/xhtml" class="flex items-center justify-center gap-1 text-[10.5px] text-[#A0AEC0] h-full">
               <img class="w-3.5 h-3.5" :src="`${EMOJI_BASE}/Backhand%20index%20pointing%20up/3D/backhand_index_pointing_up_3d.png`" alt="" />
               <span>Toca un nodo para agregar apoyo</span>
