@@ -140,6 +140,22 @@ const tecnicas = {
         titulo: "Cómo controlar la ira — técnicas efectivas",
         url: "https://www.youtube.com/shorts/RCGmD1Fwzd8",
       },
+      {
+        titulo: "Ira y estrés — video 4",
+        url: "https://www.youtube.com/watch?v=mgbALEwEEpE",
+      },
+      {
+        titulo: "Estrés — video 5",
+        url: "https://www.youtube.com/shorts/G5MiT-hpdOE",
+      },
+      {
+        titulo: "Ira — video 6",
+        url: "https://www.youtube.com/shorts/P1ViW66rMic",
+      },
+      {
+        titulo: "Ira — video 7",
+        url: "https://www.youtube.com/shorts/lzjWAKma3Ag",
+      },
     ],
     reto: {
       titulo: "El semáforo emocional · 1 semana",
