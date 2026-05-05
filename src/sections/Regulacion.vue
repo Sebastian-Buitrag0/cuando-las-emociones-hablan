@@ -75,6 +75,14 @@ const tecnicas = {
         titulo: "Qué es la ansiedad y cómo manejarla (explicación para jóvenes)",
         url: "https://www.youtube.com/watch?v=rXFYrer5gWU",
       },
+      {
+        titulo: "Ansiedad — video 2",
+        url: "https://www.youtube.com/watch?v=3iXjHf12ed4",
+      },
+      {
+        titulo: "Ansiedad — video 3",
+        url: "https://www.youtube.com/watch?v=h7KMioQbNFI",
+      },
     ],
     reto: {
       titulo: "Diario de preocupaciones · 5 días",
