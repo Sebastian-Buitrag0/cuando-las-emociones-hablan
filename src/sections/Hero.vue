@@ -319,12 +319,18 @@ function scrollToSection(id: string) {
         <h1
           class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D3748] mb-8 leading-tight flex flex-wrap justify-center gap-x-4 gap-y-1"
         >
-          <span class="hero-title-word">Cuando</span>
-          <span class="hero-title-word">las</span>
+          <span class="hero-title-word">
+            Cuando
+          </span>
+          <span class="hero-title-word">
+            Las
+          </span>
           <span
             class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
-          >emociones</span>
-          <span class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">hablan</span>
+          >Emociones</span>
+          <span class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">
+            Hablan
+          </span>
         </h1>
 
         <!-- Subtitle -->

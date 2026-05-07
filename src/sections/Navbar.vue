@@ -66,7 +66,7 @@ function scrollToTop() {
           <div class="flex flex-col leading-tight">
             <span
               class="font-bold text-sm sm:text-base text-[#2D3748] transition-colors leading-snug"
-              >Cuando las emociones hablan</span
+              >Cuando Las Emociones Hablan</span
             >
             <span class="text-xs text-[#718096] font-medium">GPTP</span>
           </div>
