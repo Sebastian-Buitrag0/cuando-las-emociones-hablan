@@ -110,26 +110,28 @@ function scrollToSection(href: string) {
       <!-- Contact -->
       <div class="mt-12 pt-8 border-t border-white/10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="flex items-center gap-3">
+          <div class="flex items-start gap-3">
             <div
-              class="w-10 h-10 rounded-full bg-[#5B8DEE]/20 flex items-center justify-center"
+              class="w-10 h-10 rounded-full bg-[#5B8DEE]/20 flex items-center justify-center flex-shrink-0"
             >
               <MapPin class="w-5 h-5 text-[#5B8DEE]" />
             </div>
             <div>
               <p class="text-sm text-white/60">Ubicación</p>
-              <p class="text-white">Gimnasio Pedagógico Thomas Paine</p>
+              <p class="text-white">Carrera 36 # 20 - 18</p>
+              <p class="text-white/80 text-sm">Barrio San Benito</p>
             </div>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex items-start gap-3">
             <div
-              class="w-10 h-10 rounded-full bg-[#BC6C8A]/20 flex items-center justify-center"
+              class="w-10 h-10 rounded-full bg-[#BC6C8A]/20 flex items-center justify-center flex-shrink-0"
             >
               <Phone class="w-5 h-5 text-[#BC6C8A]" />
             </div>
             <div>
               <p class="text-sm text-white/60">Teléfono</p>
-              <p class="text-white">Contacto institucional</p>
+              <a href="tel:+573202823664" class="block text-white hover:text-[#BC6C8A] transition-colors">320 282 3664</a>
+              <a href="tel:+573115216508" class="block text-white hover:text-[#BC6C8A] transition-colors">311 521 6508</a>
             </div>
           </div>
           <div class="flex items-center gap-3">
@@ -140,7 +142,7 @@ function scrollToSection(href: string) {
             </div>
             <div>
               <p class="text-sm text-white/60">Email</p>
-              <p class="text-white">contacto@gptp.edu.co</p>
+              <p class="text-white">g.p.thomaspaine@gmail.com</p>
             </div>
           </div>
         </div>

@@ -223,7 +223,8 @@ onMounted(() => {
           >
             <!-- Number badge -->
             <span
-              class="absolute top-4 right-4 text-3xl font-black text-[#2D3748]/[0.04] select-none leading-none"
+              class="absolute top-3 right-4 text-5xl font-black select-none leading-none"
+              :style="{ color: habilidad.color + 'AA' }"
               aria-hidden="true"
             >
               {{ String(index + 1).padStart(2, "0") }}

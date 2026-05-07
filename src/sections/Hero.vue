@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed, nextTick } from "vue";
 import { useWindowScroll } from "@vueuse/core";
 import gsap from "gsap";
 
@@ -20,7 +20,12 @@ const images = [
   { src: img5, alt: "Votación personero", width: 1200, height: 800 },
 ];
 
-const currentIndex = ref(0);
+// Infinite carousel: clone last image at start, first image at end
+const extendedImages = [images[images.length - 1], ...images, images[0]];
+const visualIndex = ref(1); // 0 = clone of last, 1..n = real, n+1 = clone of first
+const isAnimating = ref(true);
+const currentIndex = computed(() => (visualIndex.value - 1 + images.length) % images.length);
+
 let autoPlayInterval: number | null = null;
 const isInteracting = ref(false);
 
@@ -32,21 +37,47 @@ const scrollProgress = computed(() => {
   return Math.min(scrollY.value / threshold, 1);
 });
 
-const next = () => {
-  currentIndex.value = (currentIndex.value + 1) % images.length;
-};
+// Throttle navigation to prevent autoplay+click race conditions
+const TRANSITION_MS = 500;
+const NAV_THROTTLE_MS = TRANSITION_MS + 50;
+let lastNavAt = 0;
+function canNavigate() {
+  const now = Date.now();
+  if (now - lastNavAt < NAV_THROTTLE_MS) return false;
+  lastNavAt = now;
+  return true;
+}
 
-const prev = () => {
-  currentIndex.value =
-    (currentIndex.value - 1 + images.length) % images.length;
-};
-
+// Pure navigation — used by autoplay
+const next = () => { if (canNavigate()) visualIndex.value++; };
+const prev = () => { if (canNavigate()) visualIndex.value--; };
 const setSlide = (index: number) => {
-  currentIndex.value = index;
+  if (canNavigate()) visualIndex.value = index + 1;
 };
+
+// User-initiated navigation — also triggers the transparent overlay
+function userNext() { next(); hideText(); }
+function userPrev() { prev(); hideText(); }
+function userSetSlide(index: number) { setSlide(index); hideText(); }
+
+function onTransitionEnd(e: TransitionEvent) {
+  // ignore events from child elements or non-transform properties
+  if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
+
+  let target: number | null = null;
+  if (visualIndex.value >= images.length + 1) target = 1;
+  else if (visualIndex.value <= 0) target = images.length;
+
+  if (target !== null) {
+    isAnimating.value = false;
+    visualIndex.value = target;
+    nextTick(() => requestAnimationFrame(() => { isAnimating.value = true; }));
+  }
+}
 
 const startAutoPlay = () => {
-  autoPlayInterval = window.setInterval(next, 4000);
+  pauseAutoPlay(); // prevent duplicate intervals
+  autoPlayInterval = window.setInterval(next, 5000);
 };
 
 const pauseAutoPlay = () => {
@@ -65,7 +96,7 @@ function hideText() {
   if (resetTimeout) clearTimeout(resetTimeout);
   resetTimeout = window.setTimeout(() => {
     showText();
-  }, 2500); // Vuelve al estado normal después de 2.5s
+  }, 5000); // Vuelve al estado normal después de 5s sin interacción
 }
 
 function showText() {
@@ -96,11 +127,10 @@ function handleSwipe() {
   const minSwipeDistance = 50;
 
   if (Math.abs(swipeDistance) > minSwipeDistance) {
-    hideText();
     if (swipeDistance > 0) {
-      prev();
+      userPrev();
     } else {
-      next();
+      userNext();
     }
   }
 }
@@ -125,6 +155,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   pauseAutoPlay();
+  if (resetTimeout) clearTimeout(resetTimeout);
 });
 
 function scrollToSection(id: string) {
@@ -142,12 +173,15 @@ function scrollToSection(id: string) {
     <!-- Background Carousel -->
     <div class="absolute inset-0 z-0">
       <div
-        class="absolute inset-0 flex transition-transform duration-1000 ease-in-out motion-safe:duration-1000"
-        :class="{ 'motion-reduce:transition-none': true }"
-        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        class="absolute inset-0 flex"
+        :style="{
+          transform: `translateX(-${visualIndex * 100}%)`,
+          transition: isAnimating ? `transform ${TRANSITION_MS}ms ease-out` : 'none',
+        }"
+        @transitionend="onTransitionEnd"
       >
         <div
-          v-for="(img, index) in images"
+          v-for="(img, index) in extendedImages"
           :key="index"
           class="w-full h-full flex-shrink-0 relative"
         >
@@ -166,20 +200,21 @@ function scrollToSection(id: string) {
 
     <!-- Overlay Layer (Dims when interacting or scrolling) -->
     <div
-      class="absolute inset-0 backdrop-blur-[2px] transition-opacity duration-300 pointer-events-none z-0"
+      class="absolute inset-0 transition-all duration-150 pointer-events-none z-0"
+      :class="isInteracting ? '' : 'backdrop-blur-[2px]'"
       :style="{
-        backgroundColor: isMobile
-          ? `rgba(255,255,255,${Math.max(0.75 - scrollProgress * 0.75, 0)})`
-          : `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
+        backgroundColor: isInteracting
+          ? 'rgba(0,0,0,0)'
+          : isMobile
+            ? `rgba(255,255,255,${Math.max(0.75 - scrollProgress * 0.75, 0)})`
+            : `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
       }"
     ></div>
 
     <!-- Desktop navigation arrows (always visible) -->
     <div
       class="hidden md:flex absolute left-0 top-0 bottom-0 w-24 md:w-32 z-20 cursor-pointer items-center justify-start pl-4"
-      @mouseenter="hideText"
-      @mouseleave="showText"
-      @click="prev"
+      @click="userPrev"
     >
       <button
         class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
@@ -191,9 +226,7 @@ function scrollToSection(id: string) {
 
     <div
       class="hidden md:flex absolute right-0 top-0 bottom-0 w-24 md:w-32 z-20 cursor-pointer items-center justify-end pr-4"
-      @mouseenter="hideText"
-      @mouseleave="showText"
-      @click="next"
+      @click="userNext"
     >
       <button
         class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
@@ -216,15 +249,11 @@ function scrollToSection(id: string) {
         <span class="font-medium">Desliza para ver fotos</span>
       </div>
 
-      <div
-        class="flex space-x-3 mt-2 md:mt-0"
-        @mouseenter="hideText"
-        @mouseleave="showText"
-      >
+      <div class="flex space-x-3 mt-2 md:mt-0">
         <button
           v-for="(_, index) in images"
           :key="index"
-          @click="setSlide(index)"
+          @click="userSetSlide(index)"
           class="w-3 h-3 rounded-full transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
           :class="[
             currentIndex === index
@@ -255,13 +284,14 @@ function scrollToSection(id: string) {
 
     <!-- Main Content Container (dims when interacting or scrolling) -->
     <div
-      class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-300 pointer-events-none"
+      class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-300"
       :style="{
-        opacity: isInteracting ? 0.15 : 1 - scrollProgress * (isMobile ? 1 : 0.95),
+        opacity: isInteracting ? 0 : 1 - scrollProgress * (isMobile ? 1 : 0.95),
         transform: isInteracting ? 'translateY(16px) scale(0.98)' : `translateY(${scrollProgress * -20}px) scale(${1 - scrollProgress * 0.02})`,
+        pointerEvents: isInteracting ? 'none' : 'auto',
       }"
     >
-      <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0 pointer-events-auto">
+      <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0">
           <!-- Animated icon -->
           <div class="mb-8 flex justify-center hero-logo">
           <div class="relative">
@@ -287,27 +317,25 @@ function scrollToSection(id: string) {
 
         <!-- Title -->
         <h1
-          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D3748] mb-6 leading-tight"
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D3748] mb-8 leading-tight flex flex-wrap justify-center gap-x-4 gap-y-1"
         >
-          <span class="hero-title-word inline-block">Cuando</span>
-          <span class="hero-title-word inline-block">las</span>
+          <span class="hero-title-word">Cuando</span>
+          <span class="hero-title-word">las</span>
           <span
-            class="hero-title-word inline-block bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
-          >
-            emociones
-          </span>
-          <span class="hero-title-word inline-block bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">hablan</span>
+            class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
+          >emociones</span>
+          <span class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">hablan</span>
         </h1>
 
         <!-- Subtitle -->
         <p
-          class="hero-subtitle text-xl sm:text-2xl text-[#718096] mb-4"
+          class="hero-subtitle text-xl sm:text-2xl font-semibold text-[#2D3748] mb-6"
         >
           Gimnasio Pedagógico Thomas Paine
         </p>
 
         <p
-          class="hero-desc text-lg text-[#718096]/80 mb-10 max-w-2xl mx-auto hidden sm:block"
+          class="hero-desc text-lg text-[#4A5568] mb-12 max-w-2xl mx-auto hidden sm:block leading-relaxed"
         >
           Un espacio digital para escuchar, comprender y transformar las
           emociones en herramientas de crecimiento personal y convivencia

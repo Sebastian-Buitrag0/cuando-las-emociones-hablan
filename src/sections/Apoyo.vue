@@ -51,14 +51,14 @@ const institucional = [
     nombre: "Coordinación de Convivencia GPTP",
     descripcion:
       "Si estás viviendo una situación de acoso, conflicto o necesitas orientación dentro del colegio.",
-    contacto: "convivencia@gptp.edu.co",
+    contacto: "g.p.thomaspaine@gmail.com",
     tipo: "email",
   },
   {
     nombre: "Orientación Escolar",
     descripcion:
       "Apoyo psicológico y emocional para estudiantes del Gimnasio Pedagógico Thomas Paine.",
-    contacto: "orientacion@gptp.edu.co",
+    contacto: "g.p.thomaspaine@gmail.com",
     tipo: "email",
   },
   {

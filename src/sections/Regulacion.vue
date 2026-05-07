@@ -188,9 +188,9 @@ const tecnicas = {
       "Escribe una carta a la tristeza: “¿Qué me estás tratando de decir?”",
     ],
     musica: {
-      titulo: "Playlist para sentirte acompañado",
-      artista: "Spotify · abrazo sonoro",
-      url: "https://www.youtube.com/watch?v=4N3N1MlvVc4",
+      titulo: "Música de piano para acompañar la tristeza",
+      artista: "YouTube · instrumental relajante",
+      url: "https://www.youtube.com/watch?v=7vHCPYWzYU8",
     },
     videos: [
       {
