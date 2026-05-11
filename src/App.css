@@ -1,67 +1,27 @@
-/* Estilos específicos de la aplicación */
+/* Application-specific styles. Tokens come from index.css. */
 
-/* Asegurar que las secciones ocupen el ancho completo */
-section {
-  width: 100%;
-}
+section { width: 100%; }
 
-/* Mejorar la apariencia de los acordeones */
+/* Subtle accordion open tint, using tokens */
 [data-state="open"] > .accordion-trigger {
-  background-color: rgba(91, 141, 238, 0.05);
+  background-color: hsl(var(--primary) / 0.05);
 }
 
-/* Animaciones suaves para tabs */
-[role="tabpanel"] {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* Tab panel arrival — only when reduced motion is not requested */
+@media (prefers-reduced-motion: no-preference) {
+  [role="tabpanel"] { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
 
-/* Mejorar apariencia de botones */
-button {
-  transition: all 0.3s ease;
-}
+/* Breathing circle — paint-hint only, no decorative animation here */
+.breath-circle { will-change: transform, opacity; }
 
-/* Estilos para el ejercicio de respiración */
-.breath-circle {
-  will-change: transform, opacity;
-}
+/* Emotion wheel — paint hint */
+.emotion-wheel-item { will-change: transform; }
 
-/* Mejorar contraste en cards */
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(91, 141, 238, 0.15);
-}
-
-/* Estilos para la rueda de emociones */
-.emotion-wheel-item {
-  will-change: transform;
-}
-
-/* Responsive adjustments */
 @media (max-width: 640px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-/* Smooth scrolling para toda la página */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Mejorar la selección de texto */
-::selection {
-  background-color: rgba(91, 141, 238, 0.3);
-  color: #2D3748;
+  .container { padding-left: 1rem; padding-right: 1rem; }
 }

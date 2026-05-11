@@ -112,16 +112,19 @@ function hablarConEmilio() {
     <!-- Wheel -->
     <div class="relative w-full max-w-[440px] aspect-square mx-auto">
       <div
-        class="absolute inset-0 rounded-full bg-gradient-to-br from-[#5B8DEE]/10 via-white to-[#BC6C8A]/10 blur-2xl"
+        class="absolute inset-0 rounded-full bg-primary/[0.06] blur-2xl"
+        aria-hidden="true"
       />
       <div
-        class="absolute inset-[10%] rounded-full border border-white/80 shadow-soft bg-white/70 backdrop-blur-sm"
+        class="absolute inset-[10%] rounded-full border border-border/60 shadow-soft bg-surface/75 backdrop-blur-sm"
       />
       <div
-        class="absolute inset-[18%] rounded-full border-2 border-dashed border-gray-200/80 animate-spin-slow"
+        class="absolute inset-[18%] rounded-full border-2 border-dashed border-border/80 animate-spin-slow"
+        aria-hidden="true"
       />
       <div
-        class="absolute inset-[31%] rounded-full border border-[#5B8DEE]/15"
+        class="absolute inset-[31%] rounded-full border border-primary/15"
+        aria-hidden="true"
       />
 
       <svg
@@ -130,8 +133,8 @@ function hablarConEmilio() {
       >
         <defs>
           <radialGradient id="wheelGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
-            <stop offset="100%" stop-color="#f7f3ee" stop-opacity="0.6" />
+            <stop offset="0%" stop-color="hsl(var(--surface))" stop-opacity="0.95" />
+            <stop offset="100%" stop-color="hsl(var(--background))" stop-opacity="0.6" />
           </radialGradient>
         </defs>
         <circle cx="200" cy="200" r="180" fill="url(#wheelGlow)" />
@@ -154,7 +157,7 @@ function hablarConEmilio() {
         v-for="(emocion, index) in emocionesRueda"
         :key="emocion.nombre"
         type="button"
-        class="absolute z-10 flex h-14 w-14 sm:h-16 sm:w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white text-xl sm:text-2xl shadow-lg transition-all duration-300 hover:scale-[1.15] active:scale-95 hover:-translate-y-[calc(50%+4px)]"
+        class="absolute z-10 flex h-14 w-14 sm:h-16 sm:w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-surface text-xl sm:text-2xl shadow-lg transition-all duration-300 hover:scale-[1.15] active:scale-95 hover:-translate-y-[calc(50%+4px)]"
         :class="emocionSeleccionada === index ? 'ring-4 ring-offset-2' : ''"
         :style="{
           backgroundColor: emocion.color,
@@ -181,11 +184,11 @@ function hablarConEmilio() {
         class="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
         <div
-          class="wheel-pulse relative flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#5B8DEE] via-[#7d8ef0] to-[#BC6C8A] p-3 text-center text-white shadow-[0_20px_50px_rgba(91,141,238,0.30)]"
+          class="wheel-pulse relative flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-primary p-3 text-center text-primary-foreground shadow-[0_20px_50px_hsl(220_80%_60%_/_0.3)]"
         >
-          <div class="absolute inset-2 rounded-full border border-white/20" />
+          <div class="absolute inset-2 rounded-full border border-primary-foreground/20" aria-hidden="true" />
           <div class="relative">
-            <Sparkles class="mx-auto mb-1 h-5 w-5 text-white/90" />
+            <Sparkles class="mx-auto mb-1 h-5 w-5 text-primary-foreground/90" />
             <span class="text-xs sm:text-sm font-bold leading-tight"
               >Tu rueda<br />emocional</span
             >
@@ -197,12 +200,12 @@ function hablarConEmilio() {
     <!-- Info panel -->
     <div class="w-full max-w-xl mx-auto xl:mx-0">
       <div
-        class="mb-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-white/80 p-4 shadow-soft"
+        class="mb-4 rounded-2xl bg-surface/75 backdrop-blur-sm border border-border/60 p-4 shadow-soft"
       >
-        <p class="text-sm font-medium text-[#2D3748]">
+        <p class="text-sm font-medium text-foreground">
           Selecciona una emoción para explorarla
         </p>
-        <p class="text-sm text-[#718096] mt-1">
+        <p class="text-sm text-muted-foreground mt-1">
           La rueda te ayuda a ponerle nombre a lo que sientes y a identificar
           una acción útil.
         </p>
@@ -211,17 +214,17 @@ function hablarConEmilio() {
       <Transition name="slide" mode="out-in">
         <div
           :key="emocionSeleccionada"
-          class="overflow-hidden rounded-3xl border border-white/80 bg-white shadow-soft"
+          class="overflow-hidden rounded-3xl border border-border/60 bg-surface shadow-soft"
         >
           <div
             class="p-6 sm:p-7"
             :style="{
-              background: `linear-gradient(135deg, ${emocionActual.color}18 0%, #ffffff 65%)`,
+              background: `linear-gradient(135deg, ${emocionActual.color}18 0%, hsl(var(--surface)) 65%)`,
             }"
           >
             <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-5">
               <div
-                class="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/70 bg-white shadow-md"
+                class="flex h-20 w-20 items-center justify-center rounded-3xl border border-border/60 bg-surface shadow-md"
                 :style="{ boxShadow: `0 14px 28px ${emocionActual.color}30` }"
               >
                 <img
@@ -250,11 +253,11 @@ function hablarConEmilio() {
             </div>
 
             <div class="grid gap-4">
-              <div class="rounded-2xl bg-white/80 p-4 border border-gray-100">
-                <p class="text-sm font-semibold text-[#2D3748] mb-1">
+              <div class="rounded-2xl bg-surface/85 p-4 border border-border/60">
+                <p class="text-sm font-semibold text-foreground mb-1">
                   ¿Qué significa?
                 </p>
-                <p class="text-[#718096] leading-relaxed">
+                <p class="text-muted-foreground leading-relaxed">
                   {{ emocionActual.definicion }}
                 </p>
               </div>
@@ -269,14 +272,14 @@ function hablarConEmilio() {
                 >
                   <Lightbulb class="w-4 h-4" /> Acción sugerida
                 </p>
-                <p class="text-[#2D3748] leading-relaxed">
+                <p class="text-foreground leading-relaxed">
                   {{ emocionActual.tip }}
                 </p>
               </div>
 
               <button
                 @click="hablarConEmilio"
-                class="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                class="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <BotMessageSquare class="w-4 h-4" />
                 Hablar con Emilio sobre {{ emocionActual.nombre }}
@@ -284,8 +287,8 @@ function hablarConEmilio() {
             </div>
           </div>
 
-          <div class="border-t border-gray-100 bg-[#fcfaf8] p-5">
-            <p class="text-sm font-semibold text-[#2D3748] mb-3">
+          <div class="border-t border-border/60 bg-background p-5">
+            <p class="text-sm font-semibold text-foreground mb-3">
               Otras emociones que puedes explorar
             </p>
             <div class="flex flex-wrap gap-2">
@@ -296,8 +299,8 @@ function hablarConEmilio() {
                 class="rounded-full border px-3 py-2 text-sm font-medium transition-all"
                 :class="
                   emocionSeleccionada === index
-                    ? 'text-white border-transparent shadow-sm'
-                    : 'bg-white text-[#4A5568] border-gray-200 hover:border-gray-300'
+                    ? 'text-primary-foreground border-transparent shadow-sm'
+                    : 'bg-surface text-foreground/80 border-border hover:border-foreground/30'
                 "
                 :style="
                   emocionSeleccionada === index
@@ -321,7 +324,7 @@ function hablarConEmilio() {
         <div
           v-for="emocion in emocionesRueda.slice(0, 4)"
           :key="`legend-${emocion.nombre}`"
-          class="rounded-2xl border border-white/80 bg-white/80 px-3 py-3 text-center shadow-sm"
+          class="rounded-2xl border border-border/60 bg-surface/85 px-3 py-3 text-center shadow-sm"
         >
           <div
             class="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl"
@@ -333,26 +336,26 @@ function hablarConEmilio() {
               class="w-7 h-7 drop-shadow-sm"
             />
           </div>
-          <p class="text-xs font-semibold text-[#2D3748]">
+          <p class="text-xs font-semibold text-foreground">
             {{ emocion.nombre }}
           </p>
         </div>
       </div>
 
       <div
-        class="mt-4 rounded-2xl bg-gradient-to-r from-[#5B8DEE]/8 to-[#BC6C8A]/8 p-4 border border-white/80"
+        class="mt-4 rounded-2xl bg-accent/[0.06] p-4 border border-accent/15"
       >
         <div class="flex items-start gap-3">
           <div
-            class="heart-pulse mt-0.5 flex h-10 w-10 items-center justify-center rounded-2xl bg-white shadow-sm"
+            class="heart-pulse mt-0.5 flex h-10 w-10 items-center justify-center rounded-2xl bg-surface shadow-sm"
           >
-            <Heart class="h-5 w-5 text-[#BC6C8A]" />
+            <Heart class="h-5 w-5 text-accent" />
           </div>
           <div>
-            <p class="text-sm font-semibold text-[#2D3748]">
+            <p class="text-sm font-semibold text-foreground">
               Tip de autoconocimiento
             </p>
-            <p class="text-sm text-[#718096] mt-1">
+            <p class="text-sm text-muted-foreground mt-1">
               No hay emociones “buenas” o “malas”. Todas dan información valiosa
               sobre lo que necesitas.
             </p>
@@ -376,24 +379,26 @@ function hablarConEmilio() {
   opacity: 0;
   transform: translateX(-20px);
 }
-.wheel-pulse {
-  animation: pulse 3s ease-in-out infinite;
-}
-.heart-pulse {
-  animation: pulse 2s ease-in-out infinite;
-}
 .svg-line-transition {
   transition:
     stroke-opacity 0.4s ease,
     stroke-width 0.4s ease;
 }
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
+
+@media (prefers-reduced-motion: no-preference) {
+  .wheel-pulse { animation: pulse 3s ease-in-out infinite; }
+  .heart-pulse { animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.05); }
   }
-  50% {
-    transform: scale(1.05);
-  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-enter-active,
+  .slide-leave-active { transition: none; }
+  .slide-enter-from,
+  .slide-leave-to { transform: none; }
 }
 </style>

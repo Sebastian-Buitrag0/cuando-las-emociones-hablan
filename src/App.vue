@@ -13,7 +13,7 @@ import ChatBubble from "./components/ChatBubble.vue";
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#FEFBF7]">
+  <div class="min-h-screen bg-background">
     <Navbar />
     <main>
       <Hero />

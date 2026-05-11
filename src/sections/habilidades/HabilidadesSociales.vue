@@ -79,18 +79,18 @@ const activa = () =>
 
 <template>
   <div class="mt-4">
-    <p class="mb-3 text-xs font-semibold text-[#F4A259] uppercase tracking-wide">
+    <p class="mb-3 text-xs font-semibold text-secondary uppercase tracking-wide">
       Sub-habilidades para trabajar
     </p>
     <div class="flex flex-wrap gap-2 mb-4">
       <button
         v-for="sub in subHabilidades"
         :key="sub.id"
-        class="flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-all"
+        class="flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         :class="
           seleccionada === sub.id
-            ? 'text-white shadow-sm'
-            : 'bg-white text-[#4A5568] border border-gray-200 hover:border-gray-300'
+            ? 'text-primary-foreground shadow-soft'
+            : 'bg-surface text-foreground/80 border border-border hover:border-foreground/30'
         "
         :style="
           seleccionada === sub.id
@@ -113,14 +113,14 @@ const activa = () =>
           borderColor: `${activa().color}25`,
         }"
       >
-        <p class="text-sm text-[#4A5568] mb-3 leading-relaxed">
+        <p class="text-sm text-foreground/80 mb-3 leading-relaxed">
           {{ activa().resumen }}
         </p>
         <ul class="space-y-1.5 mb-3">
           <li
             v-for="(clave, i) in activa().claves"
             :key="i"
-            class="flex items-start gap-2 text-xs text-[#4A5568]"
+            class="flex items-start gap-2 text-xs text-foreground/80"
           >
             <ChevronRight
               class="h-3.5 w-3.5 mt-0.5 flex-shrink-0"
@@ -130,7 +130,7 @@ const activa = () =>
           </li>
         </ul>
         <div
-          class="rounded-xl bg-white/80 p-3 border"
+          class="rounded-xl bg-surface/85 p-3 border"
           :style="{ borderColor: `${activa().color}30` }"
         >
           <p
@@ -140,7 +140,7 @@ const activa = () =>
             <img class="w-4 h-4 inline-block" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/3D/flexed_biceps_3d.png" alt="Práctica" />
             Práctica de hoy
           </p>
-          <p class="text-xs text-[#4A5568] leading-relaxed">
+          <p class="text-xs text-foreground/80 leading-relaxed">
             {{ activa().practica }}
           </p>
         </div>
@@ -152,15 +152,14 @@ const activa = () =>
 
 <style scoped>
 .sub-fade-enter-active,
-.sub-fade-leave-active {
-  transition: all 0.25s ease;
-}
-.sub-fade-enter-from {
-  opacity: 0;
-  transform: translateY(6px);
-}
-.sub-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
+.sub-fade-leave-active { transition: opacity 0.25s ease, transform 0.25s ease; }
+.sub-fade-enter-from   { opacity: 0; transform: translateY(6px); }
+.sub-fade-leave-to     { opacity: 0; transform: translateY(-6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-fade-enter-active,
+  .sub-fade-leave-active { transition: none; }
+  .sub-fade-enter-from,
+  .sub-fade-leave-to { transform: none; }
 }
 </style>

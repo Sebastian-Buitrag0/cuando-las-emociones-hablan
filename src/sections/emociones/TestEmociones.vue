@@ -175,13 +175,13 @@ function hablarConEmilio() {
         damping: 20,
       },
     }"
-    class="overflow-hidden rounded-3xl border border-white/80 bg-white text-center shadow-soft"
+    class="overflow-hidden rounded-3xl border border-border/60 bg-surface text-center shadow-soft"
   >
     <div
       class="px-6 py-8 sm:px-8"
       :style="{
         background: resultadoActual
-          ? `linear-gradient(135deg, ${resultadoActual.color}18 0%, #ffffff 70%)`
+          ? `linear-gradient(135deg, ${resultadoActual.color}18 0%, hsl(var(--surface)) 70%)`
           : undefined,
       }"
     >
@@ -199,45 +199,42 @@ function hablarConEmilio() {
         <Smile class="w-12 h-12" :style="{ color: resultadoActual?.color }" />
       </div>
       <div
-        class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-medium text-[#718096] shadow-sm"
+        class="inline-flex items-center gap-2 rounded-full bg-surface/85 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm"
       >
-        <Sparkles class="h-4 w-4 text-[#F4A259]" />
+        <Sparkles class="h-4 w-4 text-secondary" />
         Resultado de tu test emocional
       </div>
-      <h3 class="mt-5 text-2xl sm:text-3xl font-bold text-[#2D3748] mb-2">
+      <h3 class="mt-5 text-2xl sm:text-3xl font-bold text-foreground mb-2">
         {{ resultadoActual?.titulo }}
       </h3>
-      <p class="text-[#718096] mb-6 max-w-lg mx-auto leading-relaxed">
+      <p class="text-muted-foreground mb-6 max-w-lg mx-auto leading-relaxed">
         {{ resultadoActual?.descripcion }}
       </p>
 
       <div
-        class="bg-white/80 rounded-2xl p-5 mb-6 max-w-xl mx-auto border border-gray-100 text-left"
+        class="bg-surface/85 rounded-2xl p-5 mb-6 max-w-xl mx-auto border border-border/60 text-left"
       >
-        <p class="text-sm font-semibold text-[#2D3748] mb-2">
+        <p class="text-sm font-semibold text-foreground mb-2">
           <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Light%20bulb/3D/light_bulb_3d.png`" alt="Consejo" />
           Consejo para hoy
         </p>
-        <p class="text-[#718096] leading-relaxed">
+        <p class="text-muted-foreground leading-relaxed">
           {{ resultadoActual?.consejo }}
         </p>
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <AppButton
-          class="rounded-full px-6 bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white"
-          @click="irARegulacion"
-        >
+        <AppButton class="rounded-full px-6" @click="irARegulacion">
           Ver técnicas para esto
-          <ArrowRight class="w-4 h-4 ml-2" />
+          <ArrowRight class="w-4 h-4 ml-1" />
         </AppButton>
-        <AppButton variant="outline" class="rounded-full px-6" @click="reiniciar">
-          <RefreshCw class="w-4 h-4 mr-2" />
+        <AppButton variant="outline" class="rounded-full px-6 text-foreground border-border" @click="reiniciar">
+          <RefreshCw class="w-4 h-4 mr-1" />
           Repetir test
         </AppButton>
         <button
           @click="hablarConEmilio"
-          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <BotMessageSquare class="w-4 h-4" />
           Hablar con Emilio
@@ -245,9 +242,9 @@ function hablarConEmilio() {
       </div>
     </div>
 
-    <div class="border-t border-gray-100 bg-[#fcfaf8] p-5 text-left">
-      <p class="text-sm font-semibold text-[#2D3748] mb-3">Recuerda</p>
-      <p class="text-sm text-[#718096] leading-relaxed">
+    <div class="border-t border-border/60 bg-background p-5 text-left">
+      <p class="text-sm font-semibold text-foreground mb-3">Recuerda</p>
+      <p class="text-sm text-muted-foreground leading-relaxed">
         Las emociones cambian durante el día. Puedes repetir el test cuando
         quieras para observar cómo te sientes en otro momento.
       </p>
@@ -257,16 +254,16 @@ function hablarConEmilio() {
   <!-- Preguntas -->
   <div v-else class="max-w-2xl mx-auto">
     <div
-      class="mb-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-soft backdrop-blur-sm"
+      class="mb-6 rounded-3xl border border-border/60 bg-surface/85 p-5 shadow-soft backdrop-blur-sm"
     >
       <div
         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4"
       >
         <div>
-          <p class="text-sm font-medium text-[#5B8DEE]">
+          <p class="text-sm font-medium text-primary">
             Autochequeo emocional
           </p>
-          <h3 class="text-lg font-semibold text-[#2D3748]">
+          <h3 class="text-lg font-semibold text-foreground">
             Pregunta {{ preguntaActual + 1 }} de {{ preguntas.length }}
           </h3>
         </div>
@@ -275,14 +272,14 @@ function hablarConEmilio() {
             v-for="(_, i) in preguntas"
             :key="i"
             class="h-2.5 w-8 rounded-full transition-all duration-300"
-            :class="i <= preguntaActual ? 'bg-[#5B8DEE]' : 'bg-gray-200'"
+            :class="i <= preguntaActual ? 'bg-primary' : 'bg-border'"
           />
         </div>
       </div>
 
-      <div class="h-2 rounded-full bg-gray-100 overflow-hidden">
+      <div class="h-2 rounded-full bg-muted overflow-hidden">
         <div
-          class="h-full rounded-full bg-gradient-to-r from-[#5B8DEE] to-[#BC6C8A] transition-all duration-500"
+          class="h-full rounded-full bg-primary transition-[width] duration-500 ease-out"
           :style="{ width: `${progreso}%` }"
         />
       </div>
@@ -291,16 +288,16 @@ function hablarConEmilio() {
     <Transition name="slide" mode="out-in">
       <div
         :key="preguntaActual"
-        class="rounded-3xl border border-white/80 bg-white p-6 sm:p-8 shadow-soft"
+        class="rounded-3xl border border-border/60 bg-surface p-6 sm:p-8 shadow-soft"
       >
         <div class="mb-6">
           <span
-            class="inline-flex rounded-full bg-[#5B8DEE]/10 px-3 py-1 text-xs font-semibold text-[#5B8DEE] mb-3"
+            class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-3"
           >
             Elige la opción que más se parece a ti
           </span>
           <h3
-            class="text-xl sm:text-2xl font-semibold text-[#2D3748] leading-snug"
+            class="text-xl sm:text-2xl font-semibold text-foreground leading-snug"
           >
             {{ preguntas[preguntaActual].pregunta }}
           </h3>
@@ -309,14 +306,14 @@ function hablarConEmilio() {
           <button
             v-for="(opcion, idx) in preguntas[preguntaActual].opciones"
             :key="opcion.valor"
-            class="group rounded-2xl border-2 border-gray-100 bg-white p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#5B8DEE] hover:bg-[#5B8DEE]/5 hover:shadow-md active:scale-[0.98] option-stagger"
+            class="group rounded-2xl border-2 border-border/60 bg-surface p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:bg-primary/5 hover:shadow-md active:scale-[0.98] option-stagger"
             :style="{ animationDelay: `${idx * 80}ms` }"
             @click="handleRespuesta(opcion.valor)"
           >
             <div class="flex items-start justify-between gap-3">
               <div class="flex items-start gap-3">
                 <div
-                  class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FEFBF7] text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                  class="flex h-12 w-12 items-center justify-center rounded-2xl bg-background text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
                 >
                   <img
                     :src="opcion.emojiImg"
@@ -325,13 +322,13 @@ function hablarConEmilio() {
                   />
                 </div>
                 <div>
-                  <p class="text-[#2D3748] font-medium leading-relaxed">
+                  <p class="text-foreground font-medium leading-relaxed">
                     {{ opcion.texto }}
                   </p>
                 </div>
               </div>
               <ChevronRight
-                class="h-5 w-5 text-[#A0AEC0] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#5B8DEE]"
+                class="h-5 w-5 text-muted-foreground/70 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary"
               />
             </div>
           </button>
@@ -343,30 +340,24 @@ function hablarConEmilio() {
 
 <style scoped>
 .slide-enter-active,
-.slide-leave-active {
-  transition: all 0.25s ease;
-}
-.slide-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
+.slide-leave-active { transition: opacity 0.25s ease, transform 0.25s ease; }
+.slide-enter-from   { opacity: 0; transform: translateX(20px); }
+.slide-leave-to     { opacity: 0; transform: translateX(-20px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .option-stagger {
+    animation: optionFadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes optionFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 }
 
-/* Staggered entrance for options */
-.option-stagger {
-  animation: optionFadeIn 0.4s ease both;
-}
-@keyframes optionFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@media (prefers-reduced-motion: reduce) {
+  .slide-enter-active,
+  .slide-leave-active { transition: none; }
+  .slide-enter-from,
+  .slide-leave-to { transform: none; }
 }
 </style>

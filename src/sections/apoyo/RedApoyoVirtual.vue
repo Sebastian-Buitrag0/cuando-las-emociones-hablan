@@ -300,19 +300,19 @@ onUnmounted(() => cancelAnimationFrame(_raf));
       :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700 } }"
       class="text-center mb-8"
     >
-      <span class="inline-block px-4 py-2 rounded-full bg-[#5B8DEE]/10 text-[#5B8DEE] text-sm font-semibold mb-3">
+      <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-3">
         Actividad interactiva
       </span>
-      <h3 class="text-2xl sm:text-3xl font-bold text-[#2D3748] mb-2">
+      <h3 class="text-2xl sm:text-3xl font-bold text-foreground mb-2">
         Tu red de apoyo virtual
       </h3>
-      <p class="text-sm text-[#718096] max-w-sm mx-auto">
+      <p class="text-sm text-muted-foreground max-w-sm mx-auto">
         Los nodos orbitan a tu alrededor. Tócalos o arrástralos para interactuar.
       </p>
     </div>
 
     <!-- Network card -->
-    <div class="bg-white rounded-3xl shadow-soft border border-gray-100 p-3 sm:p-5 max-w-sm mx-auto relative overflow-hidden">
+    <div class="bg-surface rounded-3xl shadow-soft border border-border p-3 sm:p-5 max-w-sm mx-auto relative overflow-hidden">
       <svg
         ref="svgRef"
         viewBox="0 0 400 400"
@@ -342,7 +342,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
             :x2="n.x" :y2="n.y"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%"   stop-color="#CBD5E0" stop-opacity="0.3" />
+            <stop offset="0%"   stop-color="hsl(var(--border))" stop-opacity="0.3" />
             <stop offset="100%" :stop-color="n.color" :stop-opacity="isLleno(n.id) ? 0.9 : 0.38" />
           </linearGradient>
         </defs>
@@ -363,10 +363,10 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         <!-- ── center "Yo" ── -->
         <g transform="translate(200,200)" filter="url(#center-shadow)">
           <circle cx="0" cy="0" r="52" class="center-pulse" />
-          <circle cx="0" cy="0" r="46" fill="#F5F0E8" stroke="#E2D5C3" stroke-width="2" />
-          <circle cx="0" cy="0" r="40" fill="white" />
+          <circle cx="0" cy="0" r="46" fill="hsl(var(--surface-warm))" stroke="hsl(var(--border))" stroke-width="2" />
+          <circle cx="0" cy="0" r="40" fill="hsl(var(--surface))" />
           <image x="-14" y="-24" width="28" height="28" :href="`${EMOJI_BASE}/Bust%20in%20silhouette/3D/bust_in_silhouette_3d.png`" />
-          <text x="0" y="14" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#2D3748" font-weight="700">Yo</text>
+          <text x="0" y="14" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="hsl(var(--foreground))" font-weight="700">Yo</text>
         </g>
 
         <!-- ── person nodes ── -->
@@ -390,8 +390,8 @@ onUnmounted(() => cancelAnimationFrame(_raf));
             />
             <!-- main circle -->
             <circle cx="0" cy="0" :r="NODE_R"
-              :fill="isLleno(n.id) ? n.color + '22' : '#F8FAFC'"
-              :stroke="isLleno(n.id) ? n.color : n.hovered ? n.color + 'AA' : '#CBD5E0'"
+              :fill="isLleno(n.id) ? n.color + '22' : 'hsl(var(--muted))'"
+              :stroke="isLleno(n.id) ? n.color : n.hovered ? n.color + 'AA' : 'hsl(var(--border))'"
               :stroke-width="isLleno(n.id) ? 2.5 : 1.5"
             />
             <!-- emoji -->
@@ -410,7 +410,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
             text-anchor="middle"
             dominant-baseline="middle"
             font-size="10.5"
-            :fill="isLleno(n.id) ? n.color : '#718096'"
+            :fill="isLleno(n.id) ? n.color : 'hsl(var(--muted-foreground))'"
             font-weight="600"
           >{{ n.label }}</text>
         </g>
@@ -428,7 +428,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         <!-- ── hint ── -->
         <Transition name="hint-fade">
           <foreignObject v-if="showHint" x="0" y="375" width="400" height="24">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="flex items-center justify-center gap-1 text-[10.5px] text-[#A0AEC0] h-full">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="flex items-center justify-center gap-1 text-[10.5px] text-muted-foreground/60 h-full">
               <img class="w-3.5 h-3.5" :src="`${EMOJI_BASE}/Backhand%20index%20pointing%20up/3D/backhand_index_pointing_up_3d.png`" alt="" />
               <span>Toca un nodo para agregar apoyo</span>
             </div>
@@ -438,14 +438,14 @@ onUnmounted(() => cancelAnimationFrame(_raf));
 
       <!-- progress dots -->
       <div class="flex items-center justify-between px-2 pb-1">
-        <p class="text-xs text-[#718096]">
-          <span class="font-bold text-[#2D3748]">{{ nodosLlenos.length }}</span>/{{ NODE_DEFS.length }} personas
+        <p class="text-xs text-muted-foreground">
+          <span class="font-bold text-foreground">{{ nodosLlenos.length }}</span>/{{ NODE_DEFS.length }} personas
         </p>
         <div class="flex gap-1.5">
           <div
             v-for="nd in NODE_DEFS" :key="'dot-' + nd.id"
             class="w-2 h-2 rounded-full transition-all duration-300"
-            :style="{ backgroundColor: isLleno(nd.id) ? nd.color : '#E2E8F0' }"
+            :style="{ backgroundColor: isLleno(nd.id) ? nd.color : 'hsl(var(--border))' }"
           />
         </div>
       </div>
@@ -455,21 +455,21 @@ onUnmounted(() => cancelAnimationFrame(_raf));
     <Transition name="panel">
       <div
         v-if="nodoActivoData"
-        class="mt-4 max-w-sm mx-auto rounded-2xl bg-white border shadow-soft p-5"
+        class="mt-4 max-w-sm mx-auto rounded-2xl bg-surface border shadow-soft p-5"
         :style="{ borderColor: nodoActivoData.color + '55' }"
       >
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
             <img class="w-5 h-5 inline-block" :src="nodoActivoData.emojiImg" :alt="nodoActivoData.label" />
-            <p class="font-semibold text-[#2D3748] text-sm">{{ nodoActivoData.question }}</p>
+            <p class="font-semibold text-foreground text-sm">{{ nodoActivoData.question }}</p>
           </div>
-          <button class="text-gray-400 hover:text-gray-600 transition-colors ml-2 flex-shrink-0" @click="cerrarForm">
+          <button class="text-muted-foreground/60 hover:text-muted-foreground transition-colors ml-2 flex-shrink-0" @click="cerrarForm">
             <X class="w-4 h-4" />
           </button>
         </div>
         <textarea
           v-model="textoActual"
-          class="w-full rounded-xl border border-gray-200 p-3 text-sm text-[#4A5568] resize-none focus:outline-none transition-colors duration-200"
+          class="w-full rounded-xl border border-border p-3 text-sm text-foreground/80 resize-none focus:outline-none transition-colors duration-200"
           :style="textoActual ? { borderColor: nodoActivoData.color + '70' } : {}"
           placeholder="Escribe aquí cómo te apoya..."
           rows="3"
@@ -477,11 +477,11 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         />
         <div class="flex justify-end gap-2 mt-3">
           <button
-            class="px-4 py-2 rounded-full text-xs font-semibold text-[#718096] border border-gray-200 hover:bg-gray-50 transition-all"
+            class="px-4 py-2 rounded-full text-xs font-semibold text-muted-foreground border border-border hover:bg-muted transition-all"
             @click="cerrarForm"
           >Cancelar</button>
           <button
-            class="px-4 py-2 rounded-full text-xs font-semibold text-white transition-all"
+            class="px-4 py-2 rounded-full text-xs font-semibold text-primary-foreground transition-all"
             :class="textoActual.trim() ? 'opacity-100 hover:-translate-y-0.5' : 'opacity-40 cursor-not-allowed'"
             :style="{ backgroundColor: nodoActivoData.color }"
             :disabled="!textoActual.trim()"
@@ -495,8 +495,8 @@ onUnmounted(() => cancelAnimationFrame(_raf));
     <Transition name="fade">
       <div v-if="nodosLlenos.length > 0 && !nodoActivo" class="mt-5 text-center">
         <button
-          class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
-          style="background: linear-gradient(135deg, #bc6c8a, #5b8dee)"
+          class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+          style="background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))"
           @click="mostrarResumen = !mostrarResumen; nodoActivo = null"
         >
           <span v-if="mostrarResumen" class="inline-flex items-center gap-1">Ocultar mi red</span>
@@ -511,7 +511,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
     <!-- summary -->
     <Transition name="panel">
       <div v-if="mostrarResumen && nodosLlenos.length > 0" class="mt-6 max-w-2xl mx-auto">
-        <h4 class="text-center font-bold text-[#2D3748] mb-5">
+        <h4 class="text-center font-bold text-foreground mb-5">
           <span class="inline-flex items-center gap-1">
             Tu red de apoyo
             <img class="w-4 h-4" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
@@ -527,10 +527,10 @@ onUnmounted(() => cancelAnimationFrame(_raf));
               <img class="w-5 h-5 inline-block" :src="nd.emojiImg" :alt="nd.label" />
               <span class="font-bold text-sm" :style="{ color: nd.color }">{{ nd.label }}</span>
             </div>
-            <p class="text-sm text-[#4A5568] leading-relaxed">{{ notas[nd.id] }}</p>
+            <p class="text-sm text-foreground/80 leading-relaxed">{{ notas[nd.id] }}</p>
           </div>
         </div>
-        <p class="text-center text-xs text-[#718096] mt-5 italic">
+        <p class="text-center text-xs text-muted-foreground mt-5 italic">
           Cuando las emociones sean difíciles, estas personas están ahí para ti.
           <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
         </p>
@@ -542,7 +542,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
 <style scoped>
 /* center pulse */
 .center-pulse {
-  fill: #BC6C8A;
+  fill: hsl(var(--accent));
   opacity: 0.16;
   transform-origin: 0 0;
   animation: centerPulse 3s ease-in-out infinite;

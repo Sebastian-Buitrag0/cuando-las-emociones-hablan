@@ -21,7 +21,7 @@ const recursos = [
     title: "Acompañamiento Emocional",
     description:
       "Guía práctica para apoyar el desarrollo emocional de tu hijo/a en cada etapa.",
-    color: "#BC6C8A",
+    color: "hsl(var(--accent))",
     cuando: [
       "Tu hijo/a llega del colegio visiblemente alterado/a o en silencio inusual.",
       "Después de una discusión o conflicto entre pares que menciona en casa.",
@@ -39,7 +39,7 @@ const recursos = [
     title: "Crianza Positiva",
     description:
       "Estrategias basadas en el respeto mutuo y el fortalecimiento de vínculos.",
-    color: "#5B8DEE",
+    color: "hsl(var(--primary))",
     cuando: [
       "Cuando los límites en casa no están funcionando y hay conflicto frecuente.",
       "Si notas que tu hijo/a actúa por miedo al castigo más que por convicción propia.",
@@ -57,7 +57,7 @@ const recursos = [
     title: "Señales de Alerta",
     description:
       "Identifica cuándo tu hijo/a puede necesitar apoyo profesional adicional.",
-    color: "#F6AD55",
+    color: "hsl(var(--secondary))",
     cuando: [
       "Si llevan más de 2 semanas con cambios notorios sin mejora.",
       "Cuando el rendimiento escolar baja abruptamente sin causa académica clara.",
@@ -95,11 +95,11 @@ const consejosRapidos = [
 </script>
 
 <template>
-  <section id="familias" class="py-20 lg:py-32 relative bg-[#F5F0E8] scroll-mt-24">
-    <div class="absolute inset-0 z-0 opacity-[0.04]">
+  <section id="familias" class="py-20 lg:py-32 relative bg-surface-warm scroll-mt-24">
+    <div class="absolute inset-0 z-0 opacity-[0.04]" aria-hidden="true">
       <img
         :src="bgFamilias"
-        alt="Votación de personero"
+        alt=""
         class="w-full h-full object-cover grayscale"
       />
     </div>
@@ -110,26 +110,22 @@ const consejosRapidos = [
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-        class="text-center mb-12"
+        class="text-center mb-12 max-w-3xl mx-auto"
       >
         <span
-          class="inline-block px-4 py-2 rounded-full bg-[#5B8DEE]/10 text-[#5B8DEE] text-sm font-semibold mb-4"
+          class="inline-block px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-5"
         >
-          Para Padres y Madres
+          Para padres y madres
         </span>
         <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6"
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
+          style="text-wrap: balance"
         >
-          Apoyo para&nbsp;
-          <span
-            class="bg-gradient-to-r from-[#5B8DEE] to-[#BC6C8A] bg-clip-text text-transparent"
-          >
-            Familias
-          </span>
+          Apoyo para <span class="text-accent">familias</span>.
         </h2>
-        <p class="text-lg text-[#718096] max-w-2xl mx-auto">
-          Recursos y guías para acompañar el desarrollo socioemocional de tus
-          hijos desde el hogar.
+        <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
+          Recursos y guías para acompañar el desarrollo socioemocional de tus hijos
+          desde el hogar.
         </p>
       </div>
 
@@ -149,11 +145,11 @@ const consejosRapidos = [
           }"
         >
           <AppCard
-            class="h-full bg-white rounded-2xl shadow-soft hover:shadow-hover transition-all duration-300 border-none overflow-hidden group"
+            class="h-full bg-surface rounded-2xl shadow-soft hover:shadow-lift transition-[transform,box-shadow] duration-300 border border-border/60 overflow-hidden group motion-safe:hover:-translate-y-1"
           >
             <AppCardHeader class="pb-4">
               <div
-                class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+                class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 motion-safe:group-hover:scale-105 transition-transform"
                 :style="{ backgroundColor: recurso.color + '15' }"
               >
                 <component
@@ -162,16 +158,16 @@ const consejosRapidos = [
                   :style="{ color: recurso.color }"
                 />
               </div>
-              <AppCardTitle class="text-xl font-bold text-[#2D3748]">{{
+              <AppCardTitle class="text-xl font-bold text-foreground">{{
                 recurso.title
               }}</AppCardTitle>
             </AppCardHeader>
             <AppCardContent>
-              <p class="text-[#718096] mb-3">{{ recurso.description }}</p>
-              <div class="rounded-xl p-3 mb-4" :style="{ backgroundColor: recurso.color + '10' }">
+              <p class="text-muted-foreground mb-4 leading-relaxed">{{ recurso.description }}</p>
+              <div class="rounded-xl p-3.5 mb-4" :style="{ backgroundColor: recurso.color + '10' }">
                 <p class="text-[10px] font-bold uppercase tracking-wider mb-2" :style="{ color: recurso.color }">Aplícalo cuando…</p>
-                <ul class="space-y-1">
-                  <li v-for="(c, ci) in recurso.cuando" :key="ci" class="text-xs text-[#4A5568] flex items-start gap-1.5">
+                <ul class="space-y-1.5">
+                  <li v-for="(c, ci) in recurso.cuando" :key="ci" class="text-xs text-foreground/75 leading-relaxed flex items-start gap-1.5">
                     <span class="mt-0.5 font-bold flex-shrink-0" :style="{ color: recurso.color }">›</span>
                     {{ c }}
                   </li>
@@ -181,7 +177,7 @@ const consejosRapidos = [
                 <li
                   v-for="(punto, i) in recurso.puntos"
                   :key="i"
-                  class="flex items-start gap-2 text-sm text-[#718096]"
+                  class="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
                 >
                   <div
                     class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
@@ -206,30 +202,30 @@ const consejosRapidos = [
         }"
         class="mb-16"
       >
-        <h3 class="text-2xl font-bold text-[#2D3748] text-center mb-8">
-          Consejos Rápidos
+        <h3 class="text-2xl font-bold text-foreground text-center mb-8" style="text-wrap: balance">
+          Consejos rápidos
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             v-for="(consejo, index) in consejosRapidos"
             :key="consejo.titulo"
             v-motion
-            :initial="{ opacity: 0, scale: 0.9 }"
+            :initial="{ opacity: 0, scale: 0.95 }"
             :visibleOnce="{
               opacity: 1,
               scale: 1,
               transition: { duration: 500, delay: 500 + index * 100 },
             }"
-            class="bg-white rounded-2xl p-6 shadow-soft text-center"
+            class="bg-surface rounded-2xl p-6 shadow-soft border border-border/50 text-center"
           >
             <component
               :is="consejo.icon"
-              class="w-10 h-10 mx-auto mb-4 text-[#F4A259]"
+              class="w-10 h-10 mx-auto mb-4 text-secondary"
             />
-            <h4 class="font-semibold text-[#2D3748] mb-2">
+            <h4 class="font-semibold text-foreground mb-2">
               {{ consejo.titulo }}
             </h4>
-            <p class="text-sm text-[#718096]">{{ consejo.texto }}</p>
+            <p class="text-sm text-muted-foreground leading-relaxed">{{ consejo.texto }}</p>
           </div>
         </div>
       </div>
@@ -245,21 +241,18 @@ const consejosRapidos = [
         }"
         class="text-center"
       >
-        <div
-          class="bg-gradient-to-r from-[#5B8DEE] to-[#BC6C8A] rounded-2xl p-8 lg:p-12 text-white"
-        >
-          <Users class="w-16 h-16 mx-auto mb-6" />
-          <h3 class="text-2xl lg:text-3xl font-bold mb-4">
+        <div class="bg-foreground rounded-3xl p-8 lg:p-12 text-background">
+          <Users class="w-12 h-12 mx-auto mb-5 text-background/85" />
+          <h3 class="text-2xl lg:text-3xl font-bold mb-4" style="text-wrap: balance">
             ¿Necesitas más apoyo?
           </h3>
-          <p class="text-white/90 mb-8 max-w-xl mx-auto">
-            Recuerda que pedir ayuda es un signo de fortaleza. El colegio cuenta
-            con profesionales dispuestos a apoyarte en el proceso de crianza.
+          <p class="text-background/80 mb-8 max-w-prose-tight mx-auto leading-relaxed">
+            Pedir ayuda es un signo de fortaleza. El colegio cuenta con
+            profesionales dispuestos a acompañarte en el proceso de crianza.
           </p>
           <AppButton
-            variant="secondary"
             size="lg"
-            class="rounded-full px-8 bg-white text-[#5B8DEE] hover:bg-white/90"
+            class="rounded-full px-8 bg-background text-foreground hover:bg-background/90"
           >
             <Heart class="w-5 h-5 mr-2" />
             Contactar al colegio

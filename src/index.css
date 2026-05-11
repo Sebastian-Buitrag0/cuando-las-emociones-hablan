@@ -1,151 +1,120 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 220 17% 23%;
+    /* Surfaces — warm cream tinted toward the accent hue */
+    --background: 36 40% 97%;          /* #FEFBF7 page bg */
+    --surface: 0 0% 100%;              /* pure card surface */
+    --surface-warm: 35 38% 93%;        /* #F5F0E8 warm panel bg */
+    --foreground: 220 22% 22%;         /* #2D3748 primary text */
+    --muted: 35 30% 94%;
+    --muted-foreground: 218 14% 46%;   /* #718096 secondary text */
+
+    /* Card + popover (shadcn baseline) */
     --card: 0 0% 100%;
-    --card-foreground: 220 17% 23%;
+    --card-foreground: 220 22% 22%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 17% 23%;
-    --primary: 220 80% 64%;
+    --popover-foreground: 220 22% 22%;
+
+    /* Brand */
+    --primary: 220 80% 64%;            /* #5B8DEE — confident blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 87% 65%;
+    --secondary: 30 87% 65%;           /* #F4A259 — warm orange */
     --secondary-foreground: 0 0% 100%;
-    --muted: 35 25% 93%;
-    --muted-foreground: 218 14% 46%;
-    --accent: 340 40% 58%;
+    --accent: 340 40% 58%;             /* #BC6C8A — dusty rose */
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
+
+    /* Semantic — keep destructive cool-red so it never collides with crisis/emotional content */
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
+
+    /* Crisis & help — warm coral. Calm, confident, not alarm-state.
+       Used for help-seeking affordances ONLY. Never for form errors. */
+    --crisis: 14 55% 52%;              /* #C2735A warm coral, grounded */
+    --crisis-foreground: 0 0% 100%;
+    --crisis-soft: 22 70% 96%;         /* #FFF5EE warm cream tint */
+
+    /* Calm — teal, used for breathing / grounding moments */
+    --calm: 170 50% 64%;               /* #74D6C5 settled teal */
+    --calm-foreground: 220 22% 22%;
+
+    /* Lines */
     --border: 35 20% 88%;
     --input: 35 20% 88%;
     --ring: 220 80% 64%;
+
     --radius: 1rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  * { @apply border-border; }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
   }
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Honor reduced-motion at the platform level. */
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Body line length cap — dyslexia-friendly and editorial */
+  .max-w-prose-tight { max-width: 60ch; }
+  .max-w-prose-reading { max-width: 65ch; }
+}
+
+/* Animated utilities — all guarded by reduced-motion */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
   }
-}
-
-/* Animaciones personalizadas */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
+  @keyframes pulse-soft {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
   }
-  50% {
-    transform: translateY(-20px);
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 0.4; }
   }
-}
-
-@keyframes pulse-soft {
-  0%, 100% {
-    transform: scale(1);
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
-  50% {
-    transform: scale(1.05);
-  }
+
+  .animate-float      { animation: float 6s ease-in-out infinite; }
+  .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+  .animate-breathe    { animation: breathe 4s ease-in-out infinite; }
+  .animate-spin-slow  { animation: spin-slow 20s linear infinite; }
 }
 
-@keyframes breathe {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.5);
-    opacity: 0.4;
-  }
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse-soft {
-  animation: pulse-soft 3s ease-in-out infinite;
-}
-
-.animate-breathe {
-  animation: breathe 4s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-/* Gradientes */
-.bg-gradient-hero {
-  background: linear-gradient(135deg, rgba(91, 141, 238, 0.1) 0%, rgba(188, 108, 138, 0.1) 100%);
-}
-
-.bg-gradient-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8f6f3 100%);
-}
-
-/* Sombras personalizadas */
-.shadow-soft {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.shadow-hover {
-  box-shadow: 0 8px 30px rgba(91, 141, 238, 0.15);
-}
-
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
+/* Scrollbar — tinted to the primary, but soft */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: hsl(var(--muted)); }
 ::-webkit-scrollbar-thumb {
-  background: #5B8DEE;
+  background: hsl(var(--primary) / 0.55);
   border-radius: 4px;
 }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.8); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #4a7bd9;
+/* Selection — warm and tinted */
+::selection {
+  background-color: hsl(var(--primary) / 0.22);
+  color: hsl(var(--foreground));
 }

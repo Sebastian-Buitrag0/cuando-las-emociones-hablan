@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Brain, Sparkles, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
+import { Brain, ArrowDown, ChevronLeft, ChevronRight, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 import { ref, onMounted, onUnmounted, computed, nextTick } from "vue";
 import { useWindowScroll } from "@vueuse/core";
@@ -20,9 +20,8 @@ const images = [
   { src: img5, alt: "Votación personero", width: 1200, height: 800 },
 ];
 
-// Infinite carousel: clone last image at start, first image at end
 const extendedImages = [images[images.length - 1], ...images, images[0]];
-const visualIndex = ref(1); // 0 = clone of last, 1..n = real, n+1 = clone of first
+const visualIndex = ref(1);
 const isAnimating = ref(true);
 const currentIndex = computed(() => (visualIndex.value - 1 + images.length) % images.length);
 
@@ -37,7 +36,6 @@ const scrollProgress = computed(() => {
   return Math.min(scrollY.value / threshold, 1);
 });
 
-// Throttle navigation to prevent autoplay+click race conditions
 const TRANSITION_MS = 500;
 const NAV_THROTTLE_MS = TRANSITION_MS + 50;
 let lastNavAt = 0;
@@ -48,20 +46,17 @@ function canNavigate() {
   return true;
 }
 
-// Pure navigation — used by autoplay
 const next = () => { if (canNavigate()) visualIndex.value++; };
 const prev = () => { if (canNavigate()) visualIndex.value--; };
 const setSlide = (index: number) => {
   if (canNavigate()) visualIndex.value = index + 1;
 };
 
-// User-initiated navigation — also triggers the transparent overlay
 function userNext() { next(); hideText(); }
 function userPrev() { prev(); hideText(); }
 function userSetSlide(index: number) { setSlide(index); hideText(); }
 
 function onTransitionEnd(e: TransitionEvent) {
-  // ignore events from child elements or non-transform properties
   if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
 
   let target: number | null = null;
@@ -76,7 +71,7 @@ function onTransitionEnd(e: TransitionEvent) {
 }
 
 const startAutoPlay = () => {
-  pauseAutoPlay(); // prevent duplicate intervals
+  pauseAutoPlay();
   autoPlayInterval = window.setInterval(next, 5000);
 };
 
@@ -96,7 +91,7 @@ function hideText() {
   if (resetTimeout) clearTimeout(resetTimeout);
   resetTimeout = window.setTimeout(() => {
     showText();
-  }, 5000); // Vuelve al estado normal después de 5s sin interacción
+  }, 5000);
 }
 
 function showText() {
@@ -108,13 +103,11 @@ function showText() {
   }
 }
 
-// Touch sliding logic
 const touchStartX = ref(0);
 const touchEndX = ref(0);
 
 function handleTouchStart(e: TouchEvent) {
   touchStartX.value = e.changedTouches[0].screenX;
-  // Almacenar el Y para chequear que no sea scroll
 }
 
 function handleTouchEnd(e: TouchEvent) {
@@ -127,26 +120,21 @@ function handleSwipe() {
   const minSwipeDistance = 50;
 
   if (Math.abs(swipeDistance) > minSwipeDistance) {
-    if (swipeDistance > 0) {
-      userPrev();
-    } else {
-      userNext();
-    }
+    if (swipeDistance > 0) userPrev();
+    else userNext();
   }
 }
 
 onMounted(() => {
   startAutoPlay();
 
-  // GSAP entrance timeline
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!prefersReduced) {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.from(".hero-logo", { scale: 0.6, opacity: 0, duration: 0.9 })
-      .from(".hero-logo-ring", { scale: 0, opacity: 0, duration: 0.6 }, "<0.2")
-      .from(".hero-title-word", { y: 40, opacity: 0, duration: 0.7, stagger: 0.08 }, "-=0.4")
-      .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.6 }, "-=0.3")
+      .from(".hero-eyebrow", { y: 14, opacity: 0, duration: 0.5 }, "-=0.4")
+      .from(".hero-title-word", { y: 40, opacity: 0, duration: 0.7, stagger: 0.08 }, "-=0.3")
       .from(".hero-desc", { y: 20, opacity: 0, duration: 0.6 }, "-=0.35")
       .from(".hero-cta", { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, "-=0.3")
       .from(".hero-scroll", { y: -10, opacity: 0, duration: 0.5 }, "-=0.2");
@@ -166,17 +154,17 @@ function scrollToSection(id: string) {
 
 <template>
   <section
-    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden bg-foreground"
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd"
   >
-    <!-- Background Carousel -->
+    <!-- Background carousel -->
     <div class="absolute inset-0 z-0">
       <div
         class="absolute inset-0 flex"
         :style="{
           transform: `translateX(-${visualIndex * 100}%)`,
-          transition: isAnimating ? `transform ${TRANSITION_MS}ms ease-out` : 'none',
+          transition: isAnimating ? `transform ${TRANSITION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)` : 'none',
         }"
         @transitionend="onTransitionEnd"
       >
@@ -191,33 +179,33 @@ function scrollToSection(id: string) {
             :width="img.width"
             :height="img.height"
             class="w-full h-full object-cover opacity-90"
-            style="object-position: center;"
-            loading="eager"
+            :loading="index <= 1 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 1 ? 'high' : 'auto'"
           />
         </div>
       </div>
     </div>
 
-    <!-- Overlay Layer (Dims when interacting or scrolling) -->
+    <!-- Cream-tinted overlay (dims when interacting or scrolling) -->
     <div
       class="absolute inset-0 transition-all duration-150 pointer-events-none z-0"
       :class="isInteracting ? '' : 'backdrop-blur-[2px]'"
       :style="{
         backgroundColor: isInteracting
-          ? 'rgba(0,0,0,0)'
+          ? 'hsla(0,0%,0%,0)'
           : isMobile
-            ? `rgba(255,255,255,${Math.max(0.75 - scrollProgress * 0.75, 0)})`
-            : `rgba(255,255,255,${0.75 - scrollProgress * 0.7})`,
+            ? `hsla(36,40%,97%,${Math.max(0.78 - scrollProgress * 0.78, 0)})`
+            : `hsla(36,40%,97%,${0.78 - scrollProgress * 0.73})`,
       }"
     ></div>
 
-    <!-- Desktop navigation arrows (always visible) -->
+    <!-- Desktop navigation arrows -->
     <div
       class="hidden md:flex absolute left-0 top-0 bottom-0 w-24 md:w-32 z-20 cursor-pointer items-center justify-start pl-4"
       @click="userPrev"
     >
       <button
-        class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
+        class="w-12 h-12 flex items-center justify-center bg-background/70 hover:bg-background/95 backdrop-blur-sm text-foreground rounded-full shadow-soft transition-all motion-safe:hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         aria-label="Anterior"
       >
         <ChevronLeft class="w-6 h-6" />
@@ -229,20 +217,19 @@ function scrollToSection(id: string) {
       @click="userNext"
     >
       <button
-        class="w-12 h-12 flex items-center justify-center bg-white/60 hover:bg-white/90 backdrop-blur-sm text-[#2D3748] rounded-full shadow-lg transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
+        class="w-12 h-12 flex items-center justify-center bg-background/70 hover:bg-background/95 backdrop-blur-sm text-foreground rounded-full shadow-soft transition-all motion-safe:hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         aria-label="Siguiente"
       >
         <ChevronRight class="w-6 h-6" />
       </button>
     </div>
 
-    <!-- Indicators & mobile hint -->
+    <!-- Indicators + mobile hint -->
     <div
       class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-30 w-full px-4"
     >
-      <!-- Mobile swipe hint -->
       <div
-        class="md:hidden flex items-center gap-2 bg-black/60 text-white px-5 py-2.5 rounded-full text-sm backdrop-blur-md transition-opacity duration-500 shadow-lg mx-auto pointer-events-none"
+        class="md:hidden flex items-center gap-2 bg-foreground/60 text-background px-5 py-2.5 rounded-full text-sm backdrop-blur-md transition-opacity duration-500 shadow-soft mx-auto pointer-events-none"
         :class="isInteracting ? 'opacity-0' : 'opacity-100'"
       >
         <Eye class="w-4 h-4" />
@@ -254,11 +241,11 @@ function scrollToSection(id: string) {
           v-for="(_, index) in images"
           :key="index"
           @click="userSetSlide(index)"
-          class="w-3 h-3 rounded-full transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+          class="h-2.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2"
           :class="[
             currentIndex === index
-              ? 'bg-white scale-125'
-              : 'bg-white/50 hover:bg-white/80'
+              ? 'bg-background w-8'
+              : 'bg-background/55 hover:bg-background/85 w-2.5'
           ]"
           :aria-label="`Ir a la imagen ${index + 1}`"
           :aria-current="currentIndex === index ? 'true' : undefined"
@@ -266,23 +253,19 @@ function scrollToSection(id: string) {
       </div>
     </div>
 
-    <!-- Floating decorative elements (dim when interacting) -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700" :class="isInteracting ? 'opacity-20' : 'opacity-100'">
-      <div
-        class="float-1 absolute top-20 left-10 w-20 h-20 rounded-full bg-[#5B8DEE]/10"
-      />
-      <div
-        class="float-2 absolute top-40 right-20 w-16 h-16 rounded-full bg-[#BC6C8A]/10"
-      />
-      <div
-        class="float-3 absolute bottom-40 left-1/4 w-24 h-24 rounded-full bg-[#F4A259]/10"
-      />
-      <div
-        class="float-4 absolute bottom-20 right-1/3 w-12 h-12 rounded-full bg-[#81E6D9]/20"
-      />
+    <!-- Floating decorative orbs (reduced-motion-aware via scoped style) -->
+    <div
+      class="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700"
+      :class="isInteracting ? 'opacity-20' : 'opacity-100'"
+      aria-hidden="true"
+    >
+      <div class="float-1 absolute top-20 left-10 w-20 h-20 rounded-full bg-primary/10" />
+      <div class="float-2 absolute top-40 right-20 w-16 h-16 rounded-full bg-accent/10" />
+      <div class="float-3 absolute bottom-40 left-1/4 w-24 h-24 rounded-full bg-secondary/10" />
+      <div class="float-4 absolute bottom-20 right-1/3 w-12 h-12 rounded-full bg-calm/20" />
     </div>
 
-    <!-- Main Content Container (dims when interacting or scrolling) -->
+    <!-- Main content -->
     <div
       class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-300"
       :style="{
@@ -291,92 +274,77 @@ function scrollToSection(id: string) {
         pointerEvents: isInteracting ? 'none' : 'auto',
       }"
     >
-      <div class="max-w-4xl mx-auto text-center pt-20 sm:pt-0">
-          <!-- Animated icon -->
-          <div class="mb-8 flex justify-center hero-logo">
+      <div class="max-w-3xl mx-auto text-center pt-20 sm:pt-0">
+        <!-- Logo -->
+        <div class="mb-6 flex justify-center hero-logo">
           <div class="relative">
+            <div class="hero-logo-ring absolute inset-0 bg-primary/15 rounded-full blur-2xl" />
             <div
-              class="hero-logo-ring absolute inset-0 bg-[#5B8DEE]/20 rounded-full blur-xl"
-            />
-            <div
-              class="relative w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden border-4 border-white"
+              class="relative w-24 h-24 bg-background rounded-full flex items-center justify-center shadow-soft overflow-hidden ring-1 ring-foreground/5"
             >
               <img
                 :src="logoPagina"
                 alt="Logo Gimnasio Pedagógico Thomas Paine"
-                class="w-[88%] h-[88%] object-contain"
+                class="w-[82%] h-[82%] object-contain"
                 width="120"
                 height="120"
               />
             </div>
-            <div class="absolute -top-2 -right-2 sparkle-rotate">
-              <Sparkles class="w-8 h-8 text-[#F4A259]" />
-            </div>
           </div>
         </div>
 
-        <!-- Title -->
-        <h1
-          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D3748] mb-8 leading-tight flex flex-wrap justify-center gap-x-4 gap-y-1"
-        >
-          <span class="hero-title-word">
-            Cuando
-          </span>
-          <span class="hero-title-word">
-            Las
-          </span>
-          <span
-            class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent"
-          >Emociones</span>
-          <span class="hero-title-word bg-gradient-to-r from-[#BC6C8A] to-[#F4A259] bg-clip-text text-transparent">
-            Hablan
-          </span>
-        </h1>
-
-        <!-- Subtitle -->
-        <p
-          class="hero-subtitle text-xl sm:text-2xl font-semibold text-[#2D3748] mb-6"
-        >
+        <!-- Eyebrow -->
+        <p class="hero-eyebrow text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-5">
           Gimnasio Pedagógico Thomas Paine
         </p>
 
-        <p
-          class="hero-desc text-lg text-[#4A5568] mb-12 max-w-2xl mx-auto hidden sm:block leading-relaxed"
+        <!-- Title -->
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-7 leading-[1.05] flex flex-wrap justify-center gap-x-3 gap-y-1"
+          style="text-wrap: balance"
         >
-          Un espacio digital para escuchar, comprender y transformar las
-          emociones en herramientas de crecimiento personal y convivencia
-          escolar
+          <span class="hero-title-word">Cuando</span>
+          <span class="hero-title-word">las</span>
+          <span class="hero-title-word text-accent">emociones</span>
+          <span class="hero-title-word text-accent">hablan.</span>
+        </h1>
+
+        <!-- Description -->
+        <p
+          class="hero-desc text-lg sm:text-xl text-foreground/80 mb-10 max-w-xl mx-auto leading-relaxed hidden sm:block"
+        >
+          Reconoce lo que sientes. Aprende a regularlo.
+          <span class="block text-foreground">Sabe a quién acudir cuando lo necesites.</span>
         </p>
 
-        <!-- CTA Buttons -->
-        <div
-          class="flex flex-col sm:flex-row gap-4 justify-center"
-        >
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <AppButton
             size="lg"
-            class="hero-cta bg-[#5B8DEE] hover:bg-[#4a7bd9] text-white rounded-full px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:ring-offset-2"
+            class="hero-cta rounded-full px-8 py-6 text-base font-semibold shadow-soft motion-safe:hover:scale-[1.02] transition-transform"
             @click="scrollToSection('emociones')"
           >
-            <Brain class="w-5 h-5 mr-2" />
-            Comenzar
+            <Brain class="w-5 h-5 mr-1" />
+            Empezar por lo que siento
           </AppButton>
           <AppButton
             size="lg"
-            variant="outline"
-            class="hero-cta border-2 border-[#BC6C8A] text-[#BC6C8A] hover:bg-[#BC6C8A] hover:text-white rounded-full px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 bg-white/50 sm:bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BC6C8A] focus-visible:ring-offset-2"
+            variant="ghost"
+            class="hero-cta rounded-full px-8 py-6 text-base font-semibold text-foreground hover:bg-foreground/5"
             @click="scrollToSection('habilidades')"
           >
-            Saber más
+            ¿Qué son las habilidades socioemocionales?
           </AppButton>
         </div>
 
-        <!-- Scroll indicator -->
+        <!-- Scroll cue -->
         <div class="mt-10 mb-4 hero-scroll">
           <button
-            class="text-[#718096] hover:text-[#5B8DEE] transition-colors bounce-arrow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B8DEE] focus-visible:rounded-full"
+            class="text-muted-foreground hover:text-primary transition-colors motion-safe:bounce-arrow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-full"
             @click="scrollToSection('habilidades')"
+            aria-label="Bajar a la siguiente sección"
           >
-            <ArrowDown class="w-8 h-8 mx-auto" />
+            <ArrowDown class="w-7 h-7 mx-auto" />
           </button>
         </div>
       </div>
@@ -385,104 +353,32 @@ function scrollToSection(id: string) {
 </template>
 
 <style scoped>
-.float-1 {
-  animation: float1 5s ease-in-out infinite;
-}
-.float-2 {
-  animation: float2 4s ease-in-out infinite 1s;
-}
-.float-3 {
-  animation: float3 6s ease-in-out infinite 0.5s;
-}
-.float-4 {
-  animation: float4 3.5s ease-in-out infinite 2s;
-}
-.pulse-ring {
-  animation: pulse-ring 3s ease-in-out infinite;
-}
-.sparkle-rotate {
-  animation: sparkle 2s ease-in-out infinite;
-}
-.bounce-arrow {
-  animation: bounce 1.5s ease-in-out infinite;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .float-1 { animation: float1 5s ease-in-out infinite; }
+  .float-2 { animation: float2 4s ease-in-out infinite 1s; }
+  .float-3 { animation: float3 6s ease-in-out infinite 0.5s; }
+  .float-4 { animation: float4 3.5s ease-in-out infinite 2s; }
+  .bounce-arrow { animation: bounce 1.8s ease-in-out infinite; }
 
-@keyframes float1 {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.1); }
   }
-  50% {
-    transform: translateY(-30px) scale(1.1);
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(20px) scale(1.2); }
   }
-}
-@keyframes float2 {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-20px) translateX(10px); }
   }
-  50% {
-    transform: translateY(20px) scale(1.2);
+  @keyframes float4 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(15px); }
   }
-}
-@keyframes float3 {
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(-20px) translateX(10px);
-  }
-}
-@keyframes float4 {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(15px);
-  }
-}
-@keyframes pulse-ring {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.3);
-  }
-}
-@keyframes sparkle {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  33% {
-    transform: rotate(15deg);
-  }
-  66% {
-    transform: rotate(-15deg);
-  }
-}
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .float-1,
-  .float-2,
-  .float-3,
-  .float-4,
-  .pulse-ring,
-  .sparkle-rotate,
-  .bounce-arrow {
-    animation: none;
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
   }
 }
 </style>

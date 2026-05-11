@@ -44,7 +44,7 @@ const tecnicas = {
     titulo: "Ansiedad",
     subtitulo:
       "Esa sensación de alerta, nudo en el estómago o la mente acelerada. Es normal y se puede regular.",
-    color: "#B794F4",
+    color: "hsl(263,73%,77%)",
     emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`,
     sintomas: [
       "Sientes el corazón acelerado o el pecho apretado sin causa física clara.",
@@ -105,7 +105,7 @@ const tecnicas = {
     titulo: "Ira o Estrés",
     subtitulo:
       "Cuando algo te desborda, te frustra o sientes que vas a estallar. La ira da información — no te define.",
-    color: "#F6AD55",
+    color: "hsl(var(--secondary))",
     emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`,
     sintomas: [
       "Sientes tensión muscular, mandíbula apretada o calor en la cara ante situaciones cotidianas.",
@@ -166,7 +166,7 @@ const tecnicas = {
     titulo: "Tristeza",
     subtitulo:
       "Sentirse decaído, sin ganas, con ganas de llorar. La tristeza también se cuida, no se esconde.",
-    color: "#90CDF4",
+    color: "hsl(var(--primary))",
     emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`,
     sintomas: [
       "Tienes pocas ganas de hacer cosas que antes disfrutabas, aunque intentes forzarte.",
@@ -215,7 +215,7 @@ const tecnicas = {
     titulo: "Bullying o Acoso",
     subtitulo:
       "Si alguien te hace daño de forma repetida, no es tu culpa y no tienes que resolverlo solo/a.",
-    color: "#BC6C8A",
+    color: "hsl(var(--accent))",
     emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
     sintomas: [
       "No quieres ir al colegio y no puedes explicar exactamente por qué.",
@@ -264,11 +264,11 @@ const tecnicas = {
 </script>
 
 <template>
-  <section id="regulacion" class="py-20 lg:py-32 relative bg-[#FEFBF7] scroll-mt-24">
-    <div class="absolute inset-0 z-0 opacity-[0.03]">
+  <section id="regulacion" class="py-20 lg:py-32 relative bg-background scroll-mt-24">
+    <div class="absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
       <img
         :src="bgRegulacion"
-        alt="Charla de convivencia"
+        alt=""
         class="w-full h-full object-cover grayscale"
       />
     </div>
@@ -279,26 +279,23 @@ const tecnicas = {
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-        class="text-center mb-12"
+        class="text-center mb-12 max-w-3xl mx-auto"
       >
         <span
-          class="inline-block px-4 py-2 rounded-full bg-[#5B8DEE]/10 text-[#5B8DEE] text-sm font-semibold mb-4"
+          class="inline-block px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-5"
         >
           Paso 2 · Regulación
         </span>
         <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6"
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
+          style="text-wrap: balance"
         >
-          Técnicas para&nbsp;
-          <span
-            class="bg-gradient-to-r from-[#5B8DEE] to-[#81E6D9] bg-clip-text text-transparent"
-          >
-            regular lo que sientes
-          </span>
+          Técnicas para
+          <span class="text-primary">regular lo que sientes</span>.
         </h2>
-        <p class="text-lg text-[#718096] max-w-2xl mx-auto">
-          Ya pusiste nombre a tu emoción. Elige tu situación y encuentra
-          técnicas, música, videos y retos diseñados para ti.
+        <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
+          Ya le pusiste nombre a tu emoción. Elige tu situación y encuentra
+          técnicas, música, videos y retos para acompañarla.
         </p>
       </div>
 
@@ -314,7 +311,7 @@ const tecnicas = {
       >
         <AppTabs v-model="currentTab" class="max-w-5xl mx-auto">
           <AppTabsList
-            class="flex w-full overflow-x-auto md:grid md:grid-cols-4 gap-2 mb-8 bg-white/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
+            class="flex w-full overflow-x-auto md:grid md:grid-cols-4 gap-2 mb-8 bg-surface/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
           >
             <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">

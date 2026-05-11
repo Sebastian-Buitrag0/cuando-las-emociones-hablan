@@ -17,7 +17,7 @@ const temas = [
     id: "conflictos",
     icon: Handshake,
     title: "Resolver Conflictos",
-    color: "#5B8DEE",
+    color: "var(--primary)",
     tips: [
       "Identifica el problema de manera objetiva, sin culpas.",
       "Escucha la perspectiva de la otra persona sin interrumpir.",
@@ -32,7 +32,7 @@ const temas = [
     id: "comunicacion",
     icon: MessageCircle,
     title: "Comunicación Asertiva",
-    color: "#BC6C8A",
+    color: "var(--accent)",
     tips: [
       "Usa frases en primera persona para expresar tus sentimientos.",
       "Sé claro y directo sin ser agresivo.",
@@ -47,7 +47,7 @@ const temas = [
     id: "escucha",
     icon: Ear,
     title: "Escucha Activa",
-    color: "#F4A259",
+    color: "var(--secondary)",
     tips: [
       "Presta atención completa a quien habla.",
       "No interrumpas ni anticipes lo que va a decir.",
@@ -62,7 +62,7 @@ const temas = [
     id: "ira",
     icon: Flame,
     title: "Manejo de la Ira",
-    color: "#F6AD55",
+    color: "var(--secondary)",
     tips: [
       "Reconoce cuándo estás empezando a enojarte.",
       "Respira profundamente antes de reaccionar.",
@@ -77,12 +77,11 @@ const temas = [
 </script>
 
 <template>
-  <section id="convivencia" class="py-20 lg:py-32 relative overflow-hidden bg-[#FEFBF7] scroll-mt-24">
-    <!-- Background Image overlay -->
-    <div class="absolute inset-0 z-0 opacity-[0.03]">
+  <section id="convivencia" class="py-20 lg:py-32 relative overflow-hidden bg-background scroll-mt-24">
+    <div class="absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
       <img
         :src="bgImage"
-        alt="Estudiantes en convivencia"
+        alt=""
         class="w-full h-full object-cover grayscale"
       />
     </div>
@@ -93,26 +92,22 @@ const temas = [
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-        class="text-center mb-12"
+        class="text-center mb-12 max-w-3xl mx-auto"
       >
         <span
-          class="inline-block px-4 py-2 rounded-full bg-[#F4A259]/10 text-[#F4A259] text-sm font-semibold mb-4"
+          class="inline-block px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold uppercase tracking-wider mb-5"
         >
-          Relaciones Saludables
+          Relaciones saludables
         </span>
         <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6"
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
+          style="text-wrap: balance"
         >
-          Mejora tu&nbsp;
-          <span
-            class="bg-gradient-to-r from-[#F4A259] to-[#5B8DEE] bg-clip-text text-transparent"
-          >
-            Convivencia
-          </span>
+          Mejora tu <span class="text-secondary">convivencia</span>.
         </h2>
-        <p class="text-lg text-[#718096] max-w-2xl mx-auto">
-          Aprende estrategias prácticas para construir relaciones más saludables
-          y manejar los desafíos del día a día.
+        <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
+          Estrategias prácticas para construir relaciones más saludables y manejar
+          los desafíos del día a día.
         </p>
       </div>
 
@@ -141,52 +136,50 @@ const temas = [
           >
             <AppAccordionItem
               :value="tema.id"
-              class="bg-white rounded-2xl border-none shadow-soft overflow-hidden"
+              class="bg-surface rounded-2xl border border-border/60 shadow-soft overflow-hidden"
             >
               <AppAccordionTrigger class="px-6 py-5 hover:no-underline group">
                 <div class="flex items-center gap-4 text-left">
-                  <div
-                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
-                    :style="{ backgroundColor: tema.color + '20' }"
-                  >
+                    <div
+                      class="w-12 h-12 rounded-xl flex items-center justify-center motion-safe:transition-transform motion-safe:group-hover:scale-105"
+                      :style="{ backgroundColor: `hsl(${tema.color} / 0.13)` }"
+                    >
                     <component
                       :is="tema.icon"
                       class="w-6 h-6"
-                      :style="{ color: tema.color }"
+                      :style="{ color: `hsl(${tema.color})` }"
                     />
                   </div>
-                  <span
-                    class="text-lg font-semibold text-[#2D3748] group-hover:text-[#5B8DEE] transition-colors"
-                  >
+                  <span class="text-lg font-semibold text-foreground transition-colors">
                     {{ tema.title }}
                   </span>
                 </div>
               </AppAccordionTrigger>
               <AppAccordionContent class="px-6 pb-6">
                 <div class="pl-16">
-                  <h4 class="font-semibold text-[#2D3748] mb-3">
-                    Tips prácticos:
+                  <h4 class="font-semibold text-foreground mb-3">
+                    Tips prácticos
                   </h4>
                   <ul class="space-y-2 mb-6">
                     <li
                       v-for="(tip, i) in tema.tips"
                       :key="i"
-                      class="flex items-start gap-2 text-[#718096]"
+                      class="flex items-start gap-2.5 text-foreground/80"
                     >
                       <CheckCircle
                         class="w-5 h-5 mt-0.5 flex-shrink-0"
-                        :style="{ color: tema.color }"
+                        :style="{ color: `hsl(${tema.color})` }"
                       />
                       <span>{{ tip }}</span>
                     </li>
                   </ul>
                   <div
                     class="rounded-xl p-4"
-                    :style="{ backgroundColor: tema.color + '10' }"
+                    :style="{ backgroundColor: `hsl(${tema.color} / 0.07)` }"
                   >
-                    <p class="text-sm">
-                      <strong :style="{ color: tema.color }">Ejercicio:</strong>
-                      <span class="text-[#718096]"> {{ tema.ejercicio }}</span>
+                    <p class="text-sm leading-relaxed">
+                      <strong :style="{ color: `hsl(${tema.color})` }">Ejercicio:</strong>
+                      <span class="text-foreground/80"> {{ tema.ejercicio }}</span>
                     </p>
                   </div>
                 </div>
@@ -207,16 +200,13 @@ const temas = [
         }"
         class="mt-16 text-center max-w-2xl mx-auto"
       >
-        <div
-          class="bg-gradient-to-r from-[#5B8DEE]/10 to-[#BC6C8A]/10 rounded-2xl p-8"
-        >
-          <p class="text-lg text-[#2D3748] italic mb-4">
-            "La calidad de nuestras relaciones determina la calidad de nuestras
-            vidas. Invertir en habilidades sociales es invertir en nuestro
-            bienestar."
-          </p>
-          <p class="text-sm text-[#718096]">— Adaptado de Daniel Goleman</p>
-        </div>
+        <figure class="rounded-3xl p-8 sm:p-10 bg-secondary/[0.06] border border-secondary/15">
+          <blockquote class="text-lg sm:text-xl text-foreground italic mb-4 leading-relaxed" style="text-wrap: balance">
+            La calidad de nuestras relaciones determina la calidad de nuestras vidas.
+            Invertir en habilidades sociales es invertir en nuestro bienestar.
+          </blockquote>
+          <figcaption class="text-sm text-muted-foreground">— Adaptado de Daniel Goleman</figcaption>
+        </figure>
       </div>
     </div>
   </section>

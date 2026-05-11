@@ -16,31 +16,29 @@ interface Message {
 
 type PersonalityId = 'emilio' | 'thalia'
 
-// ─── Personality definitions ──────────────────────────────────────────────────
 const personas = {
   emilio: {
     id: 'emilio' as PersonalityId,
     name: 'Emilio',
-    emoji: '🧠',
+    emoji: '\u{1F9E0}',
     tagline: 'Analítico · Técnicas CBT · Regulación',
     pitch: 'Te ayuda a identificar patrones de pensamiento y encontrar herramientas concretas para regularte.',
-    bubbleGlow: 'rgba(91,141,238,0.45)',
-    userBubble: 'from-blue-500 to-indigo-500',
-    sendBtn: 'from-blue-500 to-indigo-500',
+    bubbleGlow: '0 8px 25px hsl(220 80% 64% / 0.45)',
+    userBubble: 'from-primary to-[hsl(220,80%,45%)]',
+    sendBtn: 'from-primary to-[hsl(220,80%,45%)]',
   },
   thalia: {
     id: 'thalia' as PersonalityId,
     name: 'Thalía',
-    emoji: '🌸',
+    emoji: '\u{1F338}',
     tagline: 'Cálida · Psicología positiva · Fortalezas',
     pitch: 'Te acompaña desde tus fortalezas con compasión y calidez, ayudándote a encontrar tu propio camino.',
-    bubbleGlow: 'rgba(244,63,94,0.40)',
-    userBubble: 'from-rose-500 to-purple-500',
-    sendBtn: 'from-rose-500 to-purple-500',
+    bubbleGlow: '0 8px 25px hsl(340 40% 58% / 0.40)',
+    userBubble: 'from-accent to-[hsl(340,40%,45%)]',
+    sendBtn: 'from-accent to-[hsl(340,40%,45%)]',
   },
 } as const
 
-// ─── Storage keys ─────────────────────────────────────────────────────────────
 const KEY_NAME        = 'emilio_name'
 const KEY_CHAT        = 'emilio_chat'
 const KEY_SUMMARY     = 'emilio_summary'
@@ -49,7 +47,6 @@ const KEY_PERSONALITY = 'emilio_personality'
 const COMPACT_THRESHOLD = 20
 const COMPACT_KEEP_LAST  = 6
 
-// ─── State ────────────────────────────────────────────────────────────────────
 const isOpen              = ref(false)
 const userInput           = ref('')
 const messages            = ref<Message[]>([])
@@ -73,12 +70,10 @@ const emilioGradRef     = ref<HTMLElement | null>(null)
 const thaliaGradRef      = ref<HTMLElement | null>(null)
 const pickerRef         = ref<HTMLElement | null>(null)
 
-// ─── Reduced-motion gate ──────────────────────────────────────────────────────
 const mm = gsap.matchMedia()
 let reduceMotion = false
 mm.add('(prefers-reduced-motion: reduce)', () => { reduceMotion = true })
 
-// ─── Panel open/close GSAP hooks ─────────────────────────────────────────────
 function onPanelEnter(el: Element, done: () => void) {
   if (reduceMotion) { done(); return }
   gsap.fromTo(el,
@@ -91,7 +86,6 @@ function onPanelLeave(el: Element, done: () => void) {
   gsap.to(el, { y: 18, opacity: 0, scale: 0.94, duration: 0.22, ease: 'power2.in', onComplete: done })
 }
 
-// ─── Per-message entrance animation ──────────────────────────────────────────
 function animateLastMessage(role: 'user' | 'assistant') {
   if (reduceMotion || !messagesContainer.value) return
   const bubbles = messagesContainer.value.querySelectorAll<HTMLElement>('.msg-bubble')
@@ -103,7 +97,6 @@ function animateLastMessage(role: 'user' | 'assistant') {
   )
 }
 
-// ─── Header stagger on open ───────────────────────────────────────────────────
 function animateHeaderIn() {
   if (reduceMotion || !chatPanelRef.value) return
   const items = chatPanelRef.value.querySelectorAll('.header-item')
@@ -113,7 +106,6 @@ function animateHeaderIn() {
   )
 }
 
-// ─── Personality gradient crossfade ──────────────────────────────────────────
 function applyGradient(id: PersonalityId, animate = true) {
   if (!emilioGradRef.value || !thaliaGradRef.value) return
   const duration = animate && !reduceMotion ? 0.55 : 0
@@ -124,7 +116,6 @@ function applyGradient(id: PersonalityId, animate = true) {
     gsap.to(thaliaGradRef.value,  { opacity: 1, duration, ease: 'power2.inOut' })
     gsap.to(emilioGradRef.value, { opacity: 0, duration, ease: 'power2.inOut' })
   }
-  // Bubble pulse
   if (bubbleRef.value && animate && !reduceMotion) {
     gsap.fromTo(bubbleRef.value, { scale: 1.15 }, { scale: 1, duration: 0.5, ease: 'back.out(2)' })
   }
@@ -137,7 +128,6 @@ function fadeOutGradients(animate = true) {
   gsap.to(thaliaGradRef.value,  { opacity: 0, duration })
 }
 
-// ─── Picker card animations ───────────────────────────────────────────────────
 function animatePickerIn() {
   if (reduceMotion || !pickerRef.value) return
   const cards = pickerRef.value.querySelectorAll('.persona-card')
@@ -155,7 +145,6 @@ async function animatePickerOut() {
   })
 }
 
-// ─── Select personality ───────────────────────────────────────────────────────
 async function selectPersonality(id: PersonalityId) {
   await animatePickerOut()
 
@@ -172,7 +161,6 @@ async function selectPersonality(id: PersonalityId) {
   inputRef.value?.focus()
   scrollToBottom()
 
-  // Inject pending context (from section CTAs opened before picking)
   if (pendingContext.value && !isAskingName.value && !isLoading.value) {
     const ctx = pendingContext.value
     pendingContext.value = null
@@ -180,7 +168,6 @@ async function selectPersonality(id: PersonalityId) {
   }
 }
 
-// ─── System prompts ───────────────────────────────────────────────────────────
 function buildSystemPrompt(summary: string): string {
   const nameSection = userName.value
     ? `El nombre del estudiante con quien hablas es **${userName.value}**. Úsalo con naturalidad.`
@@ -351,7 +338,6 @@ Las **fortalezas personales** (VIA) son recursos naturales que cada persona tien
 - No diagnostiques ni uses etiquetas clínicas para describir al estudiante.`
 }
 
-// ─── LocalStorage helpers ─────────────────────────────────────────────────────
 function loadFromStorage() {
   userName.value = localStorage.getItem(KEY_NAME) ?? ''
 
@@ -402,7 +388,6 @@ function clearAll() {
   })
 }
 
-// ─── Conversation start ───────────────────────────────────────────────────────
 function startConversation() {
   if (!userName.value) {
     isAskingName.value = true
@@ -411,7 +396,6 @@ function startConversation() {
   saveMessages()
 }
 
-// ─── API call ─────────────────────────────────────────────────────────────────
 async function callDeepSeek(msgs: Message[], stream: boolean, onChunk?: (t: string) => void): Promise<string> {
   const apiKey = import.meta.env.VITE_DEEPSEEK_API_KEY
   const summary = loadSummary()
@@ -456,7 +440,6 @@ async function callDeepSeek(msgs: Message[], stream: boolean, onChunk?: (t: stri
   return full
 }
 
-// ─── Auto-compact ─────────────────────────────────────────────────────────────
 async function compactIfNeeded() {
   if (messages.value.length < COMPACT_THRESHOLD) return
 
@@ -480,7 +463,6 @@ async function compactIfNeeded() {
   finally { isCompacting.value = false }
 }
 
-// ─── Inject context from external sections ────────────────────────────────────
 async function injectContext(ctx: string) {
   messages.value.push({ role: 'user', content: ctx })
   saveMessages()
@@ -495,14 +477,13 @@ async function injectContext(ctx: string) {
       (chunk) => { reply.content += chunk; scrollToBottom() }
     )
   } catch {
-    reply.content = 'Hubo un error al conectarme. Por favor intenta de nuevo 🙏'
+    reply.content = 'Hubo un error al conectarme. Por favor intenta de nuevo \u{1F64F}'
   }
   isLoading.value = false
   saveMessages()
   await compactIfNeeded()
 }
 
-// ─── Name extraction ──────────────────────────────────────────────────────────
 function extractName(text: string): string | null {
   const patterns = [
     /me llamo\s+([a-záéíóúñ]+)/i,
@@ -518,7 +499,6 @@ function extractName(text: string): string | null {
       }
     }
   }
-  // Fallback: primera palabra si es corta y no es un saludo común
   const firstWord = text.trim().split(/\s+/)[0]
   const greetings = ['hola', 'buenos', 'buenas', 'hey', 'saludos', 'hi', 'hello', 'que', 'qué', 'como', 'cómo']
   if (firstWord && firstWord.length > 1 && firstWord.length < 15 && !greetings.includes(firstWord.toLowerCase())) {
@@ -527,12 +507,10 @@ function extractName(text: string): string | null {
   return null
 }
 
-// ─── Send message ─────────────────────────────────────────────────────────────
 async function sendMessage() {
   const text = userInput.value.trim()
   if (!text || isLoading.value) return
 
-  // Intentar extraer nombre si aún no lo conocemos
   if (isAskingName.value) {
     const extractedName = extractName(text)
     if (extractedName) {
@@ -557,7 +535,7 @@ async function sendMessage() {
       (chunk) => { reply.content += chunk; scrollToBottom() }
     )
   } catch {
-    reply.content = 'Hubo un error al conectarme. Por favor intenta de nuevo 🙏'
+    reply.content = 'Hubo un error al conectarme. Por favor intenta de nuevo \u{1F64F}'
   }
 
   isLoading.value = false
@@ -565,7 +543,6 @@ async function sendMessage() {
   await compactIfNeeded()
 }
 
-// ─── UI helpers ───────────────────────────────────────────────────────────────
 async function scrollToBottom() {
   await nextTick()
   if (messagesContainer.value) {
@@ -581,10 +558,8 @@ function toggleChat() {
         inputRef.value?.focus()
         animateHeaderIn()
         if (messages.value.length === 0) startConversation()
-        // Restore gradient immediately (no animation, panel just opened)
         nextTick(() => applyGradient(selectedPersonality.value!, false))
       } else {
-        // Show picker
         nextTick(() => animatePickerIn())
       }
     })
@@ -595,7 +570,6 @@ function handleKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() }
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
 onMounted(() => {
   loadFromStorage()
 
@@ -627,7 +601,6 @@ onMounted(() => {
 
     if (contexto) {
       if (!selectedPersonality.value) {
-        // Store for after personality pick
         pendingContext.value = contexto
         return
       }
@@ -658,53 +631,48 @@ watch(isLoading, async (loading) => {
 <template>
   <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
 
-    <!-- ── Panel de chat ──────────────────────────────────────────────────── -->
     <Transition :css="false" @enter="onPanelEnter" @leave="onPanelLeave">
       <div
         v-if="isOpen"
         ref="chatPanelRef"
-        class="w-[340px] sm:w-[380px] h-[540px] bg-white rounded-2xl flex flex-col overflow-hidden border border-blue-100"
-        style="box-shadow: 0 20px 60px rgba(91,141,238,0.25);"
+        class="w-[340px] sm:w-[380px] h-[540px] bg-surface rounded-2xl flex flex-col overflow-hidden border border-border"
+        style="box-shadow: 0 20px 60px hsl(220 80% 64% / 0.15);"
       >
         <!-- Header -->
-        <div class="relative px-4 py-3 flex items-center gap-3 flex-shrink-0 overflow-hidden" style="background-color: #475569;">
-          <!-- Gradient layers — crossfaded by GSAP -->
-          <div ref="emilioGradRef" class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500" style="opacity:0;" />
-          <div ref="thaliaGradRef"  class="absolute inset-0 bg-gradient-to-r from-rose-500 to-purple-500" style="opacity:0;" />
+        <div class="relative px-4 py-3 flex items-center gap-3 flex-shrink-0 overflow-hidden bg-foreground">
+          <div ref="emilioGradRef" class="absolute inset-0 bg-gradient-to-r from-primary to-[hsl(220,80%,45%)]" style="opacity:0;" />
+          <div ref="thaliaGradRef"  class="absolute inset-0 bg-gradient-to-r from-accent to-[hsl(340,40%,45%)]" style="opacity:0;" />
 
-          <!-- Header content -->
           <div class="relative z-10 flex items-center gap-3 w-full">
             <div class="relative header-item flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl select-none transition-all duration-300">
-                {{ selectedPersonality ? currentPersona.emoji : '💬' }}
+              <div class="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-xl select-none transition-all duration-300">
+                {{ selectedPersonality ? currentPersona.emoji : '\u{1F4AC}' }}
               </div>
-              <span v-if="selectedPersonality" class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+              <span v-if="selectedPersonality" class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-primary-foreground rounded-full"></span>
             </div>
             <div class="flex-1 min-w-0 header-item">
-              <p class="text-white font-semibold text-sm leading-tight">
+              <p class="text-primary-foreground font-semibold text-sm leading-tight">
                 {{ selectedPersonality
                   ? `${currentPersona.name}${userName ? ` · hola, ${userName}` : ''}`
                   : 'Asistente emocional' }}
               </p>
-              <p class="text-white/70 text-xs">
+              <p class="text-primary-foreground/70 text-xs">
                 {{ selectedPersonality ? currentPersona.tagline : 'Elige tu acompañante' }}
               </p>
             </div>
-            <!-- Clear -->
             <button
               @click="clearAll"
               title="Nueva conversación"
-              class="header-item w-7 h-7 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center text-white transition-colors mr-1"
+              class="header-item w-7 h-7 rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/30 flex items-center justify-center text-primary-foreground transition-colors mr-1"
               aria-label="Nueva conversación"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582M20 20v-5h-.581M4.582 9A8 8 0 0120 15M19.418 15A8 8 0 014 9" />
               </svg>
             </button>
-            <!-- Close -->
             <button
               @click="toggleChat"
-              class="header-item w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+              class="header-item w-7 h-7 rounded-full bg-primary-foreground/20 hover:bg-primary-foreground/30 flex items-center justify-center text-primary-foreground transition-colors"
               aria-label="Cerrar chat"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -714,28 +682,28 @@ watch(isLoading, async (loading) => {
           </div>
         </div>
 
-        <!-- ── Personality Picker ────────────────────────────────────────── -->
+        <!-- Personality Picker -->
         <div
           v-if="!selectedPersonality"
           ref="pickerRef"
-          class="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white overflow-y-auto"
+          class="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-background to-surface overflow-y-auto"
         >
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-400 to-slate-600 flex items-center justify-center text-2xl mb-5 shadow-md select-none">💬</div>
-          <h3 class="text-base font-bold text-gray-800 mb-1 text-center">¿Con quién quieres hablar hoy?</h3>
-          <p class="text-xs text-gray-500 text-center mb-7 max-w-[220px] leading-relaxed">Elige tu acompañante emocional. Puedes cambiar en cualquier momento.</p>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-muted-foreground to-foreground flex items-center justify-center text-2xl mb-5 shadow-md select-none">\u{1F4AC}</div>
+          <h3 class="text-base font-bold text-foreground mb-1 text-center">¿Con quién quieres hablar hoy?</h3>
+          <p class="text-xs text-muted-foreground text-center mb-7 max-w-[220px] leading-relaxed">Elige tu acompañante emocional. Puedes cambiar en cualquier momento.</p>
 
           <div class="w-full space-y-3">
             <!-- Emilio card -->
             <button
               @click="selectPersonality('emilio')"
-              class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-gray-100 bg-white p-4 text-left hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
+              class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-primary/50 hover:bg-primary/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🧠</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">\u{1F9E0}</div>
               <div class="flex-1 min-w-0">
-                <p class="font-bold text-gray-800 text-sm">Emilio</p>
-                <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">Analítico · Técnicas CBT · Regulación emocional</p>
+                <p class="font-bold text-foreground text-sm">Emilio</p>
+                <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Analítico · Técnicas CBT · Regulación emocional</p>
               </div>
-              <svg class="w-4 h-4 text-gray-300 group-hover:text-blue-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <svg class="w-4 h-4 text-muted-foreground/50 group-hover:text-primary transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -743,54 +711,50 @@ watch(isLoading, async (loading) => {
             <!-- Thalía card -->
             <button
               @click="selectPersonality('thalia')"
-              class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-gray-100 bg-white p-4 text-left hover:border-rose-300 hover:bg-rose-50/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
+              class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-accent/50 hover:bg-accent/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-400 to-purple-500 flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🌸</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">\u{1F338}</div>
               <div class="flex-1 min-w-0">
-                <p class="font-bold text-gray-800 text-sm">Thalía</p>
-                <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">Cálida · Psicología positiva · Fortalezas</p>
+                <p class="font-bold text-foreground text-sm">Thalía</p>
+                <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Cálida · Psicología positiva · Fortalezas</p>
               </div>
-              <svg class="w-4 h-4 text-gray-300 group-hover:text-rose-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <svg class="w-4 h-4 text-muted-foreground/50 group-hover:text-accent transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
 
-          <p class="mt-6 text-[10px] text-gray-300 text-center">Tus conversaciones se guardan solo en este dispositivo</p>
+          <p class="mt-6 text-[10px] text-muted-foreground/40 text-center">Tus conversaciones se guardan solo en este dispositivo</p>
         </div>
 
-        <!-- ── Chat activo ───────────────────────────────────────────────── -->
+        <!-- Chat activo -->
         <template v-else>
-          <!-- Banner "conversación guardada" -->
           <Transition enter-active-class="transition-all duration-300" enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0">
-            <div v-if="hasSavedChat && messages.length > 0" class="flex items-center gap-2 px-4 py-1.5 bg-blue-50 border-b border-blue-100 flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div v-if="hasSavedChat && messages.length > 0" class="flex items-center gap-2 px-4 py-1.5 bg-primary/10 border-b border-primary/15 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-              <p class="text-[10px] text-blue-500 font-medium">Retomando tu conversación anterior</p>
+              <p class="text-[10px] text-primary font-medium">Retomando tu conversación anterior</p>
             </div>
           </Transition>
 
-          <!-- Compacting indicator -->
-          <div v-if="isCompacting" class="flex items-center gap-2 px-4 py-1.5 bg-amber-50 border-b border-amber-100 flex-shrink-0">
-            <div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-            <p class="text-[10px] text-amber-600">Guardando resumen de la conversación…</p>
+          <div v-if="isCompacting" class="flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border-b border-secondary/15 flex-shrink-0">
+            <div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+            <p class="text-[10px] text-secondary">Guardando resumen de la conversación…</p>
           </div>
 
-          <!-- Mensajes -->
-          <div ref="messagesContainer" class="flex-1 overflow-y-auto bg-gradient-to-b from-slate-50/40 to-white">
-            <!-- Estado vacío -->
+          <div ref="messagesContainer" class="flex-1 overflow-y-auto bg-gradient-to-b from-background to-surface">
             <div v-if="messages.length === 0" class="h-full flex flex-col items-center justify-center px-4 text-center">
               <div
                 class="w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3 select-none shadow-sm"
                 :class="selectedPersonality === 'thalia'
-                  ? 'bg-gradient-to-br from-rose-400 to-purple-500'
-                  : 'bg-gradient-to-br from-blue-400 to-indigo-500'"
+                  ? 'bg-gradient-to-br from-accent to-[hsl(340,40%,50%)]'
+                  : 'bg-gradient-to-br from-primary to-[hsl(220,80%,50%)]'"
               >{{ currentPersona.emoji }}</div>
-              <p class="text-sm font-semibold text-gray-700 mb-1">
+              <p class="text-sm font-semibold text-foreground mb-1">
                 {{ isAskingName ? `¡Hola! Soy ${currentPersona.name}` : (userName ? `Hola, ${userName}` : 'Hola') }}
               </p>
-              <p class="text-xs text-gray-400 max-w-[200px] leading-relaxed">
+              <p class="text-xs text-muted-foreground max-w-[200px] leading-relaxed">
                 {{ isAskingName
                   ? '¿Cómo te llamas? Escríbelo abajo y presiona Enter.'
                   : `Escríbele algo a ${currentPersona.name} para comenzar la conversación.` }}
@@ -807,16 +771,16 @@ watch(isLoading, async (loading) => {
                 v-if="msg.role === 'assistant'"
                 class="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0 mt-1 select-none"
                 :class="selectedPersonality === 'thalia'
-                  ? 'bg-gradient-to-br from-rose-400 to-purple-500'
-                  : 'bg-gradient-to-br from-blue-400 to-indigo-500'"
+                  ? 'bg-gradient-to-br from-accent to-[hsl(340,40%,50%)]'
+                  : 'bg-gradient-to-br from-primary to-[hsl(220,80%,50%)]'"
               >{{ currentPersona.emoji }}</div>
 
               <div
                 :class="[
                   'max-w-[78%] px-3 py-2 rounded-2xl text-sm leading-relaxed',
                   msg.role === 'user'
-                    ? `bg-gradient-to-br ${currentPersona.userBubble} text-white rounded-br-sm`
-                    : 'bg-white text-gray-700 shadow-sm border border-gray-100 rounded-bl-sm',
+                    ? `bg-gradient-to-br ${currentPersona.userBubble} text-primary-foreground rounded-br-sm`
+                    : 'bg-surface text-foreground shadow-sm border border-border rounded-bl-sm',
                 ]"
               >
                 <span v-if="msg.role === 'user'">{{ msg.content }}</span>
@@ -825,13 +789,13 @@ watch(isLoading, async (loading) => {
                 </template>
                 <span v-else class="flex gap-1 items-center h-4 px-1">
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:0ms"></span>
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:150ms"></span>
                   <span class="w-1.5 h-1.5 rounded-full animate-bounce"
-                    :class="selectedPersonality === 'thalia' ? 'bg-rose-400' : 'bg-blue-400'"
+                    :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:300ms"></span>
                 </span>
               </div>
@@ -840,9 +804,9 @@ watch(isLoading, async (loading) => {
           </div>
 
           <!-- Input -->
-          <div class="px-3 pb-3 pt-2 border-t border-gray-100 bg-white flex-shrink-0">
-            <div class="flex gap-2 items-center bg-gray-50 rounded-xl border border-gray-200 px-3 py-2 focus-within:border-blue-400 transition-colors"
-              :class="selectedPersonality === 'thalia' ? 'focus-within:!border-rose-400' : 'focus-within:border-blue-400'"
+          <div class="px-3 pb-3 pt-2 border-t border-border bg-surface flex-shrink-0">
+            <div class="flex gap-2 items-center bg-muted rounded-xl border border-border px-3 py-2 focus-within:border-primary transition-colors"
+              :class="selectedPersonality === 'thalia' ? 'focus-within:!border-accent' : 'focus-within:border-primary'"
             >
               <input
                 ref="inputRef"
@@ -851,13 +815,13 @@ watch(isLoading, async (loading) => {
                 type="text"
                 :placeholder="isAskingName ? 'Escribe tu nombre…' : (messages.length === 0 ? 'Escribe algo para comenzar…' : 'Cuéntame cómo te sientes…')"
                 :disabled="isLoading"
-                class="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none disabled:opacity-50"
+                class="flex-1 bg-transparent text-sm text-foreground placeholder-muted-foreground outline-none disabled:opacity-50"
               />
               <button
                 @click="sendMessage"
                 :disabled="!userInput.trim() || isLoading"
                 :class="[
-                  'w-8 h-8 rounded-lg flex items-center justify-center text-white flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95',
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-primary-foreground flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95',
                   `bg-gradient-to-br ${currentPersona.sendBtn} hover:brightness-110`,
                 ]"
                 aria-label="Enviar"
@@ -867,24 +831,23 @@ watch(isLoading, async (loading) => {
                 </svg>
               </button>
             </div>
-            <p class="text-center text-[10px] text-gray-300 mt-1.5">Powered by DeepSeek AI · Tu conversación se guarda localmente</p>
+            <p class="text-center text-[10px] text-muted-foreground/40 mt-1.5">Powered by DeepSeek AI · Tu conversación se guarda localmente</p>
           </div>
         </template>
       </div>
     </Transition>
 
-    <!-- ── Botón burbuja ──────────────────────────────────────────────────── -->
+    <!-- Bubble button -->
     <button
       ref="bubbleRef"
       @click="toggleChat"
       :aria-label="isOpen ? 'Cerrar chat emocional' : 'Abrir chat emocional'"
       class="w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 active:scale-95 relative overflow-hidden"
-      :style="{ boxShadow: `0 8px 25px ${currentPersona.bubbleGlow}` }"
+      :style="{ boxShadow: currentPersona.bubbleGlow }"
     >
-      <!-- Gradient layers for bubble -->
-      <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-500 transition-opacity duration-500"
+      <div class="absolute inset-0 bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] transition-opacity duration-500"
         :style="{ opacity: selectedPersonality === 'thalia' ? 0 : 1 }" />
-      <div class="absolute inset-0 bg-gradient-to-br from-rose-500 to-purple-500 transition-opacity duration-500"
+      <div class="absolute inset-0 bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] transition-opacity duration-500"
         :style="{ opacity: selectedPersonality === 'thalia' ? 1 : 0 }" />
 
       <div class="relative z-10">
@@ -898,9 +861,9 @@ watch(isLoading, async (loading) => {
           mode="out-in"
         >
           <span v-if="!isOpen" key="open" class="select-none">
-            {{ selectedPersonality ? currentPersona.emoji : '💬' }}
+            {{ selectedPersonality ? currentPersona.emoji : '\u{1F4AC}' }}
           </span>
-          <svg v-else key="close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <svg v-else key="close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </Transition>
@@ -915,10 +878,10 @@ watch(isLoading, async (loading) => {
     >
       <div
         v-if="!isOpen && messages.length === 0"
-        class="absolute right-16 bottom-3 bg-white text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-gray-100 whitespace-nowrap pointer-events-none"
+        class="absolute right-16 bottom-3 bg-surface text-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap pointer-events-none"
       >
-        ¡Habla conmigo! 💬
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1.5 w-2.5 h-2.5 bg-white border-r border-t border-gray-100 rotate-45"></div>
+        ¡Habla conmigo! \u{1F4AC}
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1.5 w-2.5 h-2.5 bg-surface border-r border-t border-border rotate-45"></div>
       </div>
     </Transition>
   </div>
@@ -930,26 +893,26 @@ watch(isLoading, async (loading) => {
   line-height: 1.55;
 }
 .chat-md :deep(p:last-child) { margin-bottom: 0; }
-.chat-md :deep(strong) { font-weight: 700; color: #1e40af; }
-.chat-md :deep(em) { font-style: italic; color: #4b5563; }
+.chat-md :deep(strong) { font-weight: 700; color: hsl(var(--primary)); }
+.chat-md :deep(em) { font-style: italic; color: hsl(var(--muted-foreground)); }
 
 .chat-md :deep(ul) {
   list-style: none; margin: 0.4em 0; padding: 0;
   display: flex; flex-direction: column; gap: 0.3em;
 }
 .chat-md :deep(ul li) { display: flex; align-items: flex-start; gap: 0.4em; line-height: 1.5; }
-.chat-md :deep(ul li)::before { content: "›"; color: #6366f1; font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+.chat-md :deep(ul li)::before { content: "\203A"; color: hsl(var(--primary)); font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
 
 .chat-md :deep(ol) {
   counter-reset: chat-ol; margin: 0.4em 0; padding: 0;
   display: flex; flex-direction: column; gap: 0.3em;
 }
 .chat-md :deep(ol li) { display: flex; align-items: flex-start; gap: 0.5em; line-height: 1.5; counter-increment: chat-ol; }
-.chat-md :deep(ol li)::before { content: counter(chat-ol) "."; color: #6366f1; font-weight: 700; flex-shrink: 0; min-width: 1.1em; }
+.chat-md :deep(ol li)::before { content: counter(chat-ol) "."; color: hsl(var(--primary)); font-weight: 700; flex-shrink: 0; min-width: 1.1em; }
 
-.chat-md :deep(code) { background: #f0f4ff; color: #3730a3; border-radius: 4px; padding: 0.1em 0.35em; font-size: 0.85em; font-family: monospace; }
-.chat-md :deep(blockquote) { border-left: 3px solid #818cf8; margin: 0.5em 0; padding: 0.3em 0.75em; background: #f5f3ff; border-radius: 0 8px 8px 0; color: #4b5563; font-style: italic; }
-.chat-md :deep(hr) { border: none; border-top: 1px solid #e5e7eb; margin: 0.6em 0; }
-.chat-md :deep(h3), .chat-md :deep(h4) { font-weight: 700; color: #1e3a8a; margin: 0.5em 0 0.25em; font-size: 0.95em; }
-.chat-md :deep(a) { color: #4f46e5; text-decoration: underline; text-underline-offset: 2px; }
+.chat-md :deep(code) { background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); border-radius: 4px; padding: 0.1em 0.35em; font-size: 0.85em; font-family: monospace; }
+.chat-md :deep(blockquote) { border-left: 3px solid hsl(var(--primary) / 0.6); margin: 0.5em 0; padding: 0.3em 0.75em; background: hsl(var(--accent) / 0.12); border-radius: 0 8px 8px 0; color: hsl(var(--muted-foreground)); font-style: italic; }
+.chat-md :deep(hr) { border: none; border-top: 1px solid hsl(var(--border)); margin: 0.6em 0; }
+.chat-md :deep(h3), .chat-md :deep(h4) { font-weight: 700; color: hsl(var(--foreground)); margin: 0.5em 0 0.25em; font-size: 0.95em; }
+.chat-md :deep(a) { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 2px; }
 </style>

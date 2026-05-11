@@ -140,13 +140,19 @@ const opcionElegida = computed(() =>
 );
 const esUltima = computed(() => currentIndex.value === situaciones.length - 1);
 
+// Color choices are intentional:
+// - asertiva → primary (confident, the correct path)
+// - pasiva   → secondary (warm orange, not negative — passive isn't 'bad', just incomplete)
+// - agresiva → crisis warm coral (warning without alarm-red. Per the emotion-safe principle,
+//              we never use destructive cool-red for emotional content; that hue is reserved
+//              for form errors elsewhere.)
 const tipoStyle: Record<
   TipoRespuesta,
   { color: string; label: string; bgHex: string }
 > = {
-  asertiva: { color: "#5B8DEE", label: "Respuesta asertiva ✓", bgHex: "0D" },
-  pasiva: { color: "#F4A259", label: "Respuesta pasiva", bgHex: "15" },
-  agresiva: { color: "#E53E3E", label: "Respuesta agresiva", bgHex: "12" },
+  asertiva: { color: "#5B8DEE", label: "Respuesta asertiva ✓", bgHex: "12" },
+  pasiva:   { color: "#F4A259", label: "Respuesta pasiva",     bgHex: "15" },
+  agresiva: { color: "#C2735A", label: "Respuesta agresiva",   bgHex: "14" },
 };
 
 function elegir(i: number) {
@@ -216,8 +222,8 @@ function reiniciar() {
 </script>
 
 <template>
-  <div class="mt-5 rounded-2xl border border-[#5B8DEE]/20 bg-white/70 p-5">
-    <p class="text-xs font-semibold text-[#5B8DEE] uppercase tracking-wide mb-4">
+  <div class="mt-5 rounded-2xl border border-primary/20 bg-surface/85 p-5">
+    <p class="text-xs font-semibold text-primary uppercase tracking-wide mb-4">
       <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Performing%20arts/3D/performing_arts_3d.png`" alt="Simulador" />
       Simulador · Comunicación asertiva
     </p>
@@ -244,10 +250,10 @@ function reiniciar() {
           alt="Sigue practicando"
         />
       </div>
-      <p class="text-xl font-bold text-[#2D3748] mb-2">
+      <p class="text-xl font-bold text-foreground mb-2">
         {{ asertivas }}/{{ situaciones.length }} respuestas asertivas
       </p>
-      <p class="text-sm text-[#718096] mb-5 max-w-xs mx-auto">
+      <p class="text-sm text-muted-foreground mb-5 max-w-xs mx-auto">
         {{
           asertivas === situaciones.length
             ? "¡Excelente dominio de la comunicación asertiva!"
@@ -258,8 +264,7 @@ function reiniciar() {
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
         <button
-          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#5B8DEE]"
-          style="background-color: #5b8dee"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground shadow-soft motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           @click="reiniciar"
         >
           <RotateCcw class="h-4 w-4" />
@@ -267,7 +272,7 @@ function reiniciar() {
         </button>
         <button
           @click="hablarConEmilio"
-          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <BotMessageSquare class="h-4 w-4" />
           Seguir practicando con Emilio
@@ -277,45 +282,44 @@ function reiniciar() {
 
     <!-- Simulador activo -->
     <template v-else>
-      <!-- Barra de progreso -->
+      <!-- Progreso -->
       <div class="flex items-center gap-1.5 mb-4">
         <div
           v-for="(_, i) in situaciones"
           :key="i"
           class="h-1.5 flex-1 rounded-full transition-[background-color] duration-300"
-          :style="{
-            backgroundColor:
-              i < currentIndex
-                ? '#5B8DEE'
-                : i === currentIndex
-                  ? '#5B8DEE80'
-                  : '#E2E8F0',
-          }"
+          :class="
+            i < currentIndex
+              ? 'bg-primary'
+              : i === currentIndex
+                ? 'bg-primary/50'
+                : 'bg-border'
+          "
         />
-        <span class="ml-2 text-xs text-[#A0AEC0] font-medium tabular-nums">
+        <span class="ml-2 text-xs text-muted-foreground/70 font-medium tabular-nums">
           {{ currentIndex + 1 }}/{{ situaciones.length }}
         </span>
       </div>
 
       <!-- Situación -->
-      <div class="rounded-xl bg-[#F5F0E8] p-4 mb-4">
+      <div class="rounded-xl bg-surface-warm p-4 mb-4">
         <p
-          class="text-xs font-semibold text-[#718096] uppercase tracking-wide mb-1.5"
+          class="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5"
         >
           Situación
         </p>
-        <p class="text-sm text-[#2D3748] font-medium leading-relaxed">
+        <p class="text-sm text-foreground font-medium leading-relaxed">
           {{ situacion.situacion }}
         </p>
       </div>
 
       <!-- Opciones -->
-      <p class="text-xs text-[#718096] mb-2.5">¿Cómo respondes?</p>
+      <p class="text-xs text-muted-foreground mb-2.5">¿Cómo respondes?</p>
       <div class="space-y-2">
         <button
           v-for="(opcion, i) in situacion.opciones"
           :key="i"
-          class="sim-opcion w-full text-left rounded-xl border-2 p-3 text-sm transition-[border-color,background-color,color,opacity] duration-200 leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#5B8DEE]/50"
+          class="sim-opcion w-full text-left rounded-xl border-2 p-3 text-sm transition-[border-color,background-color,color,opacity] duration-200 leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-ring"
           :style="
             seleccion === i
               ? {
@@ -323,21 +327,20 @@ function reiniciar() {
                   backgroundColor:
                     tipoStyle[opcion.tipo].color +
                     tipoStyle[opcion.tipo].bgHex,
-                  color: '#2D3748',
                 }
-              : seleccion !== null
-                ? { borderColor: '#F0F0F0', color: '#A0AEC0', opacity: '0.65' }
-                : {}
+              : {}
           "
-          :class="
+          :class="[
             seleccion === null
-              ? 'border-gray-200 hover:border-[#5B8DEE]/40 hover:bg-[#5B8DEE]/5 text-[#4A5568]'
-              : ''
-          "
+              ? 'border-border hover:border-primary/40 hover:bg-primary/5 text-foreground/80'
+              : seleccion === i
+                ? 'text-foreground'
+                : 'border-border/40 text-muted-foreground/60 opacity-70',
+          ]"
           :disabled="seleccion !== null"
           @click="elegir(i)"
         >
-          <span class="font-bold mr-1.5" style="color: #a0aec0">{{
+          <span class="font-bold mr-1.5 text-muted-foreground/70">{{
             String.fromCharCode(65 + i) }}.
           </span>{{ opcion.texto }}
         </button>
@@ -362,21 +365,18 @@ function reiniciar() {
             >
               {{ tipoStyle[opcionElegida.tipo].label }}
             </p>
-            <p class="text-sm text-[#4A5568] leading-relaxed">
+            <p class="text-sm text-foreground/80 leading-relaxed">
               {{ opcionElegida.feedback }}
             </p>
           </div>
 
           <!-- Aprendizaje -->
-          <div
-            class="rounded-xl p-3"
-            style="background-color: #5b8dee10; border: 1px solid #5b8dee25"
-          >
-            <p class="text-xs font-semibold text-[#5B8DEE] mb-1">
-              <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Light%20bulb/3D/light_bulb_3d.png`" alt="Consejo" />
+          <div class="rounded-xl p-3 bg-primary/[0.06] border border-primary/15">
+            <p class="text-xs font-semibold text-primary mb-1">
+              <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Light%20bulb/3D/light_bulb_3d.png`" alt="" />
               Para recordar
             </p>
-            <p class="text-xs text-[#4A5568] leading-relaxed">
+            <p class="text-xs text-foreground/80 leading-relaxed">
               {{ situacion.aprendizaje }}
             </p>
           </div>
@@ -384,8 +384,7 @@ function reiniciar() {
           <!-- Botón siguiente -->
           <div class="flex justify-end">
             <button
-              class="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#5B8DEE]"
-              style="background-color: #5b8dee"
+              class="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground shadow-soft motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring"
               @click="siguiente"
             >
               {{ esUltima ? "Ver resultado" : "Siguiente situación" }}

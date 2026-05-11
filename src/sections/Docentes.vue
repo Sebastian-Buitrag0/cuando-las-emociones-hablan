@@ -30,7 +30,7 @@ const estrategias = [
       'Pregunta del día: "¿Cómo te sientes en una palabra?"',
       "Respiración grupal (3 respiraciones profundas).",
     ],
-    color: "#5B8DEE",
+    color: "hsl(var(--primary))",
   },
   {
     icon: Target,
@@ -44,7 +44,7 @@ const estrategias = [
       "Ejercicios de respiración coordinada.",
       "Juegos rápidos de atención plena.",
     ],
-    color: "#81E6D9",
+    color: "hsl(var(--calm))",
   },
   {
     icon: HeartHandshake,
@@ -57,7 +57,7 @@ const estrategias = [
       "Objeto que da la palabra (solo quien lo tiene habla).",
       "Tema abierto o pregunta guía.",
     ],
-    color: "#BC6C8A",
+    color: "hsl(var(--accent))",
   },
   {
     icon: BrainCircuit,
@@ -70,7 +70,7 @@ const estrategias = [
       "Materiales: cojines, libros, crayolas.",
       "Reglas claras de uso (tiempo, cantidad de personas).",
     ],
-    color: "#F4A259",
+    color: "hsl(var(--secondary))",
   },
 ];
 
@@ -127,11 +127,11 @@ const recursos = [
 </script>
 
 <template>
-  <section id="docentes" class="py-20 lg:py-32 relative bg-[#FEFBF7] scroll-mt-24">
-    <div class="absolute inset-0 z-0 opacity-[0.03]">
+  <section id="docentes" class="py-20 lg:py-32 relative bg-background scroll-mt-24">
+    <div class="absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
       <img
         :src="bgDocentes"
-        alt="Estudiantes viendo video educativo"
+        alt=""
         class="w-full h-full object-cover grayscale"
       />
     </div>
@@ -142,26 +142,23 @@ const recursos = [
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-        class="text-center mb-12"
+        class="text-center mb-12 max-w-3xl mx-auto"
       >
         <span
-          class="inline-block px-4 py-2 rounded-full bg-[#F4A259]/10 text-[#F4A259] text-sm font-semibold mb-4"
+          class="inline-block px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold uppercase tracking-wider mb-5"
         >
-          Para Educadores
+          Para educadores
         </span>
         <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6"
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
+          style="text-wrap: balance"
         >
-          Estrategias para&nbsp;
-          <span
-            class="bg-gradient-to-r from-[#F4A259] to-[#5B8DEE] bg-clip-text text-transparent"
-          >
-            Docentes
-          </span>
+          Estrategias para
+          <span class="text-secondary">docentes</span>.
         </h2>
-        <p class="text-lg text-[#718096] max-w-2xl mx-auto">
-          Herramientas prácticas para integrar el desarrollo socioemocional en
-          tu práctica diaria de aula.
+        <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
+          Herramientas prácticas para integrar el desarrollo socioemocional en tu
+          práctica diaria de aula.
         </p>
       </div>
 
@@ -177,10 +174,10 @@ const recursos = [
         class="mb-16"
       >
         <h3
-          class="text-2xl font-bold text-[#2D3748] mb-8 flex items-center gap-3"
+          class="text-2xl font-bold text-foreground mb-8 flex items-center gap-3"
         >
-          <GraduationCap class="w-8 h-8 text-[#5B8DEE]" />
-          Estrategias de Aula
+          <GraduationCap class="w-7 h-7 text-primary" />
+          Estrategias de aula
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div
@@ -195,13 +192,13 @@ const recursos = [
             }"
           >
             <AppCard
-              class="h-full bg-white rounded-2xl shadow-soft hover:shadow-hover transition-all duration-300 border-none overflow-hidden group"
+              class="h-full bg-surface rounded-2xl shadow-soft hover:shadow-lift motion-safe:hover:-translate-y-1 transition-[transform,box-shadow] duration-300 border border-border/60 overflow-hidden group"
             >
               <AppCardHeader class="pb-4">
                 <div class="flex items-start justify-between">
                   <div
-                    class="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"
-                    :style="{ backgroundColor: estrategia.color + '15' }"
+                    class="w-12 h-12 rounded-xl flex items-center justify-center motion-safe:group-hover:scale-105 transition-transform"
+                    :style="{ backgroundColor: `color-mix(in srgb, ${estrategia.color} 9%, transparent)` }"
                   >
                     <component
                       :is="estrategia.icon"
@@ -213,35 +210,35 @@ const recursos = [
                     variant="secondary"
                     class="rounded-full"
                     :style="{
-                      backgroundColor: estrategia.color + '15',
+                      backgroundColor: `color-mix(in srgb, ${estrategia.color} 8%, transparent)`,
                       color: estrategia.color,
                     }"
                   >
                     {{ estrategia.duracion }}
                   </AppBadge>
                 </div>
-                <AppCardTitle class="text-lg font-bold text-[#2D3748] mt-4">{{
+                <AppCardTitle class="text-lg font-bold text-foreground mt-4">{{
                   estrategia.title
                 }}</AppCardTitle>
               </AppCardHeader>
               <AppCardContent>
-                <p class="text-[#718096] text-sm mb-3">
+                <p class="text-muted-foreground text-sm mb-3 leading-relaxed">
                   {{ estrategia.descripcion }}
                 </p>
-                <div class="rounded-xl p-3 mb-3" :style="{ backgroundColor: estrategia.color + '10' }">
-                  <p class="text-[10px] font-bold uppercase tracking-wider mb-1" :style="{ color: estrategia.color }">Úsala cuando…</p>
-                  <p class="text-xs text-[#4A5568] leading-relaxed">{{ estrategia.cuando }}</p>
+                <div class="rounded-xl p-3.5 mb-3" :style="{ backgroundColor: `color-mix(in srgb, ${estrategia.color} 6%, transparent)` }">
+                  <p class="text-[10px] font-bold uppercase tracking-wider mb-1.5" :style="{ color: estrategia.color }">Úsala cuando…</p>
+                  <p class="text-xs text-foreground/75 leading-relaxed">{{ estrategia.cuando }}</p>
                 </div>
                 <div class="space-y-2">
-                  <p class="text-xs font-semibold text-[#2D3748]">Pasos:</p>
-                  <ol class="space-y-1">
+                  <p class="text-xs font-semibold text-foreground">Pasos</p>
+                  <ol class="space-y-1.5">
                     <li
                       v-for="(paso, i) in estrategia.pasos"
                       :key="i"
-                      class="text-sm text-[#718096] flex items-start gap-2"
+                      class="text-sm text-muted-foreground flex items-start gap-2 leading-relaxed"
                     >
                       <span
-                        class="font-semibold"
+                        class="font-semibold tabular-nums"
                         :style="{ color: estrategia.color }"
                         >{{ i + 1 }}.</span
                       >
@@ -267,17 +264,17 @@ const recursos = [
         class="mb-16"
       >
         <h3
-          class="text-2xl font-bold text-[#2D3748] mb-8 flex items-center gap-3"
+          class="text-2xl font-bold text-foreground mb-8 flex items-center gap-3"
         >
-          <Users class="w-8 h-8 text-[#BC6C8A]" />
-          Actividades Socioemocionales
+          <Users class="w-7 h-7 text-accent" />
+          Actividades socioemocionales
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="(actividad, index) in actividades"
             :key="actividad.titulo"
             v-motion
-            :initial="{ opacity: 0, scale: 0.9 }"
+            :initial="{ opacity: 0, scale: 0.95 }"
             :visibleOnce="{
               opacity: 1,
               scale: 1,
@@ -285,23 +282,23 @@ const recursos = [
             }"
           >
             <AppCard
-              class="h-full bg-white rounded-2xl shadow-soft hover:shadow-hover transition-all duration-300 border-none"
+              class="h-full bg-surface rounded-2xl shadow-soft hover:shadow-lift motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 border border-border/60"
             >
               <AppCardHeader class="pb-3">
-                <AppCardTitle class="text-base font-bold text-[#2D3748]">{{
+                <AppCardTitle class="text-base font-bold text-foreground">{{
                   actividad.titulo
                 }}</AppCardTitle>
               </AppCardHeader>
               <AppCardContent class="space-y-3">
-                <p class="text-sm text-[#718096]">
+                <p class="text-sm text-muted-foreground leading-relaxed">
                   {{ actividad.descripcion }}
                 </p>
-                <div class="pt-3 border-t border-gray-100 space-y-1">
-                  <p class="text-xs text-[#718096]">
-                    <strong>Materiales:</strong> {{ actividad.materiales }}
+                <div class="pt-3 border-t border-border/60 space-y-1">
+                  <p class="text-xs text-muted-foreground">
+                    <strong class="text-foreground/75">Materiales:</strong> {{ actividad.materiales }}
                   </p>
-                  <p class="text-xs text-[#718096]">
-                    <strong>Tiempo:</strong> {{ actividad.tiempo }}
+                  <p class="text-xs text-muted-foreground">
+                    <strong class="text-foreground/75">Tiempo:</strong> {{ actividad.tiempo }}
                   </p>
                 </div>
               </AppCardContent>
@@ -324,23 +321,23 @@ const recursos = [
         <div
           v-for="recurso in recursos"
           :key="recurso.titulo"
-          class="bg-white rounded-2xl p-6 shadow-soft"
+          class="bg-surface rounded-2xl p-6 shadow-soft border border-border/60"
         >
           <div class="flex items-center gap-3 mb-4">
             <div
-              class="w-10 h-10 rounded-xl bg-[#F4A259]/15 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-secondary/15 flex items-center justify-center"
             >
-              <component :is="recurso.icon" class="w-5 h-5 text-[#F4A259]" />
+              <component :is="recurso.icon" class="w-5 h-5 text-secondary" />
             </div>
-            <h4 class="font-bold text-[#2D3748]">{{ recurso.titulo }}</h4>
+            <h4 class="font-bold text-foreground">{{ recurso.titulo }}</h4>
           </div>
           <ul class="space-y-2">
             <li
               v-for="(item, i) in recurso.items"
               :key="i"
-              class="text-sm text-[#718096] flex items-center gap-2"
+              class="text-sm text-muted-foreground flex items-center gap-2.5 leading-relaxed"
             >
-              <div class="w-1.5 h-1.5 rounded-full bg-[#F4A259]" />
+              <div class="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
               {{ item }}
             </li>
           </ul>
@@ -356,15 +353,15 @@ const recursos = [
           y: 0,
           transition: { duration: 800, delay: 800 },
         }"
-        class="mt-16 text-center"
+        class="mt-16 text-center max-w-3xl mx-auto"
       >
-        <div class="bg-[#5B8DEE]/5 rounded-2xl p-8">
-          <p class="text-lg text-[#2D3748] italic">
-            "El mejor regalo que puedes dar a tus estudiantes no es solo
-            conocimiento, sino también las herramientas para gestionar sus
-            emociones y construir relaciones saludables."
-          </p>
-        </div>
+        <figure class="rounded-3xl p-8 sm:p-10 bg-primary/[0.05] border border-primary/15">
+          <blockquote class="text-lg sm:text-xl text-foreground italic leading-relaxed" style="text-wrap: balance">
+            El mejor regalo que puedes darle a tus estudiantes no es solo conocimiento;
+            son también las herramientas para gestionar sus emociones y construir
+            relaciones saludables.
+          </blockquote>
+        </figure>
       </div>
 
       <!-- Funciones del proyecto y marco legal -->
@@ -376,67 +373,55 @@ const recursos = [
           y: 0,
           transition: { duration: 800, delay: 900 },
         }"
-        class="mt-12 rounded-3xl border border-[#F4A259]/20 bg-gradient-to-br from-[#FEFBF7] to-white p-6 sm:p-8"
+        class="mt-12 rounded-3xl border border-border/60 bg-surface-warm/60 p-6 sm:p-8"
       >
         <p
-          class="text-xs font-semibold text-[#F4A259] uppercase tracking-wide mb-2 text-center"
+          class="text-[10px] font-bold text-secondary uppercase tracking-wider mb-2 text-center"
         >
           Sobre este proyecto
         </p>
-        <h3 class="text-xl font-bold text-[#2D3748] text-center mb-6">
+        <h3 class="text-xl font-bold text-foreground text-center mb-7" style="text-wrap: balance">
           Una herramienta con 4 funciones clave
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
-            <div
-              class="w-12 h-12 rounded-2xl bg-[#5B8DEE]/10 flex items-center justify-center mx-auto mb-3"
-            >
-              <BookOpen class="w-6 h-6 text-[#5B8DEE]" />
+          <div class="rounded-2xl bg-surface p-5 shadow-soft border border-border/40 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+              <BookOpen class="w-6 h-6 text-primary" />
             </div>
-            <p class="font-semibold text-[#2D3748] text-sm mb-1">Educativa</p>
-            <p class="text-xs text-[#718096] leading-relaxed">
+            <p class="font-semibold text-foreground text-sm mb-1.5">Educativa</p>
+            <p class="text-xs text-muted-foreground leading-relaxed">
               Refuerza los contenidos de los talleres sobre autoconciencia,
               autorregulación, empatía y habilidades sociales.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
-            <div
-              class="w-12 h-12 rounded-2xl bg-[#BC6C8A]/10 flex items-center justify-center mx-auto mb-3"
-            >
-              <Shield class="w-6 h-6 text-[#BC6C8A]" />
+          <div class="rounded-2xl bg-surface p-5 shadow-soft border border-border/40 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-3">
+              <Shield class="w-6 h-6 text-accent" />
             </div>
-            <p class="font-semibold text-[#2D3748] text-sm mb-1">Preventiva</p>
-            <p class="text-xs text-[#718096] leading-relaxed">
+            <p class="font-semibold text-foreground text-sm mb-1.5">Preventiva</p>
+            <p class="text-xs text-muted-foreground leading-relaxed">
               Previene conflictos, desmotivación y aislamiento. Alineada con la
-              <strong>Ley 1620 de 2013</strong> de convivencia escolar.
+              <strong class="text-foreground/85">Ley 1620 de 2013</strong> de convivencia escolar.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
-            <div
-              class="w-12 h-12 rounded-2xl bg-[#F4A259]/10 flex items-center justify-center mx-auto mb-3"
-            >
-              <HeartHandshake class="w-6 h-6 text-[#F4A259]" />
+          <div class="rounded-2xl bg-surface p-5 shadow-soft border border-border/40 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-3">
+              <HeartHandshake class="w-6 h-6 text-secondary" />
             </div>
-            <p class="font-semibold text-[#2D3748] text-sm mb-1">
-              Acompañamiento
-            </p>
-            <p class="text-xs text-[#718096] leading-relaxed">
-              Amplía el acompañamiento grupal con test, guías y actividades de
+            <p class="font-semibold text-foreground text-sm mb-1.5">Acompañamiento</p>
+            <p class="text-xs text-muted-foreground leading-relaxed">
+              Amplía el acompañamiento grupal con tests, guías y actividades de
               reflexión accesibles en todo momento.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-5 shadow-soft text-center">
-            <div
-              class="w-12 h-12 rounded-2xl bg-[#81E6D9]/20 flex items-center justify-center mx-auto mb-3"
-            >
-              <GraduationCap class="w-6 h-6 text-[#5B8DEE]" />
+          <div class="rounded-2xl bg-surface p-5 shadow-soft border border-border/40 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-calm/20 flex items-center justify-center mx-auto mb-3">
+              <GraduationCap class="w-6 h-6 text-primary" />
             </div>
-            <p class="font-semibold text-[#2D3748] text-sm mb-1">
-              Institucional
-            </p>
-            <p class="text-xs text-[#718096] leading-relaxed">
+            <p class="font-semibold text-foreground text-sm mb-1.5">Institucional</p>
+            <p class="text-xs text-muted-foreground leading-relaxed">
               Apoya el PEI y se articula con la misión del colegio y la
-              <strong>Ley 2383 de 2024</strong> de educación socioemocional.
+              <strong class="text-foreground/85">Ley 2383 de 2024</strong> de educación socioemocional.
             </p>
           </div>
         </div>

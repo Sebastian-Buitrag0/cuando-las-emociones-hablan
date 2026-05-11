@@ -117,7 +117,7 @@ onMounted(() => {
 
 <template>
   <div ref="containerRef" class="w-full max-w-4xl mx-auto my-10 px-4">
-    <p class="text-center text-xs font-semibold text-[#A0AEC0] uppercase tracking-widest mb-8">
+    <p class="text-center text-xs font-semibold text-muted-foreground/60 uppercase tracking-widest mb-8">
       Cómo se conectan
     </p>
 
@@ -130,8 +130,8 @@ onMounted(() => {
     >
       <defs>
         <linearGradient id="gc-d" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#4a5568" />
-          <stop offset="100%" stop-color="#1a202c" />
+          <stop offset="0%" stop-color="hsl(var(--foreground))" />
+          <stop offset="100%" stop-color="hsl(var(--foreground))" />
         </linearGradient>
         <linearGradient
           v-for="n in nodes"
@@ -151,8 +151,8 @@ onMounted(() => {
       </defs>
 
       <!-- Ripple rings -->
-      <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="#7c8cf8" stroke-width="1.5" />
-      <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="#7c8cf8" stroke-width="1.5" />
+      <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
+      <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
 
       <!-- Connection paths -->
       <path
@@ -161,7 +161,7 @@ onMounted(() => {
         :d="qPath(CX, CY, node.x, node.y)"
         class="path-d"
         fill="none"
-        stroke="#CBD5E0"
+        stroke="hsl(var(--border))"
         stroke-width="2"
         pathLength="1"
       />
@@ -170,10 +170,10 @@ onMounted(() => {
       <g class="center-g-d">
         <circle :cx="CX" :cy="CY" r="60" fill="url(#gc-d)" filter="url(#shadow-center-d)" />
         <!-- decorative ring inside -->
-        <circle :cx="CX" :cy="CY" r="54" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+        <circle :cx="CX" :cy="CY" r="54" fill="none" stroke="hsl(var(--surface) / 0.12)" stroke-width="1.5" />
         <text :x="CX" :y="CY - 11" text-anchor="middle" dominant-baseline="central" font-size="20">🌟</text>
-        <text :x="CX" :y="CY + 8" text-anchor="middle" fill="white" font-size="9.5" font-weight="700" letter-spacing="0.8">HABILIDADES</text>
-        <text :x="CX" :y="CY + 22" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="7.5" letter-spacing="0.6">SOCIOEMOCIONALES</text>
+        <text :x="CX" :y="CY + 8" text-anchor="middle" fill="hsl(var(--surface))" font-size="9.5" font-weight="700" letter-spacing="0.8">HABILIDADES</text>
+        <text :x="CX" :y="CY + 22" text-anchor="middle" fill="hsl(var(--surface) / 0.6)" font-size="7.5" letter-spacing="0.6">SOCIOEMOCIONALES</text>
       </g>
 
       <!-- Leaf nodes -->
@@ -191,7 +191,7 @@ onMounted(() => {
           filter="url(#shadow-d)"
         />
         <!-- inner shine ring -->
-        <circle :cx="node.x" :cy="node.y" r="37" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1" />
+        <circle :cx="node.x" :cy="node.y" r="37" fill="none" stroke="hsl(var(--surface) / 0.18)" stroke-width="1" />
         <!-- emoji -->
         <text
           :x="node.x"
@@ -201,7 +201,7 @@ onMounted(() => {
           font-size="18"
         >{{ node.emoji }}</text>
         <!-- label -->
-        <text text-anchor="middle" fill="white" font-size="9.5" font-weight="700">
+        <text text-anchor="middle" fill="hsl(var(--surface))" font-size="9.5" font-weight="700">
           <tspan
             v-for="(line, li) in node.lines"
             :key="li"
@@ -218,7 +218,7 @@ onMounted(() => {
         :x="node.x"
         :y="node.y + 56"
         text-anchor="middle"
-        fill="#718096"
+        fill="hsl(var(--muted-foreground))"
         font-size="7.5"
         class="node-sub-d"
       >{{ node.sub }}</text>
@@ -233,8 +233,8 @@ onMounted(() => {
     >
       <defs>
         <linearGradient id="gc-m" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#4a5568" />
-          <stop offset="100%" stop-color="#1a202c" />
+          <stop offset="0%" stop-color="hsl(var(--foreground))" />
+          <stop offset="100%" stop-color="hsl(var(--foreground))" />
         </linearGradient>
         <linearGradient
           v-for="n in nodes"
@@ -254,28 +254,28 @@ onMounted(() => {
       </defs>
 
       <!-- Ripple rings -->
-      <circle class="ring-m" :cx="MCX" :cy="MCY" r="58" fill="none" stroke="#7c8cf8" stroke-width="1.5" />
-      <circle class="ring-m" :cx="MCX" :cy="MCY" r="58" fill="none" stroke="#7c8cf8" stroke-width="1.5" />
+      <circle class="ring-m" :cx="MCX" :cy="MCY" r="58" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
+      <circle class="ring-m" :cx="MCX" :cy="MCY" r="58" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
 
       <!-- Chain paths (center-to-0, then 0-to-1, etc.) -->
       <path
         :d="`M ${MCX} ${MCY + 52} L ${MCX} ${nodes[0].my - 38}`"
-        class="path-m" fill="none" stroke="#CBD5E0" stroke-width="2" pathLength="1"
+        class="path-m" fill="none" stroke="hsl(var(--border))" stroke-width="2" pathLength="1"
       />
       <path
         v-for="(_, i) in nodes.slice(0, 4)"
         :key="`pm-${i}`"
         :d="`M ${MCX} ${nodes[i].my + 38} L ${MCX} ${nodes[i + 1].my - 38}`"
-        class="path-m" fill="none" stroke="#CBD5E0" stroke-width="2" pathLength="1"
+        class="path-m" fill="none" stroke="hsl(var(--border))" stroke-width="2" pathLength="1"
       />
 
       <!-- Center node -->
       <g class="center-g-m">
         <circle :cx="MCX" :cy="MCY" r="52" fill="url(#gc-m)" filter="url(#shadow-center-m)" />
-        <circle :cx="MCX" :cy="MCY" r="46" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+        <circle :cx="MCX" :cy="MCY" r="46" fill="none" stroke="hsl(var(--surface) / 0.12)" stroke-width="1.5" />
         <text :x="MCX" :y="MCY - 10" text-anchor="middle" dominant-baseline="central" font-size="18">🌟</text>
-        <text :x="MCX" :y="MCY + 7" text-anchor="middle" fill="white" font-size="9" font-weight="700" letter-spacing="0.8">HABILIDADES</text>
-        <text :x="MCX" :y="MCY + 20" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="7" letter-spacing="0.6">SOCIOEMOCIONALES</text>
+        <text :x="MCX" :y="MCY + 7" text-anchor="middle" fill="hsl(var(--surface))" font-size="9" font-weight="700" letter-spacing="0.8">HABILIDADES</text>
+        <text :x="MCX" :y="MCY + 20" text-anchor="middle" fill="hsl(var(--surface) / 0.6)" font-size="7" letter-spacing="0.6">SOCIOEMOCIONALES</text>
       </g>
 
       <!-- Leaf nodes mobile -->
@@ -292,7 +292,7 @@ onMounted(() => {
           :fill="`url(#gn-m-${node.id})`"
           filter="url(#shadow-m)"
         />
-        <circle :cx="MCX" :cy="node.my" r="33" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1" />
+        <circle :cx="MCX" :cy="node.my" r="33" fill="none" stroke="hsl(var(--surface) / 0.18)" stroke-width="1" />
         <text
           :x="MCX"
           :y="node.my + (node.lines.length > 1 ? -12 : -9)"
@@ -300,7 +300,7 @@ onMounted(() => {
           dominant-baseline="central"
           font-size="16"
         >{{ node.emoji }}</text>
-        <text text-anchor="middle" fill="white" font-size="9" font-weight="700">
+        <text text-anchor="middle" fill="hsl(var(--surface))" font-size="9" font-weight="700">
           <tspan
             v-for="(line, li) in node.lines"
             :key="li"
@@ -317,19 +317,19 @@ onMounted(() => {
         :x="MCX"
         :y="node.my + 49"
         text-anchor="middle"
-        fill="#718096"
+        fill="hsl(var(--muted-foreground))"
         font-size="7.5"
         class="node-sub-m"
       >{{ node.sub }}</text>
     </svg>
 
     <div class="mt-6 flex flex-wrap justify-center gap-6">
-      <div class="flex items-center gap-2 text-xs text-[#718096]">
-        <span class="w-6 h-0.5 bg-[#CBD5E0] rounded-full inline-block"></span>
+      <div class="flex items-center gap-2 text-xs text-muted-foreground">
+        <span class="w-6 h-0.5 bg-muted rounded-full inline-block"></span>
         <span>Conexión con el centro</span>
       </div>
-      <div class="flex items-center gap-2 text-xs text-[#718096]">
-        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] inline-block"></span>
+      <div class="flex items-center gap-2 text-xs text-muted-foreground">
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[hsl(240,70%,65%)] to-[hsl(270,65%,55%)] inline-block"></span>
         <span>Cada habilidad potencia a las demás</span>
       </div>
     </div>
