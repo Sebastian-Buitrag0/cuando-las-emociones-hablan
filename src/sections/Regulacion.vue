@@ -70,6 +70,11 @@ const tecnicas = {
       "Distraerte con el teléfono para no pensar — pospone, no regula.",
       "Pedir que otros te tranquilicen constantemente sin trabajar la tolerancia propia.",
     ],
+    noExpresar: [
+      "Mantener la ansiedad callada puede generar tensión muscular crónica y problemas digestivos.",
+      "No pedir ayuda cuando se necesita aumenta el aislamiento y la sensación de estar solo/a.",
+      "Guardar todo para uno/a mismo puede llevar a crisis de pánico inesperadas.",
+    ],
     consecuencias: {
       fisicas: ["Tensión muscular crónica", "Insomnio frecuente", "Dolores de cabeza recurrentes"],
       sociales: ["Evitación de situaciones sociales", "Aislamiento progresivo", "Dependencia emocional de otros"],
@@ -141,6 +146,11 @@ const tecnicas = {
       "Rumiar dándole vueltas al mismo pensamiento sin buscar solución.",
       "Guardar silencio indefinidamente sin comunicar lo que sientes.",
     ],
+    noExpresar: [
+      "No decir lo que molesta genera resentimiento acumulado que explota después.",
+      "Guardar la ira puede convertirse en dolores de cabeza crónicos y contracturas.",
+      "Callar lo que sientes hace que otros no sepan qué límites respetar.",
+    ],
     consecuencias: {
       fisicas: ["Tensión muscular y contracturas", "Problemas de presión arterial", "Alteraciones digestivas crónicas"],
       sociales: ["Conflictos relacionales frecuentes", "Pérdida de confianza de otros", "Aislamiento por miedo a perder el control"],
@@ -211,6 +221,11 @@ const tecnicas = {
       "Aislarte y no responder mensajes — prolonga y profundiza el estado.",
       "Consumir contenido que te haga sentir peor o que te haga compararte.",
       "Esperar que pase sola sin hacer nada — sin acción, tiende a cronificarse.",
+    ],
+    noExpresar: [
+      "No contar la tristeza a nadie puede hacer que la soledad se sienta permanente.",
+      "Ocultar lo que se siente agota energía que se podría usar para sanar.",
+      "Guardar todo para uno/a mismo dificulta que otros puedan acompañar.",
     ],
     consecuencias: {
       fisicas: ["Fatiga crónica y falta de energía", "Cambios en apetito y sueño", "Sistema inmune debilitado"],

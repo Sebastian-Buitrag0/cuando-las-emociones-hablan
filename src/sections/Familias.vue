@@ -87,7 +87,7 @@ function reiniciarQuiz() {
 const recursos = [
   {
     icon: Heart,
-    title: "Acompañamiento Emocional",
+    title: "¿Cómo acompaño emocionalmente a mi hijo/a?",
     descripcion: "Apoya el desarrollo emocional de tu hijo/a en cada momento del día.",
     color: "hsl(var(--accent))",
     puntos: [
@@ -99,7 +99,7 @@ const recursos = [
   },
   {
     icon: BookOpen,
-    title: "Crianza Positiva",
+    title: "¿Qué es la crianza positiva y cómo la practico?",
     descripcion: "Estrategias basadas en el respeto mutuo y el fortalecimiento de vínculos.",
     color: "hsl(var(--primary))",
     puntos: [
@@ -111,7 +111,7 @@ const recursos = [
   },
   {
     icon: AlertTriangle,
-    title: "Señales de Alerta",
+    title: "¿Qué señales debo observar en mi hijo/a?",
     descripcion: "Identifico cuándo mi hijo/a puede necesitar apoyo profesional adicional.",
     color: "hsl(var(--secondary))",
     puntos: [
@@ -188,7 +188,7 @@ function hablarConEmilio() {
         class="text-center mb-12 max-w-3xl mx-auto"
       >
         <span
-          class="inline-block px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-5"
+          class="inline-block px-3.5 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wider mb-5"
         >
           Para padres y madres
         </span>
@@ -216,8 +216,8 @@ function hablarConEmilio() {
         <div
           class="max-w-2xl mx-auto bg-surface rounded-2xl shadow-soft border border-border/60 overflow-hidden"
         >
-          <div class="bg-primary/[0.06] px-6 py-4 border-b border-border/40">
-            <p class="text-xs font-semibold uppercase tracking-wider text-primary mb-0.5">
+          <div class="bg-accent/[0.06] px-6 py-4 border-b border-border/40">
+            <p class="text-xs font-semibold uppercase tracking-wider text-accent mb-0.5">
               Mini diagnóstico
             </p>
             <h3 class="text-lg font-bold text-foreground">

@@ -16,7 +16,7 @@ const temas = [
   {
     id: "conflictos",
     icon: Handshake,
-    title: "Resolver Conflictos",
+    title: "¿Cómo resolver un conflicto sin que nadie pierda?",
     color: "var(--primary)",
     tips: [
       "Identifica el problema de manera objetiva, sin culpas.",
@@ -31,7 +31,7 @@ const temas = [
   {
     id: "comunicacion",
     icon: MessageCircle,
-    title: "Comunicación Asertiva",
+    title: "¿Cómo decir lo que siento sin herir ni ceder?",
     color: "var(--accent)",
     tips: [
       "Usa frases en primera persona para expresar tus sentimientos.",
@@ -46,7 +46,7 @@ const temas = [
   {
     id: "escucha",
     icon: Ear,
-    title: "Escucha Activa",
+    title: "¿Cómo escuchar de verdad a alguien?",
     color: "var(--secondary)",
     tips: [
       "Presta atención completa a quien habla.",
@@ -61,7 +61,7 @@ const temas = [
   {
     id: "ira",
     icon: Flame,
-    title: "Manejo de la Ira",
+    title: "¿Cómo manejar la ira antes de que explote?",
     color: "var(--secondary)",
     tips: [
       "Reconoce cuándo estás empezando a enojarte.",

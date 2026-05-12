@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight, BotMessageSquare } from "lucide-vue-next";
+import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight, BotMessageSquare, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
 const EMOJI_BASE = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
@@ -14,7 +14,6 @@ interface Opcion {
 interface Pregunta {
   pregunta: string;
   opciones: Opcion[];
-  ramas?: string[];
 }
 
 // Primeras 2 preguntas universales — determinan la rama
@@ -39,7 +38,7 @@ const preguntasUniversales: Pregunta[] = [
   },
 ];
 
-// Preguntas por rama (2 preguntas por rama)
+// Preguntas por rama (4 preguntas por rama — 2 nuevas adicionales)
 const preguntasPorRama: Record<string, Pregunta[]> = {
   "alegria-calma": [
     {
@@ -58,6 +57,24 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Un momento de calma para procesar lo que logró", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Star-struck/3D/star-struck_3d.png`, texto: "Pensar en el próximo reto para no perder el impulso", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Heart%20with%20ribbon/3D/heart_with_ribbon_3d.png`, texto: "Compartirlo con las personas que más importan", valor: "conexion" },
+      ],
+    },
+    {
+      pregunta: "Mateo recibe una buena noticia inesperada. ¿Qué hace una persona que está en equilibrio emocional?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20smiling%20eyes/3D/smiling_face_with_smiling_eyes_3d.png`, texto: "La disfruta sin preocuparse por lo que viene después", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Party%20popper/3D/party_popper_3d.png`, texto: "La celebra con entusiasmo y quiere que todos lo sepan", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Empieza a pensar en qué podría salir mal después", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Siente que no se lo merece y le cuesta celebrar", valor: "tristeza" },
+      ],
+    },
+    {
+      pregunta: "Lucía tiene un día libre sin compromisos. ¿Cómo lo disfruta más una persona con bienestar emocional?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Hace lo que le gusta sin culpa: lee, escucha música o simplemente descansa", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`, texto: "Organiza algo con amigos o familia para compartir el tiempo", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Aprovecha para avanzar en tareas que tenía pendientes", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se siente abrumada por no saber qué hacer con tanto tiempo", valor: "ansiedad" },
       ],
     },
   ],
@@ -80,6 +97,24 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Relieved%20face/3D/relieved_face_3d.png`, texto: "Simplemente prefiere los espacios tranquilos y eso está bien", valor: "calma" },
       ],
     },
+    {
+      pregunta: "Santiago tiene un examen importante mañana. ¿Qué le pasa a una persona con ansiedad por rendimiento?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Le cuesta concentrarse para estudiar porque su mente se acelera", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se queda despierto/a pensando en todo lo que podría salir mal", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Estudia sin parar pero siente que nunca está listo/a", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Organiza su tiempo y confía en lo que ha preparado", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Mariana siente que todos la observan cuando camina por el pasillo. ¿Qué experimenta una persona con ansiedad social?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Siente que la juzgan aunque no haya evidencia real de eso", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Le sudan las manos y le cuesta respirar normal", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Después repite la escena en su mente buscando qué hizo mal", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Relieved%20face/3D/relieved_face_3d.png`, texto: "Cruza el pasillo sin pensar en lo que otros piensen", valor: "calma" },
+      ],
+    },
   ],
   "ira-tristeza": [
     {
@@ -98,6 +133,24 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Un poco de tiempo y espacio para procesar sola", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "Hacer algo activo que corte el ciclo de pensamientos negativos", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Recordar una fortaleza propia para recuperar la confianza", valor: "alegria" },
+      ],
+    },
+    {
+      pregunta: "Tomás se dio cuenta de que un amigo le mintió. ¿Cómo reacciona una persona que tiene dificultad con la ira?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Le responde de inmediato con palabras fuertes que después lamenta", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Guarda el enojo y empieza a distanciarse sin decir por qué", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Le da vueltas al asunto imaginando peores escenarios", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Le pide hablar cuando esté más calmado/a para entender qué pasó", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Isabella perdió una competencia en la que se había esforzado mucho. ¿Qué siente una persona que está procesando una pérdida?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Siente que no sirve para eso y le cuesta ver sus logros previos", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Busca culpables externos para no sentirse mal consigo misma", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Crying%20face/3D/crying_face_3d.png`, texto: "Llora, se siente vacía y le cuesta encontrar motivación por días", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Reconoce la decepción pero valora el esfuerzo que hizo", valor: "calma" },
       ],
     },
   ],
@@ -170,14 +223,14 @@ const progreso = computed(() => ((preguntaIdx.value + 1) / totalPreguntas.value)
 const resultadoActual = computed(() => {
   if (!mostrarResultado.value || respuestas.value.length === 0) return null;
   const conteo: Record<string, number> = {};
-  respuestas.value.forEach(r => { conteo[r] = (conteo[r] || 0) + 1; });
+  respuestas.value.forEach((r) => { conteo[r] = (conteo[r] || 0) + 1; });
   const clave = Object.entries(conteo).sort((a, b) => b[1] - a[1])[0][0];
   return resultados[clave] ?? resultados.calma;
 });
 
 function determinarRama(respuestasUniversales: string[]): string {
   const conteo: Record<string, number> = {};
-  respuestasUniversales.forEach(r => { conteo[r] = (conteo[r] || 0) + 1; });
+  respuestasUniversales.forEach((r) => { conteo[r] = (conteo[r] || 0) + 1; });
   const top = Object.entries(conteo).sort((a, b) => b[1] - a[1])[0][0];
   if (top === "alegria" || top === "calma" || top === "conexion") return "alegria-calma";
   if (top === "ansiedad") return "ansiedad";
@@ -221,12 +274,22 @@ function irARegulacion() {
   document.getElementById("regulacion")?.scrollIntoView({ behavior: "smooth" });
 }
 
+function verEnRueda() {
+  const emocion = resultadoActual.value?.emocionRueda;
+  if (emocion) {
+    window.dispatchEvent(new CustomEvent("rueda:select", { detail: { emocion } }));
+  }
+  // Cambiar a pestaña de rueda y hacer scroll
+  window.dispatchEvent(new CustomEvent("emociones-tab", { detail: "rueda" }));
+  document.getElementById("emociones")?.scrollIntoView({ behavior: "smooth" });
+}
+
 function hablarConEmilio() {
   const r = resultadoActual.value;
   if (!r) return;
   window.dispatchEvent(new CustomEvent("emilio:open", {
     detail: {
-      contexto: `Hice el test emocional y mi resultado fue: ${r.titulo}. ${r.descripcion} ${r.consejo} Me gustaría explorar esto contigo.`,
+      contexto: `Hice el test emocional y mi resultado fue: ${r.titulo}. ${r.descripcion} ${r.consejo} Me gustaría explorar esto contigo y entender mejor qué puedo hacer.`,
     },
   }));
 }
@@ -275,15 +338,18 @@ function hablarConEmilio() {
         </p>
       </div>
 
-      <p class="text-xs text-muted-foreground mb-5">
-        La rueda de emociones en la sección anterior ya refleja tu resultado.
-      </p>
-
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
         <AppButton class="rounded-full px-6" @click="irARegulacion">
           Ver técnicas para esto
           <ArrowRight class="w-4 h-4 ml-1" />
         </AppButton>
+        <button
+          @click="verEnRueda"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold border border-primary/30 text-primary hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <Eye class="w-4 h-4" />
+          Ver en la Rueda de Emociones
+        </button>
         <AppButton variant="outline" class="rounded-full px-6 text-foreground border-border" @click="reiniciar">
           <RefreshCw class="w-4 h-4 mr-1" />
           Repetir test
@@ -293,7 +359,7 @@ function hablarConEmilio() {
           class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <BotMessageSquare class="w-4 h-4" />
-          Hablar con Emilio
+          Hablar con Emilio sobre esto
         </button>
       </div>
     </div>

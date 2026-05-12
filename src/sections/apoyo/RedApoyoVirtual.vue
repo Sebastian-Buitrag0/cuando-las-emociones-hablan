@@ -125,7 +125,8 @@ function tick(t: number) {
     n.homeX = CX + ORBIT_R * Math.cos(n.baseAngle);
     n.homeY = CY + ORBIT_R * Math.sin(n.baseAngle);
 
-    if (draggingIdx === i) continue;
+    // Skip physics when hovered — freeze position
+    if (n.hovered || draggingIdx === i) continue;
 
     // Tangential spring: pull toward moving home angle
     // Compute angular difference and apply tangential force

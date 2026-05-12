@@ -15,6 +15,10 @@ import {
   ThumbsUp,
   ThumbsDown,
   TriangleAlert,
+  HeartCrack,
+  Brain,
+  Users,
+  BookOpen,
 } from "lucide-vue-next";
 import EjercicioRespiracion from "@/sections/emociones/EjercicioRespiracion.vue";
 
@@ -30,6 +34,7 @@ type Props = {
   prevencion: string[];
   inmediato: string[];
   noRecomendadas?: string[];
+  noExpresar?: string[];
   consecuencias?: { fisicas: string[]; sociales: string[]; academicas: string[] };
   musica: { titulo: string; artista: string; url: string };
   videos: { titulo: string; url: string }[];
@@ -49,6 +54,7 @@ const props = defineProps<Props>();
 const retosCompletados   = ref<Set<number>>(new Set());
 const mostrarRespiracion = ref(false);
 const mostrarConsecuencias = ref(false);
+const mostrarNoExpresar = ref(false);
 
 function hablarConEmilio() {
   window.dispatchEvent(new CustomEvent("emilio:open", {
@@ -125,80 +131,96 @@ function toggleReto(idx: number) {
       </div>
     </div>
 
-    <!-- Two-column tips grid -->
+    <!-- Técnicas positivas vs negativas -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft">
-        <div class="flex items-center gap-2.5 mb-3">
-          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-calm/25">
-            <Shield class="h-4 w-4 text-calm-foreground" />
+      <!-- Técnicas que ayudan (positivas) -->
+      <div class="rounded-2xl bg-surface border-2 border-calm/30 p-5 shadow-soft">
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-calm/20">
+            <ThumbsUp class="h-5 w-5 text-calm-foreground" />
           </div>
-          <h4 class="font-bold text-foreground">Prevención</h4>
+          <div>
+            <h4 class="font-bold text-foreground">Técnicas que ayudan</h4>
+            <p class="text-xs text-muted-foreground">Prevención + respuesta inmediata</p>
+          </div>
         </div>
-        <p class="text-xs text-muted-foreground mb-3 leading-relaxed">
-          Hábitos que te ayudan antes de que la emoción te desborde.
-        </p>
-        <ul class="space-y-2">
-          <li
-            v-for="(tip, i) in prevencion"
-            :key="i"
-            class="flex items-start gap-2.5 text-sm text-foreground/80"
-          >
-            <span class="mt-0.5 flex-shrink-0 font-bold text-calm-foreground">›</span>
-            <span class="leading-relaxed">{{ tip }}</span>
-          </li>
-        </ul>
-      </div>
 
-      <div class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft">
-        <div class="flex items-center gap-2.5 mb-3">
-          <div
-            class="flex h-9 w-9 items-center justify-center rounded-xl"
-            :style="{ backgroundColor: `${color}26` }"
-          >
-            <Zap class="h-4 w-4" :style="{ color }" />
-          </div>
-          <h4 class="font-bold text-foreground">Respuesta inmediata</h4>
-        </div>
-        <p class="text-xs text-muted-foreground mb-3 leading-relaxed">
-          Qué hacer cuando la emoción está aquí y ahora.
-        </p>
-        <!-- Técnicas que ayudan -->
-        <div class="rounded-xl bg-calm/10 border border-calm/20 px-4 py-3 mb-3">
-          <p class="text-xs font-bold text-calm-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <ThumbsUp class="w-3.5 h-3.5" /> Ayudan
-          </p>
-          <ul class="space-y-1.5">
-            <li
-              v-for="(tip, i) in inmediato"
-              :key="i"
-              class="flex items-start gap-2 text-sm text-foreground/80"
-            >
+        <div class="mb-4">
+          <p class="text-[10px] font-bold uppercase tracking-wider text-calm-foreground mb-2">Prevención</p>
+          <ul class="space-y-2">
+            <li v-for="(tip, i) in prevencion" :key="i" class="flex items-start gap-2 text-sm text-foreground/80">
               <span class="mt-0.5 flex-shrink-0 font-bold text-calm-foreground">›</span>
               <span class="leading-relaxed">{{ tip }}</span>
             </li>
           </ul>
         </div>
-        <!-- Técnicas que no ayudan -->
-        <div v-if="noRecomendadas?.length" class="rounded-xl bg-crisis/[0.07] border border-crisis/20 px-4 py-3">
-          <p class="text-xs font-bold text-crisis uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <ThumbsDown class="w-3.5 h-3.5" /> Lo que suele empeorarla
-          </p>
-          <ul class="space-y-1.5">
-            <li
-              v-for="(tip, i) in noRecomendadas"
-              :key="i"
-              class="flex items-start gap-2 text-sm text-foreground/80"
-            >
-              <span class="mt-0.5 flex-shrink-0 font-bold text-crisis">›</span>
+
+        <div class="pt-3 border-t border-calm/20">
+          <p class="text-[10px] font-bold uppercase tracking-wider mb-2" :style="{ color }">Respuesta inmediata</p>
+          <ul class="space-y-2">
+            <li v-for="(tip, i) in inmediato" :key="i" class="flex items-start gap-2 text-sm text-foreground/80">
+              <span class="mt-0.5 flex-shrink-0 font-bold" :style="{ color }">›</span>
               <span class="leading-relaxed">{{ tip }}</span>
             </li>
           </ul>
         </div>
       </div>
+
+      <!-- Técnicas que no ayudan (negativas) -->
+      <div class="rounded-2xl bg-surface border-2 border-crisis/25 p-5 shadow-soft">
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-crisis/15">
+            <ThumbsDown class="h-5 w-5 text-crisis" />
+          </div>
+          <div>
+            <h4 class="font-bold text-foreground">Técnicas que no ayudan</h4>
+            <p class="text-xs text-muted-foreground">Lo que suele empeorar la situación</p>
+          </div>
+        </div>
+        <ul class="space-y-2">
+          <li v-for="(tip, i) in noRecomendadas" :key="i" class="flex items-start gap-2 text-sm text-foreground/80">
+            <span class="mt-0.5 flex-shrink-0 font-bold text-crisis">›</span>
+            <span class="leading-relaxed">{{ tip }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <!-- Consecuencias (colapsable) -->
-    <div v-if="consecuencias" class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft">
+    <!-- Consecuencias de no expresar bien lo que se siente -->
+    <div v-if="noExpresar?.length" class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft">
+      <button
+        class="w-full flex items-center justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl"
+        :aria-expanded="mostrarNoExpresar"
+        @click="mostrarNoExpresar = !mostrarNoExpresar"
+      >
+        <div class="flex items-center gap-2.5">
+          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-crisis/15">
+            <HeartCrack class="h-4 w-4 text-crisis" />
+          </div>
+          <div>
+            <p class="font-bold text-foreground text-sm">¿Qué pasa si no lo expreso bien?</p>
+            <p class="text-xs text-muted-foreground">Consecuencias de guardar lo que se siente</p>
+          </div>
+        </div>
+        <ChevronDown
+          class="h-4 w-4 text-muted-foreground flex-shrink-0 motion-safe:transition-transform duration-300"
+          :class="mostrarNoExpresar ? 'rotate-180' : ''"
+        />
+      </button>
+      <Transition name="resp-slide">
+        <div v-if="mostrarNoExpresar" class="mt-4 pt-4 border-t border-border/60">
+          <ul class="space-y-2">
+            <li v-for="(item, i) in noExpresar" :key="i" class="flex items-start gap-2 text-sm text-foreground/80">
+              <span class="mt-0.5 flex-shrink-0 font-bold text-crisis">›</span>
+              <span class="leading-relaxed">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </Transition>
+    </div>
+
+    <!-- Consecuencias de no regular (colapsable) -->
+    <div v-if="consecuencias" class="rounded-2xl bg-surface border-2 border-secondary/20 p-5 shadow-soft">
       <button
         class="w-full flex items-center justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl"
         :aria-expanded="mostrarConsecuencias"
@@ -220,24 +242,30 @@ function toggleReto(idx: number) {
       </button>
       <Transition name="resp-slide">
         <div v-if="mostrarConsecuencias" class="mt-4 pt-4 border-t border-border/60 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Físicas</p>
+          <div class="rounded-xl bg-surface/85 border border-border/40 p-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+              <Brain class="w-3.5 h-3.5" /> Físicas
+            </p>
             <ul class="space-y-1.5">
               <li v-for="c in consecuencias.fisicas" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
                 <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}
               </li>
             </ul>
           </div>
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Sociales</p>
+          <div class="rounded-xl bg-surface/85 border border-border/40 p-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+              <Users class="w-3.5 h-3.5" /> Sociales
+            </p>
             <ul class="space-y-1.5">
               <li v-for="c in consecuencias.sociales" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
                 <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}
               </li>
             </ul>
           </div>
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Académicas</p>
+          <div class="rounded-xl bg-surface/85 border border-border/40 p-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+              <BookOpen class="w-3.5 h-3.5" /> Académicas
+            </p>
             <ul class="space-y-1.5">
               <li v-for="c in consecuencias.academicas" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
                 <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}

@@ -3,35 +3,39 @@ import { computed, onMounted, ref } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HabilidadesSociales from "./HabilidadesSociales.vue";
-import { AlertCircle, BotMessageSquare, Lightbulb } from "lucide-vue-next";
+import { AlertCircle, BotMessageSquare, Lightbulb, CheckCircle2, Circle, ArrowRight } from "lucide-vue-next";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const EMOJI_BASE = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
 const containerRef = ref<HTMLElement | null>(null);
-const svgRef = ref<SVGSVGElement | null>(null);
-
-const CX = 300, CY = 262, R = 168;
-
-function toRad(d: number) { return d * Math.PI / 180; }
-function polar(cx: number, cy: number, r: number, d: number) {
-  return { x: Math.round(cx + r * Math.cos(toRad(d))), y: Math.round(cy + r * Math.sin(toRad(d))) };
-}
-const dp = [-90, -18, 54, 126, 198].map(a => polar(CX, CY, R, a));
+const flowRef = ref<HTMLElement | null>(null);
 
 interface Habilidad {
-  id: string; title: string; lines: string[]; sub: string;
-  emoji: string; emojiImg: string; gf: string; gt: string; color: string;
-  conector: string; description: string; señales: string[]; tips: string[];
-  hasSubSkills: boolean; x: number; y: number;
+  id: string;
+  title: string;
+  emoji: string;
+  emojiImg: string;
+  gf: string;
+  gt: string;
+  color: string;
+  conector: string;
+  description: string;
+  señales: string[];
+  tips: string[];
+  hasSubSkills: boolean;
+  practica: { accion: string; pasos: string[] };
 }
 
 const habilidades: Habilidad[] = [
   {
-    id: "autoconciencia", title: "Autoconciencia",
-    lines: ["Autoconciencia"], sub: "Reconocerte a ti mismo",
-    emoji: "🧠", emojiImg: `${EMOJI_BASE}/Face%20in%20clouds/3D/face_in_clouds_3d.png`,
-    gf: "#667eea", gt: "#764ba2", color: "hsl(var(--primary))",
+    id: "autoconciencia",
+    title: "Autoconciencia",
+    emoji: "🧠",
+    emojiImg: `${EMOJI_BASE}/Face%20in%20clouds/3D/face_in_clouds_3d.png`,
+    gf: "#667eea",
+    gt: "#764ba2",
+    color: "hsl(var(--primary))",
     conector: "Es el punto de partida: sin reconocer lo que sentimos, no podemos gestionarlo.",
     description: "Reconocer y comprender nuestras propias emociones, fortalezas, limitaciones y cómo afectan nuestro comportamiento.",
     señales: [
@@ -45,13 +49,24 @@ const habilidades: Habilidad[] = [
       "Escribe 3 pensamientos que acompañan esa emoción.",
       "Practica el 'check-in' diario: antes de dormir, nombra 3 emociones que sentiste hoy.",
     ],
-    hasSubSkills: false, x: dp[0].x, y: dp[0].y,
+    hasSubSkills: false,
+    practica: {
+      accion: "Check-in emocional de 3 momentos",
+      pasos: [
+        "En la mañana, al llegar al colegio: ¿cómo te sientes?",
+        "En la tarde, después del almuerzo: ¿cambió algo?",
+        "En la noche, antes de dormir: ¿qué emoción predominó?",
+      ],
+    },
   },
   {
-    id: "autorregulacion", title: "Autorregulación",
-    lines: ["Autorregulación"], sub: "Gestionar emociones",
-    emoji: "⚖️", emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
-    gf: "#38b2ac", gt: "#2b6cb0", color: "hsl(var(--calm))",
+    id: "autorregulacion",
+    title: "Autorregulación",
+    emoji: "⚖️",
+    emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
+    gf: "#38b2ac",
+    gt: "#2b6cb0",
+    color: "hsl(var(--calm))",
     conector: "Reconocer es el primer paso; autorregularse es expresar esa emoción sin que nos controle.",
     description: "Gestionar las emociones de manera saludable, controlar impulsos y adaptarse a los cambios con flexibilidad.",
     señales: [
@@ -65,13 +80,24 @@ const habilidades: Habilidad[] = [
       "Cambia el pensamiento negativo por uno más realista: ¿qué evidencia tengo de esto?",
       "Practica la pausa: aléjate 5 minutos antes de responder en caliente.",
     ],
-    hasSubSkills: false, x: dp[1].x, y: dp[1].y,
+    hasSubSkills: false,
+    practica: {
+      accion: "Técnica del semáforo emocional",
+      pasos: [
+        "🛑 PARO: cuando sientas que explotas, detente.",
+        "🟡 PIENSO: ¿qué emoción es y qué la causó?",
+        "🟢 ACTÚO: elige una respuesta con la que te sientas bien después.",
+      ],
+    },
   },
   {
-    id: "empatia", title: "Empatía",
-    lines: ["Empatía"], sub: "Comprender al otro",
-    emoji: "💜", emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20hearts/3D/smiling_face_with_hearts_3d.png`,
-    gf: "#b794f4", gt: "#d53f8c", color: "hsl(var(--accent))",
+    id: "empatia",
+    title: "Empatía",
+    emoji: "💜",
+    emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20hearts/3D/smiling_face_with_hearts_3d.png`,
+    gf: "#b794f4",
+    gt: "#d53f8c",
+    color: "hsl(var(--accent))",
     conector: "La empatía convierte la convivencia en algo más que coexistir: es la base de las relaciones reales.",
     description: "Comprender los sentimientos de los demás, ponerse en su lugar y responder con compasión.",
     señales: [
@@ -85,23 +111,46 @@ const habilidades: Habilidad[] = [
       "Escucha sin dar consejos inmediatos — a veces solo necesitan ser escuchados.",
       "Antes de responder en un conflicto, repite con tus palabras lo que la otra persona dijo.",
     ],
-    hasSubSkills: false, x: dp[2].x, y: dp[2].y,
+    hasSubSkills: false,
+    practica: {
+      accion: "Escucha activa de 1 conversación",
+      pasos: [
+        "En tu próxima conversación, no interrumpas ni una vez.",
+        "Cuando termine, repite: 'Entiendo que sientes...'",
+        "Pregunta: '¿Quieres que te escuche o que te dé una idea?'",
+      ],
+    },
   },
   {
-    id: "habilidades", title: "Habilidades Sociales",
-    lines: ["Habilidades", "Sociales"], sub: "Conectar con otros",
-    emoji: "🤝", emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`,
-    gf: "#f6ad55", gt: "#ed8936", color: "hsl(var(--secondary))",
+    id: "habilidades",
+    title: "Habilidades Sociales",
+    emoji: "🤝",
+    emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`,
+    gf: "#f6ad55",
+    gt: "#ed8936",
+    color: "hsl(var(--secondary))",
     conector: "Son las herramientas concretas para poner en práctica todo lo anterior en tus relaciones.",
     description: "Competencias específicas para relacionarte con otros: comunicar, escuchar, cooperar y resolver desacuerdos.",
-    señales: [], tips: [], hasSubSkills: true,
-    x: dp[3].x, y: dp[3].y,
+    señales: [],
+    tips: [],
+    hasSubSkills: true,
+    practica: {
+      accion: "Usa la fórmula asertiva hoy",
+      pasos: [
+        "Identifica una situación que te moleste.",
+        "Escribe: 'Yo siento... cuando pasa X... necesito Y'.",
+        "Díselo a la persona, aunque sea por mensaje.",
+      ],
+    },
   },
   {
-    id: "motivacion", title: "Motivación",
-    lines: ["Motivación"], sub: "Impulsar el cambio",
-    emoji: "✨", emojiImg: `${EMOJI_BASE}/Star-struck/3D/star-struck_3d.png`,
-    gf: "#e8c94a", gt: "#c07030", color: "hsl(50,88%,65%)",
+    id: "motivacion",
+    title: "Motivación",
+    emoji: "✨",
+    emojiImg: `${EMOJI_BASE}/Star-struck/3D/star-struck_3d.png`,
+    gf: "#e8c94a",
+    gt: "#c07030",
+    color: "hsl(50,88%,65%)",
     conector: "La motivación no es un estado fijo: es una habilidad que se entrena para sostener el esfuerzo cuando la emoción decae.",
     description: "Orientar las emociones hacia objetivos personales, mantener la perseverancia y la actitud positiva.",
     señales: [
@@ -115,356 +164,349 @@ const habilidades: Habilidad[] = [
       "Rodéate de personas que te inspiren y apoyen.",
       "Define un 'para qué' personal: no solo '¿qué quiero hacer?' sino '¿por qué me importa?'",
     ],
-    hasSubSkills: false, x: dp[4].x, y: dp[4].y,
+    hasSubSkills: false,
+    practica: {
+      accion: "Divide una meta en 3 pasos",
+      pasos: [
+        "Escribe una meta que quieras lograr esta semana.",
+        "Divídela en 3 pasos concretos y pequeños.",
+        "Haz el paso 1 hoy, aunque dure solo 10 minutos.",
+      ],
+    },
   },
 ];
 
 const selectedId = ref("autoconciencia");
-const selected = computed(() => habilidades.find(h => h.id === selectedId.value) ?? habilidades[0]);
+const selected = computed(() => habilidades.find((h) => h.id === selectedId.value) ?? habilidades[0]);
 
-function selectNode(id: string) { selectedId.value = id; }
+const practicaChecks = ref<Record<string, boolean[]>>({});
+function initChecks(id: string, count: number) {
+  if (!practicaChecks.value[id]) {
+    practicaChecks.value[id] = new Array(count).fill(false);
+  }
+}
+function toggleCheck(id: string, idx: number) {
+  initChecks(id, habilidades.find((h) => h.id === id)!.practica.pasos.length);
+  practicaChecks.value[id][idx] = !practicaChecks.value[id][idx];
+}
+function allChecked(id: string) {
+  const checks = practicaChecks.value[id];
+  if (!checks) return false;
+  return checks.every(Boolean);
+}
+
+function selectNode(id: string) {
+  selectedId.value = id;
+}
 
 function hablarConEmilio() {
   const h = selected.value;
-  window.dispatchEvent(new CustomEvent("emilio:open", {
-    detail: {
-      contexto: `Estoy explorando la habilidad de "${h.title}". ${h.conector} ${h.description} ¿Puedes ayudarme a desarrollarla?`,
-    },
-  }));
+  window.dispatchEvent(
+    new CustomEvent("emilio:open", {
+      detail: {
+        contexto: `Estoy explorando la habilidad de "${h.title}". ${h.conector} ${h.description} ¿Puedes ayudarme a desarrollarla?`,
+      },
+    })
+  );
 }
 
-function qPath(x1: number, y1: number, x2: number, y2: number) {
-  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
-  const dx = x2 - x1, dy = y2 - y1;
-  return `M ${x1} ${y1} Q ${Math.round(mx - dy * 0.15)} ${Math.round(my + dx * 0.15)} ${x2} ${y2}`;
+function hablarPracticaConEmilio() {
+  const h = selected.value;
+  const practicaTexto = h.practica.pasos.join("\n");
+  window.dispatchEvent(
+    new CustomEvent("emilio:open", {
+      detail: {
+        contexto: `Quiero practicar ${h.title} hoy. Mi práctica es: ${h.practica.accion}. Los pasos son:\n${practicaTexto}\n¿Puedes ayudarme a completarla?`,
+      },
+    })
+  );
 }
 
-function animate(svg: SVGSVGElement) {
-  gsap.set(svg.querySelectorAll(".ring-d"), { scale: 1, opacity: 0, svgOrigin: `${CX} ${CY}` });
-  gsap.set(svg.querySelectorAll(".path-d"), { strokeDashoffset: 1 });
-  gsap.set(svg.querySelectorAll(".node-g-d"), { scale: 0, opacity: 0, transformOrigin: "center center" });
-  gsap.set(svg.querySelectorAll(".node-sub-d"), { opacity: 0, y: 4 });
-  gsap.set(svg.querySelector(".center-g-d"), { scale: 0, opacity: 0, svgOrigin: `${CX} ${CY}` });
+function animateFlow() {
+  if (!flowRef.value || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const nodes = flowRef.value.querySelectorAll(".flow-node");
+  const arrows = flowRef.value.querySelectorAll(".flow-arrow");
+  gsap.set(nodes, { opacity: 0, y: 20, scale: 0.9 });
+  gsap.set(arrows, { opacity: 0, scaleX: 0 });
 
   const tl = gsap.timeline({
-    scrollTrigger: { trigger: containerRef.value, start: "top 78%", toggleActions: "play none none reverse" },
-    onComplete: () => idle(svg),
+    scrollTrigger: { trigger: containerRef.value, start: "top 80%", toggleActions: "play none none reverse" },
   });
-  tl.to(svg.querySelector(".center-g-d"), { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.7)" })
-    .to(svg.querySelectorAll(".path-d"), { strokeDashoffset: 0, duration: 1, stagger: 0.1, ease: "power2.inOut" }, "-=0.3")
-    .to(svg.querySelectorAll(".node-g-d"), { scale: 1, opacity: 1, duration: 0.55, stagger: 0.1, ease: "back.out(1.7)" }, "-=0.6")
-    .to(svg.querySelectorAll(".node-sub-d"), { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" }, "-=0.4");
-}
 
-function idle(svg: SVGSVGElement) {
-  Array.from(svg.querySelectorAll(".ring-d")).forEach((ring, i) => {
-    gsap.fromTo(ring,
-      { scale: 1, opacity: 0.45 },
-      { scale: 1.8, opacity: 0, duration: 3, delay: i * 1.5, repeat: -1, ease: "power1.out", svgOrigin: `${CX} ${CY}` }
-    );
-  });
-  const amps = [7, 6, 8, 5, 7], speeds = [2.8, 3.3, 2.6, 3.1, 2.4], delays = [0, 0.55, 1.1, 0.3, 0.85];
-  svg.querySelectorAll(".node-g-d").forEach((el, i) => {
-    gsap.to(el, { y: amps[i], duration: speeds[i], delay: delays[i], repeat: -1, yoyo: true, ease: "sine.inOut" });
+  nodes.forEach((node, i) => {
+    tl.to(node, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, i * 0.18);
+    if (arrows[i]) {
+      tl.to(arrows[i], { opacity: 1, scaleX: 1, duration: 0.3, ease: "power2.out" }, i * 0.18 + 0.25);
+    }
   });
 }
 
 onMounted(() => {
-  if (!svgRef.value || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  animate(svgRef.value);
+  animateFlow();
 });
 </script>
 
 <template>
   <div ref="containerRef" class="w-full max-w-6xl mx-auto my-10 px-4">
-    <p class="text-center text-xs font-semibold text-muted-foreground/60 uppercase tracking-widest mb-8">
+    <p class="text-center text-xs font-semibold text-muted-foreground/60 uppercase tracking-widest mb-6">
       Cómo se conectan
     </p>
 
-    <div class="grid grid-cols-1 xl:grid-cols-[460px_1fr] gap-8 items-start">
-
-      <!-- ── LEFT: SVG diagram (md+, below panel on mobile) ── -->
-      <div class="order-2 xl:order-1 hidden md:block">
-        <svg
-          ref="svgRef"
-          viewBox="0 0 600 510"
-          class="w-full h-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-label="Diagrama de habilidades socioemocionales — haz clic en un nodo para explorar"
-          role="img"
-        >
-          <defs>
-            <linearGradient id="gc-d" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="hsl(var(--foreground))" />
-              <stop offset="100%" stop-color="hsl(var(--foreground))" />
-            </linearGradient>
-            <linearGradient
-              v-for="h in habilidades"
-              :id="`gn-d-${h.id}`"
-              :key="h.id"
-              x1="0%" y1="0%" x2="100%" y2="100%"
-            >
-              <stop offset="0%" :stop-color="h.gf" />
-              <stop offset="100%" :stop-color="h.gt" />
-            </linearGradient>
-            <filter id="shadow-d" x="-25%" y="-25%" width="150%" height="150%">
-              <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,0.18)" />
-            </filter>
-            <filter id="shadow-center-d" x="-35%" y="-35%" width="170%" height="170%">
-              <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="rgba(0,0,0,0.22)" />
-            </filter>
-          </defs>
-
-          <!-- Ripple rings -->
-          <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
-          <circle class="ring-d" :cx="CX" :cy="CY" r="66" fill="none" stroke="hsl(var(--primary))" stroke-width="1.5" />
-
-          <!-- Connection paths — reactive color when node selected -->
-          <path
-            v-for="h in habilidades"
-            :key="`p-${h.id}`"
-            :d="qPath(CX, CY, h.x, h.y)"
-            class="path-d"
-            fill="none"
-            :stroke="selectedId === h.id ? h.gt : 'hsl(var(--border))'"
-            :stroke-width="selectedId === h.id ? 2.5 : 1.5"
-            pathLength="1"
-            style="transition: stroke 0.35s ease, stroke-width 0.35s ease;"
-          />
-
-          <!-- Center node -->
-          <g class="center-g-d">
-            <circle :cx="CX" :cy="CY" r="60" fill="url(#gc-d)" filter="url(#shadow-center-d)" />
-            <circle :cx="CX" :cy="CY" r="54" fill="none" stroke="hsl(var(--surface) / 0.12)" stroke-width="1.5" />
-            <text :x="CX" :y="CY - 11" text-anchor="middle" dominant-baseline="central" font-size="20">🌟</text>
-            <text :x="CX" :y="CY + 8" text-anchor="middle" fill="hsl(var(--surface))" font-size="9.5" font-weight="700" letter-spacing="0.8">HABILIDADES</text>
-            <text :x="CX" :y="CY + 22" text-anchor="middle" fill="hsl(var(--surface) / 0.6)" font-size="7.5" letter-spacing="0.6">SOCIOEMOCIONALES</text>
-          </g>
-
-          <!-- Leaf nodes — clickable, keyboard accessible -->
-          <g
-            v-for="h in habilidades"
-            :key="h.id"
-            class="node-g-d"
-            role="button"
+    <!-- Flow Diagram -->
+    <div ref="flowRef" class="mb-10">
+      <!-- Desktop: horizontal flow -->
+      <div class="hidden md:flex items-center justify-center gap-0">
+        <template v-for="(h, i) in habilidades" :key="h.id">
+          <button
+            type="button"
+            class="flow-node group relative flex flex-col items-center gap-2 rounded-2xl border-2 px-5 py-4 text-center transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            :class="
+              selectedId === h.id
+                ? 'border-primary shadow-lift bg-surface'
+                : 'border-border/60 bg-surface/70 hover:border-primary/40 hover:bg-surface hover:shadow-soft'
+            "
             :aria-pressed="selectedId === h.id"
-            :aria-label="`Seleccionar ${h.title}`"
-            tabindex="0"
-            style="cursor: pointer;"
             @click="selectNode(h.id)"
-            @keydown.enter="selectNode(h.id)"
-            @keydown.space.prevent="selectNode(h.id)"
           >
-            <!-- Main filled circle -->
-            <circle :cx="h.x" :cy="h.y" r="43" :fill="`url(#gn-d-${h.id})`" filter="url(#shadow-d)" />
-            <!-- Inner shine -->
-            <circle :cx="h.x" :cy="h.y" r="37" fill="none" stroke="hsl(var(--surface) / 0.18)" stroke-width="1" />
-            <!-- Selection ring (opacity-driven by Vue reactive binding) -->
-            <circle
-              :cx="h.x" :cy="h.y" r="53"
-              fill="none" :stroke="h.gt" stroke-width="2.5" stroke-dasharray="5 3"
-              :style="{ opacity: selectedId === h.id ? 0.85 : 0, transition: 'opacity 0.35s ease' }"
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl text-xl shadow-sm transition-transform duration-300 group-hover:scale-110"
+              :style="{ background: `linear-gradient(135deg, ${h.gf}30, ${h.gt}45)` }"
+            >
+              <img :src="h.emojiImg" :alt="h.title" class="w-7 h-7 drop-shadow-sm" />
+            </div>
+            <span
+              class="text-xs font-bold"
+              :class="selectedId === h.id ? 'text-foreground' : 'text-foreground/80'"
+            >
+              {{ h.title }}
+            </span>
+            <span
+              v-if="selectedId === h.id"
+              class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full bg-primary"
             />
-            <!-- Emoji -->
-            <text
-              :x="h.x"
-              :y="h.y + (h.lines.length > 1 ? -14 : -10)"
-              text-anchor="middle"
-              dominant-baseline="central"
-              font-size="18"
-            >{{ h.emoji }}</text>
-            <!-- Label -->
-            <text text-anchor="middle" fill="hsl(var(--surface))" font-size="9.5" font-weight="700">
-              <tspan
-                v-for="(line, li) in h.lines"
-                :key="li"
-                :x="h.x"
-                :y="h.y + (h.lines.length > 1 ? (li === 0 ? 6 : 19) : 11)"
-              >{{ line }}</tspan>
-            </text>
-          </g>
+          </button>
 
-          <!-- Sub-labels below each leaf -->
-          <text
-            v-for="h in habilidades"
-            :key="`sub-${h.id}`"
-            :x="h.x"
-            :y="h.y + 56"
-            text-anchor="middle"
-            fill="hsl(var(--muted-foreground))"
-            font-size="7.5"
-            class="node-sub-d"
-          >{{ h.sub }}</text>
-        </svg>
-
-        <!-- Legend -->
-        <div class="mt-4 flex flex-wrap justify-center gap-6">
-          <div class="flex items-center gap-2 text-xs text-muted-foreground">
-            <span class="w-6 h-0.5 bg-muted rounded-full inline-block" />
-            <span>Conexión con el centro</span>
+          <div
+            v-if="i < habilidades.length - 1"
+            class="flow-arrow flex items-center justify-center px-1"
+          >
+            <ArrowRight
+              class="w-5 h-5 text-muted-foreground/40"
+            />
           </div>
-          <div class="flex items-center gap-2 text-xs text-muted-foreground">
-            <span class="w-2.5 h-2.5 rounded-full bg-primary/60 inline-block" />
-            <span>Haz clic en un nodo para explorar</span>
-          </div>
-        </div>
+        </template>
       </div>
 
-      <!-- ── RIGHT: Chip selector + Detail panel ── -->
-      <div class="order-1 xl:order-2 xl:sticky xl:top-24">
-
-        <!-- Chip selector -->
-        <div class="flex flex-wrap gap-2 mb-5" role="group" aria-label="Seleccionar habilidad">
+      <!-- Mobile: vertical flow -->
+      <div class="md:hidden flex flex-col items-center gap-3">
+        <template v-for="(h, i) in habilidades" :key="h.id">
           <button
-            v-for="h in habilidades"
-            :key="`chip-${h.id}`"
             type="button"
-            class="inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            :class="selectedId === h.id
-              ? 'text-white border-transparent shadow-sm'
-              : 'bg-surface text-foreground/80 border-border hover:border-foreground/30'"
-            :style="selectedId === h.id ? { backgroundColor: h.gf } : {}"
+            class="flow-node group flex items-center gap-4 w-full max-w-xs rounded-2xl border-2 px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            :class="
+              selectedId === h.id
+                ? 'border-primary shadow-lift bg-surface'
+                : 'border-border/60 bg-surface/70 hover:border-primary/40 hover:bg-surface hover:shadow-soft'
+            "
             :aria-pressed="selectedId === h.id"
             @click="selectNode(h.id)"
           >
-            <span aria-hidden="true">{{ h.emoji }}</span>
-            <span>{{ h.title }}</span>
-          </button>
-        </div>
-
-        <!-- Detail panel -->
-        <Transition name="panel-slide" mode="out-in">
-          <div
-            :key="selectedId"
-            class="overflow-hidden rounded-3xl border border-border/60 bg-surface shadow-soft"
-          >
-            <!-- Header with tinted gradient -->
             <div
-              class="p-6 sm:p-7"
-              :style="{ background: `linear-gradient(135deg, ${selected.gf}18 0%, hsl(var(--surface)) 65%)` }"
+              class="flex h-10 w-10 items-center justify-center rounded-xl text-lg shadow-sm transition-transform duration-300 group-hover:scale-110 flex-shrink-0"
+              :style="{ background: `linear-gradient(135deg, ${h.gf}30, ${h.gt}45)` }"
             >
-              <!-- Identity row -->
-              <div class="flex items-start gap-4 mb-5">
-                <div
-                  class="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md"
-                  :style="{
-                    background: `linear-gradient(135deg, ${selected.gf}30, ${selected.gt}45)`,
-                    boxShadow: `0 12px 28px ${selected.gf}30`,
-                  }"
+              <img :src="h.emojiImg" :alt="h.title" class="w-6 h-6 drop-shadow-sm" />
+            </div>
+            <div>
+              <span
+                class="text-sm font-bold block"
+                :class="selectedId === h.id ? 'text-foreground' : 'text-foreground/80'"
+              >
+                {{ h.title }}
+              </span>
+              <span class="text-[10px] text-muted-foreground">Paso {{ i + 1 }} de {{ habilidades.length }}</span>
+            </div>
+            <ArrowRight
+              v-if="selectedId === h.id"
+              class="w-4 h-4 text-primary ml-auto flex-shrink-0"
+            />
+          </button>
+
+          <div
+            v-if="i < habilidades.length - 1"
+            class="flow-arrow flex justify-center"
+          >
+            <div class="h-4 w-px bg-border" />
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- Detail panel -->
+    <div class="max-w-3xl mx-auto">
+      <Transition name="panel-slide" mode="out-in">
+        <div
+          :key="selectedId"
+          class="overflow-hidden rounded-3xl border border-border/60 bg-surface shadow-soft"
+        >
+          <!-- Header with tinted gradient -->
+          <div class="p-6 sm:p-7" :style="{ background: `linear-gradient(135deg, ${selected.gf}18 0%, hsl(var(--surface)) 65%)` }">
+            <!-- Identity row -->
+            <div class="flex items-start gap-4 mb-5">
+              <div
+                class="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md"
+                :style="{
+                  background: `linear-gradient(135deg, ${selected.gf}30, ${selected.gt}45)`,
+                  boxShadow: `0 12px 28px ${selected.gf}30`,
+                }"
+              >
+                <img :src="selected.emojiImg" :alt="selected.title" class="w-10 h-10 drop-shadow-sm" />
+              </div>
+              <div>
+                <span
+                  class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide mb-2"
+                  :style="{ color: selected.color, backgroundColor: `${selected.gf}18` }"
                 >
-                  <img :src="selected.emojiImg" :alt="selected.title" class="w-10 h-10 drop-shadow-sm" />
+                  Habilidad socioemocional
+                </span>
+                <h3 class="text-2xl sm:text-3xl font-bold leading-tight" :style="{ color: selected.color }">
+                  {{ selected.title }}
+                </h3>
+              </div>
+            </div>
+
+            <!-- Conector quote -->
+            <div class="rounded-xl px-4 py-3 mb-4" :style="{ backgroundColor: `${selected.gf}14` }">
+              <p class="text-sm italic text-foreground/80 leading-relaxed">
+                {{ selected.conector }}
+              </p>
+            </div>
+
+            <!-- Description -->
+            <p class="text-muted-foreground leading-relaxed text-sm mb-5">
+              {{ selected.description }}
+            </p>
+
+            <!-- HabilidadesSociales (when hasSubSkills) -->
+            <div v-if="selected.hasSubSkills" class="mb-5">
+              <HabilidadesSociales />
+            </div>
+
+            <template v-else>
+              <!-- Señales -->
+              <div v-if="selected.señales.length" class="rounded-2xl bg-surface/85 border border-border/60 p-4 mb-4">
+                <p class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5 text-muted-foreground">
+                  <AlertCircle class="w-3.5 h-3.5 flex-shrink-0" />
+                  Señales de que falta trabajarla
+                </p>
+                <ul class="space-y-2">
+                  <li v-for="s in selected.señales" :key="s" class="flex items-start gap-2 text-sm text-foreground/80">
+                    <span class="mt-0.5 flex-shrink-0 text-muted-foreground font-bold">›</span>
+                    {{ s }}
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Tips -->
+              <div class="rounded-2xl p-4 mb-5" :style="{ backgroundColor: `${selected.gf}12` }">
+                <p class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5" :style="{ color: selected.color }">
+                  <Lightbulb class="w-3.5 h-3.5 flex-shrink-0" />
+                  Cómo desarrollarla
+                </p>
+                <ul class="space-y-2">
+                  <li v-for="tip in selected.tips" :key="tip" class="flex items-start gap-2 text-sm text-foreground/80">
+                    <span class="mt-0.5 flex-shrink-0 font-bold" :style="{ color: selected.color }">›</span>
+                    {{ tip }}
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Práctica de hoy -->
+            <div
+              class="rounded-2xl border p-4 sm:p-5 mb-5"
+              :style="{ borderColor: `${selected.gf}35`, backgroundColor: `${selected.gf}0A` }"
+            >
+              <div class="flex items-center gap-2.5 mb-3">
+                <div
+                  class="flex h-9 w-9 items-center justify-center rounded-xl bg-surface shadow-sm"
+                >
+                  <img
+                    class="w-5 h-5"
+                    src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/3D/flexed_biceps_3d.png"
+                    alt="Práctica"
+                  />
                 </div>
                 <div>
+                  <h4 class="font-bold text-foreground text-sm">Práctica de hoy</h4>
+                  <p class="text-xs text-muted-foreground">{{ selected.practica.accion }}</p>
+                </div>
+              </div>
+              <ul class="space-y-2">
+                <li
+                  v-for="(paso, pi) in selected.practica.pasos"
+                  :key="pi"
+                  class="flex items-start gap-3 rounded-xl bg-surface/80 backdrop-blur-sm p-3 cursor-pointer hover:bg-surface transition-colors"
+                  @click="toggleCheck(selected.id, pi)"
+                >
+                  <CheckCircle2
+                    v-if="practicaChecks[selected.id]?.[pi]"
+                    class="h-5 w-5 mt-0.5 flex-shrink-0"
+                    :style="{ color: selected.gf }"
+                  />
+                  <Circle v-else class="h-5 w-5 mt-0.5 flex-shrink-0 text-muted-foreground/40" />
                   <span
-                    class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide mb-2"
-                    :style="{ color: selected.color, backgroundColor: `${selected.gf}18` }"
+                    class="text-sm leading-relaxed"
+                    :class="practicaChecks[selected.id]?.[pi] ? 'text-muted-foreground/70 line-through' : 'text-foreground'"
                   >
-                    Habilidad socioemocional
+                    {{ paso }}
                   </span>
-                  <h3 class="text-2xl sm:text-3xl font-bold leading-tight" :style="{ color: selected.color }">
-                    {{ selected.title }}
-                  </h3>
-                </div>
-              </div>
-
-              <!-- Conector quote (background tint, no side-stripe border) -->
-              <div
-                class="rounded-xl px-4 py-3 mb-4"
-                :style="{ backgroundColor: `${selected.gf}14` }"
-              >
-                <p class="text-sm italic text-foreground/80 leading-relaxed">
-                  {{ selected.conector }}
-                </p>
-              </div>
-
-              <!-- Description -->
-              <p class="text-muted-foreground leading-relaxed text-sm mb-5">
-                {{ selected.description }}
-              </p>
-
-              <!-- HabilidadesSociales (when hasSubSkills) -->
-              <div v-if="selected.hasSubSkills" class="mb-5">
-                <HabilidadesSociales />
-              </div>
-
-              <template v-else>
-                <!-- Señales -->
-                <div
-                  v-if="selected.señales.length"
-                  class="rounded-2xl bg-surface/85 border border-border/60 p-4 mb-4"
+                </li>
+              </ul>
+              <div class="mt-3 flex flex-col sm:flex-row gap-2">
+                <button
+                  v-if="allChecked(selected.id)"
+                  @click="hablarPracticaConEmilio"
+                  class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-xs font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <p class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5 text-muted-foreground">
-                    <AlertCircle class="w-3.5 h-3.5 flex-shrink-0" />
-                    Señales de que falta trabajarla
-                  </p>
-                  <ul class="space-y-2">
-                    <li
-                      v-for="s in selected.señales"
-                      :key="s"
-                      class="flex items-start gap-2 text-sm text-foreground/80"
-                    >
-                      <span class="mt-0.5 flex-shrink-0 text-muted-foreground font-bold">›</span>
-                      {{ s }}
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Tips -->
-                <div
-                  class="rounded-2xl p-4 mb-5"
-                  :style="{ backgroundColor: `${selected.gf}12` }"
+                  <BotMessageSquare class="w-3.5 h-3.5" />
+                  Contarle a Emilio que lo completé
+                </button>
+                <button
+                  v-else
+                  @click="hablarPracticaConEmilio"
+                  class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-xs font-semibold border border-primary/30 text-primary hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <p
-                    class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5"
-                    :style="{ color: selected.color }"
-                  >
-                    <Lightbulb class="w-3.5 h-3.5 flex-shrink-0" />
-                    Cómo desarrollarla
-                  </p>
-                  <ul class="space-y-2">
-                    <li
-                      v-for="tip in selected.tips"
-                      :key="tip"
-                      class="flex items-start gap-2 text-sm text-foreground/80"
-                    >
-                      <span class="mt-0.5 flex-shrink-0 font-bold" :style="{ color: selected.color }">›</span>
-                      {{ tip }}
-                    </li>
-                  </ul>
-                </div>
-              </template>
-
-              <!-- CTA — always shown -->
-              <button
-                @click="hablarConEmilio"
-                class="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <BotMessageSquare class="w-4 h-4" />
-                Practicar {{ selected.title }} con Emilio
-              </button>
+                  <BotMessageSquare class="w-3.5 h-3.5" />
+                  Pedir ayuda a Emilio con esta práctica
+                </button>
+              </div>
             </div>
 
-            <!-- Footer -->
-            <div class="border-t border-border/60 bg-background px-6 py-4">
-              <p class="text-sm text-muted-foreground">
-                <span class="font-semibold text-foreground">{{ selected.sub }}</span>
-                &nbsp;· Habilidad {{ habilidades.findIndex(h => h.id === selectedId) + 1 }} de {{ habilidades.length }}
-              </p>
-            </div>
+            <!-- CTA — always shown -->
+            <button
+              @click="hablarConEmilio"
+              class="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <BotMessageSquare class="w-4 h-4" />
+              Practicar {{ selected.title }} con Emilio
+            </button>
           </div>
-        </Transition>
-      </div>
 
+          <!-- Footer -->
+          <div class="border-t border-border/60 bg-background px-6 py-4">
+            <p class="text-sm text-muted-foreground">
+              <span class="font-semibold text-foreground">{{ selected.title }}</span>
+              &nbsp;· Habilidad {{ habilidades.findIndex((h) => h.id === selectedId) + 1 }} de {{ habilidades.length }}
+            </p>
+          </div>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
 
 <style scoped>
-.path-d {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
 .panel-slide-enter-active,
 .panel-slide-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -480,8 +522,13 @@ onMounted(() => {
 
 @media (prefers-reduced-motion: reduce) {
   .panel-slide-enter-active,
-  .panel-slide-leave-active { transition: none; }
+  .panel-slide-leave-active {
+    transition: none;
+  }
   .panel-slide-enter-from,
-  .panel-slide-leave-to { transform: none; opacity: 1; }
+  .panel-slide-leave-to {
+    transform: none;
+    opacity: 1;
+  }
 }
 </style>

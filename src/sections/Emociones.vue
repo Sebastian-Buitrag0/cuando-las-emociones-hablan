@@ -8,9 +8,19 @@ import RuedaEmociones from "./emociones/RuedaEmociones.vue";
 import { ArrowDown } from "lucide-vue-next";
 import bgEmociones from "@/img/actividades_patio.jpeg";
 import gsap from "gsap";
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 
 const activeTab = ref("test");
+
+function handleEmocionesTab(e: Event) {
+  const tab = (e as CustomEvent<string>).detail;
+  if (tab === "rueda" || tab === "test") {
+    activeTab.value = tab;
+  }
+}
+
+onMounted(() => window.addEventListener("emociones-tab", handleEmocionesTab));
+onUnmounted(() => window.removeEventListener("emociones-tab", handleEmocionesTab));
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });

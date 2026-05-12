@@ -94,6 +94,45 @@ function hablarConEmilio() {
         </p>
       </div>
 
+      <!-- Banner prominente -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 20 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700, delay: 100 } }"
+        class="mb-16 max-w-4xl mx-auto rounded-3xl border-2 border-crisis/25 bg-crisis-soft p-6 sm:p-8 shadow-soft"
+      >
+        <div class="flex flex-col sm:flex-row items-start gap-5">
+          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-crisis/15 text-crisis">
+            <Shield class="h-7 w-7" />
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">
+              Si estás viviendo acoso, no estás solo/a
+            </h3>
+            <p class="text-sm text-foreground/80 leading-relaxed mb-4">
+              El bullying <span class="font-semibold">no desaparece solo</span>. Todos los colegios en Colombia están obligados por la <span class="font-semibold">Ley 1620 de 2013</span> a tener un protocolo de atención. Hablar con un adulto de confianza no es debilidad: es el paso más valiente que puedes dar.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="tel:106" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold bg-crisis text-white shadow-soft hover:shadow-lift transition-shadow">
+                <Phone class="w-3.5 h-3.5" />
+                Línea 106 · Bogotá
+              </a>
+              <a href="tel:141" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold bg-secondary text-white shadow-soft hover:shadow-lift transition-shadow">
+                <Phone class="w-3.5 h-3.5" />
+                Línea 141 · ICBF
+              </a>
+              <button
+                @click="hablarConEmilio"
+                class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold bg-foreground text-background shadow-soft hover:shadow-lift transition-shadow"
+              >
+                <BotMessageSquare class="w-3.5 h-3.5" />
+                Hablar con Emilio
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 4 tipos de bullying -->
       <div
         v-motion
@@ -101,7 +140,7 @@ function hablarConEmilio() {
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700, delay: 100 } }"
         class="mb-20"
       >
-        <h3 class="text-xl font-bold text-foreground text-center mb-8">¿Qué formas puede tomar?</h3>
+        <h3 class="text-xl font-bold text-foreground text-center mb-8">¿De qué formas se presenta el acoso?</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
           <div
             v-for="tipo in tipos"
@@ -133,7 +172,7 @@ function hablarConEmilio() {
       >
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div>
-            <h3 class="text-xl font-bold text-foreground mb-2">¿Cómo reconocerlo?</h3>
+            <h3 class="text-xl font-bold text-foreground mb-2">¿Cómo reconocer si alguien sufre acoso?</h3>
             <p class="text-muted-foreground text-sm mb-6 leading-relaxed">
               Estas preguntas ayudan a identificar si alguien en el entorno puede estar viviendo acoso.
               No se necesita que estén todas presentes.
@@ -177,7 +216,7 @@ function hablarConEmilio() {
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700, delay: 200 } }"
         class="mb-20 max-w-2xl mx-auto"
       >
-        <h3 class="text-xl font-bold text-foreground mb-2 text-center">¿Qué puede hacer una persona?</h3>
+        <h3 class="text-xl font-bold text-foreground mb-2 text-center">¿Qué puedo hacer si soy víctima o testigo?</h3>
         <p class="text-sm text-muted-foreground text-center mb-7">
           Marca cada paso a medida que lo vayas tomando.
         </p>

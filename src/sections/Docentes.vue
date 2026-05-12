@@ -44,7 +44,7 @@ const estrategiaIdx = ref(0);
 const estrategias = [
   {
     icon: Clock,
-    title: "Rutina de Bienvenida",
+    title: "¿Cómo empezar la clase conectando emocionalmente?",
     duracion: "5 min",
     descripcion: "Inicia la clase con una actividad breve de conexión emocional.",
     cuando: "Al inicio de cada sesión, especialmente después de recreos largos, exámenes o situaciones de conflicto reciente en el grupo.",
@@ -58,7 +58,7 @@ const estrategias = [
   },
   {
     icon: Target,
-    title: "Pausas Activas",
+    title: "¿Cuándo y cómo hacer una pausa activa?",
     duracion: "3-5 min",
     descripcion: "Interrupciones programadas para regular la atención y energía.",
     cuando: "Cuando notes dispersión generalizada, después de 45+ minutos de trabajo sostenido, o cuando el grupo esté visiblemente agitado.",
@@ -72,7 +72,7 @@ const estrategias = [
   },
   {
     icon: HeartHandshake,
-    title: "Círculo de Confianza",
+    title: "¿Cómo crear un círculo de confianza en el aula?",
     duracion: "10-15 min",
     descripcion: "Espacio seguro para que los estudiantes se expresen.",
     cuando: "Tras un conflicto entre pares, cuando notes aislamiento de algún estudiante, o como cierre de semana.",
@@ -86,7 +86,7 @@ const estrategias = [
   },
   {
     icon: BrainCircuit,
-    title: "Rincón de Calma",
+    title: "¿Cómo implementar un rincón de calma?",
     duracion: "Permanente",
     descripcion: "Espacio en el aula para que un estudiante se autorregule sin interrumpir la clase.",
     cuando: "Cuando un estudiante llega alterado, después de un conflicto puntual, o cuando alguien necesita un momento antes de reintegrarse.",
