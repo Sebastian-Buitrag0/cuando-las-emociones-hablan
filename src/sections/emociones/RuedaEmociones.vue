@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { Heart, Sparkles, Lightbulb, BotMessageSquare } from "lucide-vue-next";
 
 const BASE =
@@ -94,6 +94,16 @@ function getPosition(index: number) {
 function selectEmotion(index: number) {
   emocionSeleccionada.value = index;
 }
+
+function handleRuedaSelect(e: Event) {
+  const nombre = (e as CustomEvent<{ emocion: string }>).detail?.emocion;
+  if (!nombre) return;
+  const idx = emocionesRueda.findIndex(em => em.nombre === nombre);
+  if (idx !== -1) emocionSeleccionada.value = idx;
+}
+
+onMounted(() => window.addEventListener("rueda:select", handleRuedaSelect));
+onUnmounted(() => window.removeEventListener("rueda:select", handleRuedaSelect));
 
 function hablarConEmilio() {
   const e = emocionActual.value;

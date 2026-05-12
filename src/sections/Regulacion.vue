@@ -63,8 +63,18 @@ const tecnicas = {
       "Haz la técnica 4-4-4: inhala 4s, sostén 4s, exhala 4s.",
       "Nombra 5 cosas que veas, 4 que toques, 3 que oigas, 2 que huelas, 1 que saborees.",
       "Pon hielo en tus manos o mójalas con agua fría — activa el nervio vago.",
-      "Dite en voz baja: “esto pasará, ya lo he sentido antes y se ha calmado”.",
+      'Dite en voz baja: "esto pasará, ya lo he sentido antes y se ha calmado".',
     ],
+    noRecomendadas: [
+      "Evitar las situaciones que generan ansiedad (a largo plazo la aumenta).",
+      "Distraerte con el teléfono para no pensar — pospone, no regula.",
+      "Pedir que otros te tranquilicen constantemente sin trabajar la tolerancia propia.",
+    ],
+    consecuencias: {
+      fisicas: ["Tensión muscular crónica", "Insomnio frecuente", "Dolores de cabeza recurrentes"],
+      sociales: ["Evitación de situaciones sociales", "Aislamiento progresivo", "Dependencia emocional de otros"],
+      academicas: ["Bloqueo en exámenes y presentaciones", "Dificultad para concentrarse", "Procrastinación por miedo al fracaso"],
+    },
     musica: {
       titulo: "Weightless",
       artista: "Marconi Union",
@@ -117,7 +127,7 @@ const tecnicas = {
     prevencion: [
       "Identifica tus detonantes: ¿qué personas o situaciones suelen activarte?",
       "Haz ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
-      "Aprende a decir “no” sin sentir culpa — el estrés crónico viene de cargar más de la cuenta.",
+      'Aprende a decir "no" sin sentir culpa — el estrés crónico viene de cargar más de la cuenta.',
       "Crea rutinas de descanso: 10 min sin pantalla entre clases o tareas.",
     ],
     inmediato: [
@@ -126,6 +136,16 @@ const tecnicas = {
       "Aprieta los puños 10 segundos y luego suéltalos — repite 3 veces.",
       'Usa frases en primera persona: "Yo me siento… cuando pasa X, necesito Y".',
     ],
+    noRecomendadas: [
+      "Explotar verbalmente en el momento — daña relaciones y genera culpa posterior.",
+      "Rumiar dándole vueltas al mismo pensamiento sin buscar solución.",
+      "Guardar silencio indefinidamente sin comunicar lo que sientes.",
+    ],
+    consecuencias: {
+      fisicas: ["Tensión muscular y contracturas", "Problemas de presión arterial", "Alteraciones digestivas crónicas"],
+      sociales: ["Conflictos relacionales frecuentes", "Pérdida de confianza de otros", "Aislamiento por miedo a perder el control"],
+      academicas: ["Problemas de concentración sostenida", "Conflictos con compañeros o docentes", "Bajo rendimiento por estrés crónico"],
+    },
     musica: {
       titulo: "Playlist Lo-fi para calmarte",
       artista: "Lofi Girl",
@@ -183,10 +203,20 @@ const tecnicas = {
     ],
     inmediato: [
       "Permítete llorar si lo necesitas — es una liberación, no una debilidad.",
-      "Envía un mensaje a alguien de confianza: “Necesito hablar un rato”.",
+      'Envía un mensaje a alguien de confianza: "Necesito hablar un rato".',
       "Haz una actividad que antes disfrutabas, aunque no tengas ganas (10 min mínimo).",
-      "Escribe una carta a la tristeza: “¿Qué me estás tratando de decir?”",
+      'Escribe una carta a la tristeza: "¿Qué me estás tratando de decir?"',
     ],
+    noRecomendadas: [
+      "Aislarte y no responder mensajes — prolonga y profundiza el estado.",
+      "Consumir contenido que te haga sentir peor o que te haga compararte.",
+      "Esperar que pase sola sin hacer nada — sin acción, tiende a cronificarse.",
+    ],
+    consecuencias: {
+      fisicas: ["Fatiga crónica y falta de energía", "Cambios en apetito y sueño", "Sistema inmune debilitado"],
+      sociales: ["Aislamiento social progresivo", "Pérdida de relaciones cercanas", "Dificultad para conectar con otros"],
+      academicas: ["Falta de motivación para estudiar", "Bajo rendimiento sostenido", "Dificultad para concentrarse en tareas"],
+    },
     musica: {
       titulo: "Música de piano para acompañar la tristeza",
       artista: "YouTube · instrumental relajante",
@@ -205,58 +235,9 @@ const tecnicas = {
       pasos: [
         "Cada noche escribe 3 cosas buenas que te pasaron hoy (pueden ser pequeñas).",
         "Junto a cada una, anota por qué crees que pasó.",
-        "Si no se te ocurre nada grande, sirve “un café rico”, “un mensaje”, “una canción”.",
+        'Si no se te ocurre nada grande, sirve "un café rico", "un mensaje", "una canción".',
         "Repite durante 7 días sin saltarte ninguno.",
         "Al final: relee los 7 días del tirón y observa cómo te sientes.",
-      ],
-    },
-  },
-  bullying: {
-    titulo: "Bullying o Acoso",
-    subtitulo:
-      "Si alguien te hace daño de forma repetida, no es tu culpa y no tienes que resolverlo solo/a.",
-    color: "hsl(var(--accent))",
-    emojiImg: `${EMOJI_BASE}/Shield/3D/shield_3d.png`,
-    sintomas: [
-      "No quieres ir al colegio y no puedes explicar exactamente por qué.",
-      "Llegas a casa con objetos perdidos, ropa dañada o sin explicación de lo que pasó.",
-      "Cambias de ánimo drásticamente antes o después de estar en ciertos grupos o espacios.",
-      "Evitas hablar de lo que pasa en el colegio o en redes sociales.",
-    ],
-    tipos: "Acoso físico (golpes, empujones), verbal (insultos, apodos hirientes), social/relacional (exclusión deliberada, rumores) y ciberbullying (acoso por redes o mensajes). Todos son igual de serios y todos tienen ruta de atención.",
-    prevencion: [
-      "Guarda evidencia (capturas, mensajes) desde el primer incidente.",
-      "Identifica al menos 1 adulto de confianza (docente, orientador, familiar) al que puedas acudir.",
-      "Rodéate de grupos donde te sientas seguro/a: un amigo de verdad vale más que 20 de apariencia.",
-      "Conoce tus derechos: en Colombia la Ley 1620 de 2013 te protege.",
-    ],
-    inmediato: [
-      "No respondas con agresión — es lo que el agresor busca para justificarse.",
-      "Aléjate físicamente si es presencial; bloquea y reporta si es digital.",
-      "Habla hoy mismo con alguien: orientador, docente, familiar o amistad cercana.",
-      "Si te sientes en peligro, llama a la Línea 106 (Bogotá) o al 141 (ICBF) — ver sección Apoyo.",
-    ],
-    musica: {
-      titulo: "Brave",
-      artista: "Sara Bareilles",
-      url: "https://www.youtube.com/watch?v=QUQsqBqxoR4",
-    },
-    videos: [
-      {
-        titulo: "Qué hacer si sufres bullying — guía práctica",
-        url: "https://www.youtube.com/watch?v=6jF71Z_dyxo",
-      },
-    ],
-    reto: {
-      titulo: "Red de protección · hoy mismo",
-      descripcion:
-        "No puedes detenerlo tú solo/a — pero sí puedes activar tu red de protección hoy:",
-      pasos: [
-        "Escribe en una nota 3 personas adultas en las que confías.",
-        "Elige UNA y envíale un mensaje pidiendo hablar hoy o mañana.",
-        "Guarda en una carpeta capturas o evidencias del acoso.",
-        "Revisa la sección “Apoyo” de esta página y guarda 1 número de emergencia.",
-        "Recuérdate: pedir ayuda es un acto de fuerza, no de debilidad.",
       ],
     },
   },
@@ -311,7 +292,7 @@ const tecnicas = {
       >
         <AppTabs v-model="currentTab" class="max-w-5xl mx-auto">
           <AppTabsList
-            class="flex w-full overflow-x-auto md:grid md:grid-cols-4 gap-2 mb-8 bg-surface/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
+            class="flex w-full overflow-x-auto md:grid md:grid-cols-3 gap-2 mb-8 bg-surface/70 backdrop-blur-sm rounded-3xl p-2 h-auto shadow-soft scrollbar-hide"
           >
             <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">
@@ -331,12 +312,6 @@ const tecnicas = {
                 Tristeza
               </span>
             </AppTabsTrigger>
-            <AppTabsTrigger value="bullying" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
-              <span class="inline-flex items-center gap-1">
-                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Shield/3D/shield_3d.png" alt="Bullying" />
-                Bullying
-              </span>
-            </AppTabsTrigger>
           </AppTabsList>
 
           <AppTabsContent value="ansiedad" class="mt-6 regulacion-tab-content">
@@ -351,9 +326,6 @@ const tecnicas = {
             <TecnicaRegulacion v-bind="tecnicas.tristeza" />
           </AppTabsContent>
 
-          <AppTabsContent value="bullying" class="mt-6 regulacion-tab-content">
-            <TecnicaRegulacion v-bind="tecnicas.bullying" />
-          </AppTabsContent>
         </AppTabs>
       </div>
     </div>

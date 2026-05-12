@@ -635,8 +635,11 @@ watch(isLoading, async (loading) => {
       <div
         v-if="isOpen"
         ref="chatPanelRef"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Chat emocional"
         class="w-[340px] sm:w-[380px] h-[540px] bg-surface rounded-2xl flex flex-col overflow-hidden border border-border"
-        style="box-shadow: 0 20px 60px hsl(220 80% 64% / 0.15);"
+        style="box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);"
       >
         <!-- Header -->
         <div class="relative px-4 py-3 flex items-center gap-3 flex-shrink-0 overflow-hidden bg-foreground">
@@ -688,7 +691,7 @@ watch(isLoading, async (loading) => {
           ref="pickerRef"
           class="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-background to-surface overflow-y-auto"
         >
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-muted-foreground to-foreground flex items-center justify-center text-2xl mb-5 shadow-md select-none">\u{1F4AC}</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-muted-foreground to-foreground flex items-center justify-center text-2xl mb-5 shadow-md select-none">💬</div>
           <h3 class="text-base font-bold text-foreground mb-1 text-center">¿Con quién quieres hablar hoy?</h3>
           <p class="text-xs text-muted-foreground text-center mb-7 max-w-[220px] leading-relaxed">Elige tu acompañante emocional. Puedes cambiar en cualquier momento.</p>
 
@@ -698,7 +701,7 @@ watch(isLoading, async (loading) => {
               @click="selectPersonality('emilio')"
               class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-primary/50 hover:bg-primary/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">\u{1F9E0}</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🧠</div>
               <div class="flex-1 min-w-0">
                 <p class="font-bold text-foreground text-sm">Emilio</p>
                 <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Analítico · Técnicas CBT · Regulación emocional</p>
@@ -713,7 +716,7 @@ watch(isLoading, async (loading) => {
               @click="selectPersonality('thalia')"
               class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-accent/50 hover:bg-accent/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">\u{1F338}</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🌸</div>
               <div class="flex-1 min-w-0">
                 <p class="font-bold text-foreground text-sm">Thalía</p>
                 <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Cálida · Psicología positiva · Fortalezas</p>
@@ -739,7 +742,7 @@ watch(isLoading, async (loading) => {
           </Transition>
 
           <div v-if="isCompacting" class="flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border-b border-secondary/15 flex-shrink-0">
-            <div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+            <div class="w-2 h-2 bg-secondary rounded-full motion-safe:animate-pulse"></div>
             <p class="text-[10px] text-secondary">Guardando resumen de la conversación…</p>
           </div>
 
@@ -788,13 +791,13 @@ watch(isLoading, async (loading) => {
                   <div class="chat-md" v-html="renderMarkdown(msg.content)" />
                 </template>
                 <span v-else class="flex gap-1 items-center h-4 px-1">
-                  <span class="w-1.5 h-1.5 rounded-full animate-bounce"
+                  <span class="w-1.5 h-1.5 rounded-full motion-safe:animate-bounce"
                     :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:0ms"></span>
-                  <span class="w-1.5 h-1.5 rounded-full animate-bounce"
+                  <span class="w-1.5 h-1.5 rounded-full motion-safe:animate-bounce"
                     :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:150ms"></span>
-                  <span class="w-1.5 h-1.5 rounded-full animate-bounce"
+                  <span class="w-1.5 h-1.5 rounded-full motion-safe:animate-bounce"
                     :class="selectedPersonality === 'thalia' ? 'bg-accent' : 'bg-primary'"
                     style="animation-delay:300ms"></span>
                 </span>
@@ -842,7 +845,7 @@ watch(isLoading, async (loading) => {
       ref="bubbleRef"
       @click="toggleChat"
       :aria-label="isOpen ? 'Cerrar chat emocional' : 'Abrir chat emocional'"
-      class="w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 active:scale-95 relative overflow-hidden"
+      class="w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all duration-300 hover:scale-110 active:scale-95 relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       :style="{ boxShadow: currentPersona.bubbleGlow }"
     >
       <div class="absolute inset-0 bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] transition-opacity duration-500"
@@ -880,7 +883,7 @@ watch(isLoading, async (loading) => {
         v-if="!isOpen && messages.length === 0"
         class="absolute right-16 bottom-3 bg-surface text-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap pointer-events-none"
       >
-        ¡Habla conmigo! \u{1F4AC}
+        ¡Habla conmigo! 💬
         <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1.5 w-2.5 h-2.5 bg-surface border-r border-t border-border rotate-45"></div>
       </div>
     </Transition>
@@ -911,7 +914,7 @@ watch(isLoading, async (loading) => {
 .chat-md :deep(ol li)::before { content: counter(chat-ol) "."; color: hsl(var(--primary)); font-weight: 700; flex-shrink: 0; min-width: 1.1em; }
 
 .chat-md :deep(code) { background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); border-radius: 4px; padding: 0.1em 0.35em; font-size: 0.85em; font-family: monospace; }
-.chat-md :deep(blockquote) { border-left: 3px solid hsl(var(--primary) / 0.6); margin: 0.5em 0; padding: 0.3em 0.75em; background: hsl(var(--accent) / 0.12); border-radius: 0 8px 8px 0; color: hsl(var(--muted-foreground)); font-style: italic; }
+.chat-md :deep(blockquote) { border: 1px solid hsl(var(--primary) / 0.22); margin: 0.5em 0; padding: 0.4em 0.85em; background: hsl(var(--primary) / 0.06); border-radius: 8px; color: hsl(var(--muted-foreground)); font-style: italic; }
 .chat-md :deep(hr) { border: none; border-top: 1px solid hsl(var(--border)); margin: 0.6em 0; }
 .chat-md :deep(h3), .chat-md :deep(h4) { font-weight: 700; color: hsl(var(--foreground)); margin: 0.5em 0 0.25em; font-size: 0.95em; }
 .chat-md :deep(a) { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 2px; }

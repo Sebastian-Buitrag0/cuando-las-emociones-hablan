@@ -9,6 +9,7 @@ const navLinks = [
   { href: "#emociones", label: "Reconocimiento" },
   { href: "#regulacion", label: "Regulación" },
   { href: "#apoyo", label: "Apoyo" },
+  { href: "#bullying", label: "Bullying" },
   { href: "#convivencia", label: "Convivencia" },
   { href: "#familias", label: "Familias" },
   { href: "#docentes", label: "Docentes" },

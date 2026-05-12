@@ -12,6 +12,9 @@ import {
   Wind,
   ChevronDown,
   BotMessageSquare,
+  ThumbsUp,
+  ThumbsDown,
+  TriangleAlert,
 } from "lucide-vue-next";
 import EjercicioRespiracion from "@/sections/emociones/EjercicioRespiracion.vue";
 
@@ -26,6 +29,8 @@ type Props = {
   tipos: string;
   prevencion: string[];
   inmediato: string[];
+  noRecomendadas?: string[];
+  consecuencias?: { fisicas: string[]; sociales: string[]; academicas: string[] };
   musica: { titulo: string; artista: string; url: string };
   videos: { titulo: string; url: string }[];
   reto: { titulo: string; descripcion: string; pasos: Paso[] };
@@ -43,6 +48,7 @@ const props = defineProps<Props>();
 
 const retosCompletados   = ref<Set<number>>(new Set());
 const mostrarRespiracion = ref(false);
+const mostrarConsecuencias = ref(false);
 
 function hablarConEmilio() {
   window.dispatchEvent(new CustomEvent("emilio:open", {
@@ -156,21 +162,90 @@ function toggleReto(idx: number) {
         <p class="text-xs text-muted-foreground mb-3 leading-relaxed">
           Qué hacer cuando la emoción está aquí y ahora.
         </p>
-        <ul class="space-y-2">
-          <li
-            v-for="(tip, i) in inmediato"
-            :key="i"
-            class="flex items-start gap-2.5 text-sm text-foreground/80"
-          >
-            <span
-              class="mt-0.5 flex-shrink-0 font-bold"
-              :style="{ color }"
-              >›</span
+        <!-- Técnicas que ayudan -->
+        <div class="rounded-xl bg-calm/10 border border-calm/20 px-4 py-3 mb-3">
+          <p class="text-xs font-bold text-calm-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <ThumbsUp class="w-3.5 h-3.5" /> Ayudan
+          </p>
+          <ul class="space-y-1.5">
+            <li
+              v-for="(tip, i) in inmediato"
+              :key="i"
+              class="flex items-start gap-2 text-sm text-foreground/80"
             >
-            <span class="leading-relaxed">{{ tip }}</span>
-          </li>
-        </ul>
+              <span class="mt-0.5 flex-shrink-0 font-bold text-calm-foreground">›</span>
+              <span class="leading-relaxed">{{ tip }}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- Técnicas que no ayudan -->
+        <div v-if="noRecomendadas?.length" class="rounded-xl bg-crisis/[0.07] border border-crisis/20 px-4 py-3">
+          <p class="text-xs font-bold text-crisis uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <ThumbsDown class="w-3.5 h-3.5" /> Lo que suele empeorarla
+          </p>
+          <ul class="space-y-1.5">
+            <li
+              v-for="(tip, i) in noRecomendadas"
+              :key="i"
+              class="flex items-start gap-2 text-sm text-foreground/80"
+            >
+              <span class="mt-0.5 flex-shrink-0 font-bold text-crisis">›</span>
+              <span class="leading-relaxed">{{ tip }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
+    </div>
+
+    <!-- Consecuencias (colapsable) -->
+    <div v-if="consecuencias" class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft">
+      <button
+        class="w-full flex items-center justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl"
+        :aria-expanded="mostrarConsecuencias"
+        @click="mostrarConsecuencias = !mostrarConsecuencias"
+      >
+        <div class="flex items-center gap-2.5">
+          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary/15">
+            <TriangleAlert class="h-4 w-4 text-secondary" />
+          </div>
+          <div>
+            <p class="font-bold text-foreground text-sm">¿Qué pasa si no se regula?</p>
+            <p class="text-xs text-muted-foreground">Consecuencias de la {{ titulo.toLowerCase() }} sostenida</p>
+          </div>
+        </div>
+        <ChevronDown
+          class="h-4 w-4 text-muted-foreground flex-shrink-0 motion-safe:transition-transform duration-300"
+          :class="mostrarConsecuencias ? 'rotate-180' : ''"
+        />
+      </button>
+      <Transition name="resp-slide">
+        <div v-if="mostrarConsecuencias" class="mt-4 pt-4 border-t border-border/60 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Físicas</p>
+            <ul class="space-y-1.5">
+              <li v-for="c in consecuencias.fisicas" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
+                <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Sociales</p>
+            <ul class="space-y-1.5">
+              <li v-for="c in consecuencias.sociales" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
+                <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Académicas</p>
+            <ul class="space-y-1.5">
+              <li v-for="c in consecuencias.academicas" :key="c" class="flex items-start gap-1.5 text-xs text-foreground/80">
+                <span class="mt-0.5 text-secondary font-bold flex-shrink-0">›</span>{{ c }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Transition>
     </div>
 
     <!-- Música -->

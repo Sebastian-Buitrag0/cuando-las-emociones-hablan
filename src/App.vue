@@ -5,6 +5,7 @@ import Habilidades from "./sections/Habilidades.vue";
 import Emociones from "./sections/Emociones.vue";
 import Regulacion from "./sections/Regulacion.vue";
 import Apoyo from "./sections/Apoyo.vue";
+import Bullying from "./sections/Bullying.vue";
 import Convivencia from "./sections/Convivencia.vue";
 import Familias from "./sections/Familias.vue";
 import Docentes from "./sections/Docentes.vue";
@@ -21,6 +22,7 @@ import ChatBubble from "./components/ChatBubble.vue";
       <Emociones />
       <Regulacion />
       <Apoyo />
+      <Bullying />
       <Convivencia />
       <Familias />
       <Docentes />

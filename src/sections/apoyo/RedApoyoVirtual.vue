@@ -119,7 +119,7 @@ function tick(t: number) {
     n.scale += ((n.hovered ? 1.25 : 1.0) - n.scale) * 0.14;
 
     // ── advance orbit ──
-    if (draggingIdx !== i) {
+    if (draggingIdx !== i && !n.hovered) {
       n.baseAngle += ORBIT_SPEED * dt;
     }
     n.homeX = CX + ORBIT_R * Math.cos(n.baseAngle);
@@ -330,7 +330,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
 
           <!-- soft shadow for center -->
           <filter id="center-shadow" x="-40%" y="-40%" width="180%" height="180%">
-            <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#BC6C8A" flood-opacity="0.16" />
+            <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="hsl(var(--accent))" flood-opacity="0.16" />
           </filter>
 
           <!-- per-node gradient lines (live-updated) -->
@@ -469,7 +469,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         </div>
         <textarea
           v-model="textoActual"
-          class="w-full rounded-xl border border-border p-3 text-sm text-foreground/80 resize-none focus:outline-none transition-colors duration-200"
+          class="w-full rounded-xl border border-border p-3 text-sm text-foreground/80 resize-none outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:border-primary transition-colors duration-200"
           :style="textoActual ? { borderColor: nodoActivoData.color + '70' } : {}"
           placeholder="Escribe aquí cómo te apoya..."
           rows="3"
@@ -495,8 +495,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
     <Transition name="fade">
       <div v-if="nodosLlenos.length > 0 && !nodoActivo" class="mt-5 text-center">
         <button
-          class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
-          style="background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))"
+          class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold bg-foreground text-background shadow-soft motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 transition-[transform,box-shadow] duration-200 hover:shadow-lift"
           @click="mostrarResumen = !mostrarResumen; nodoActivo = null"
         >
           <span v-if="mostrarResumen" class="inline-flex items-center gap-1">Ocultar mi red</span>
@@ -545,16 +544,23 @@ onUnmounted(() => cancelAnimationFrame(_raf));
   fill: hsl(var(--accent));
   opacity: 0.16;
   transform-origin: 0 0;
-  animation: centerPulse 3s ease-in-out infinite;
 }
-@keyframes centerPulse {
-  0%,100% { transform: scale(1);    opacity: 0.16; }
-  50%      { transform: scale(1.25); opacity: 0.05; }
+@media (prefers-reduced-motion: no-preference) {
+  .center-pulse { animation: centerPulse 3s ease-in-out infinite; }
+  @keyframes centerPulse {
+    0%,100% { transform: scale(1);    opacity: 0.16; }
+    50%      { transform: scale(1.25); opacity: 0.05; }
+  }
 }
 
 /* transitions */
 .panel-enter-active, .panel-leave-active  { transition: all 0.3s ease; }
 .panel-enter-from,  .panel-leave-to       { opacity: 0; transform: translateY(-10px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-enter-active, .panel-leave-active { transition: opacity 0.3s ease; }
+  .panel-enter-from,  .panel-leave-to      { transform: none; }
+}
 
 .fade-enter-active, .fade-leave-active  { transition: opacity 0.35s ease; }
 .fade-enter-from,   .fade-leave-to      { opacity: 0; }
