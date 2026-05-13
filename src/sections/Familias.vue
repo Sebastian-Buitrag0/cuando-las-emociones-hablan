@@ -14,6 +14,7 @@ import {
 } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 import bgFamilias from "@/img/votacion_personero.jpeg";
+import DiagramaFamilias from "./familias/DiagramaFamilias.vue";
 
 // --- MINI-QUIZ ---
 const preguntasQuiz = [
@@ -201,7 +202,7 @@ function hablarConEmilio() {
         <p
           class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed"
         >
-          Recursos y guías para acompañar el desarrollo socioemocional de tus
+          Recursos y guías para acompañar el desarrollo socioemocional de los
           hijos desde el hogar.
         </p>
       </div>
@@ -490,6 +491,9 @@ function hablarConEmilio() {
           </div>
         </div>
       </div>
+
+      <!-- Diagrama interactivo -->
+      <DiagramaFamilias />
 
       <!-- CTA Banner -->
       <div

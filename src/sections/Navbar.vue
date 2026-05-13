@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { Menu, X } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 import logoPagina from "@/img/logo-pagina.png";
 
+const router = useRouter();
+const route = useRoute();
+
 const navLinks = [
-  { href: "#habilidades", label: "Habilidades" },
-  { href: "#emociones", label: "Reconocimiento" },
-  { href: "#regulacion", label: "Regulación" },
-  { href: "#apoyo", label: "Apoyo" },
-  { href: "#bullying", label: "Bullying" },
-  { href: "#convivencia", label: "Convivencia" },
-  { href: "#familias", label: "Familias" },
-  { href: "#docentes", label: "Docentes" },
+  { href: "#habilidades", label: "Habilidades", route: "/" },
+  { href: "#emociones", label: "Reconocimiento", route: "/" },
+  { href: "#regulacion", label: "Regulación", route: "/" },
+  { href: "#apoyo", label: "Apoyo", route: "/" },
+  { href: "#bullying", label: "Bullying", route: "/" },
+  { href: "#convivencia", label: "Convivencia", route: "/" },
+  { href: "/familias", label: "Familias", route: "/familias" },
+  { href: "/docentes", label: "Docentes", route: "/docentes" },
 ];
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
+
+const isHome = () => route.name === "home";
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 24;
@@ -25,14 +31,46 @@ function handleScroll() {
 onMounted(() => window.addEventListener("scroll", handleScroll, { passive: true }));
 onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
-function scrollToSection(href: string) {
-  const el = document.querySelector(href);
-  el?.scrollIntoView({ behavior: "smooth" });
+function handleNav(link: typeof navLinks[number]) {
   isMobileMenuOpen.value = false;
+
+  const targetRoute = link.route;
+  const currentRoute = isHome() ? "/" : `/${String(route.name)}`;
+
+  if (targetRoute !== currentRoute) {
+    router.push(targetRoute).then(() => {
+      if (link.href.startsWith("#")) {
+        setTimeout(() => {
+          const el = document.querySelector(link.href);
+          el?.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    });
+  } else if (link.href.startsWith("#")) {
+    const el = document.querySelector(link.href);
+    el?.scrollIntoView({ behavior: "smooth" });
+  }
 }
 
 function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (!isHome()) {
+    router.push("/");
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function empezarHandler() {
+  isMobileMenuOpen.value = false;
+  if (!isHome()) {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        document.querySelector("#emociones")?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    });
+  } else {
+    document.querySelector("#emociones")?.scrollIntoView({ behavior: "smooth" });
+  }
 }
 </script>
 
@@ -81,7 +119,7 @@ function scrollToTop() {
             v-for="link in navLinks"
             :key="link.href"
             class="px-3.5 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            @click="scrollToSection(link.href)"
+            @click="handleNav(link)"
           >
             {{ link.label }}
           </button>
@@ -91,7 +129,7 @@ function scrollToTop() {
         <div class="hidden xl:block">
           <AppButton
             class="rounded-full px-6"
-            @click="scrollToSection('#emociones')"
+            @click="empezarHandler"
           >
             Empezar
           </AppButton>
@@ -126,14 +164,14 @@ function scrollToTop() {
             v-for="link in navLinks"
             :key="link.href"
             class="px-4 py-3 rounded-xl text-left text-foreground font-medium hover:bg-foreground/[0.04] hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            @click="scrollToSection(link.href)"
+            @click="handleNav(link)"
           >
             {{ link.label }}
           </button>
           <div class="pt-4 border-t border-border mt-2">
             <AppButton
               class="w-full rounded-full"
-              @click="scrollToSection('#emociones')"
+              @click="empezarHandler"
             >
               Empezar
             </AppButton>

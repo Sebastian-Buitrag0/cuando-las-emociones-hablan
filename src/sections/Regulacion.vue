@@ -47,33 +47,33 @@ const tecnicas = {
     color: "hsl(263,73%,77%)",
     emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`,
     sintomas: [
-      "Sientes el corazón acelerado o el pecho apretado sin causa física clara.",
-      "Tu mente produce pensamientos repetitivos del tipo '¿y si pasa algo malo?'",
-      "Evitas situaciones que antes no te causaban problema (hablar en clase, estar en grupos).",
-      "Duermes mal o te despiertas con la sensación de que algo malo puede pasar.",
+      "Siente el corazón acelerado o el pecho apretado sin causa física clara.",
+      "La mente produce pensamientos repetitivos del tipo '¿y si pasa algo malo?'",
+      "Evita situaciones que antes no causaban problema (hablar en clase, estar en grupos).",
+      "Duerme mal o se despierta con la sensación de que algo malo puede pasar.",
     ],
-    tipos: "Ansiedad generalizada (preocupación constante por casi todo), ansiedad social (miedo intenso a ser juzgado), ansiedad por rendimiento (pánico ante exámenes) y crisis de pánico (episodios intensos y repentinos de miedo físico). Todas tienen solución.",
+    tipos: "Ansiedad generalizada (preocupación constante por casi todo), ansiedad social (miedo intenso a ser juzgado/a), ansiedad por rendimiento (pánico ante exámenes) y crisis de pánico (episodios intensos y repentinos de miedo físico). Todas tienen solución.",
     prevencion: [
-      "Duerme al menos 8 horas y reduce la cafeína.",
-      "Haz actividad física 3 veces por semana: el cuerpo descarga la ansiedad.",
-      "Escribe en un diario lo que te preocupa antes de dormir.",
-      "Limita el tiempo en redes sociales a 1 hora al día.",
+      "Dormir al menos 8 horas y reducir la cafeína.",
+      "Hacer actividad física 3 veces por semana: el cuerpo descarga la ansiedad.",
+      "Escribir en un diario lo que preocupa antes de dormir.",
+      "Limitar el tiempo en redes sociales a 1 hora al día.",
     ],
     inmediato: [
-      "Haz la técnica 4-4-4: inhala 4s, sostén 4s, exhala 4s.",
-      "Nombra 5 cosas que veas, 4 que toques, 3 que oigas, 2 que huelas, 1 que saborees.",
-      "Pon hielo en tus manos o mójalas con agua fría — activa el nervio vago.",
-      'Dite en voz baja: "esto pasará, ya lo he sentido antes y se ha calmado".',
+      "Hacer la técnica 4-4-4: inhalar 4s, sostener 4s, exhalar 4s.",
+      "Nombrar 5 cosas que ve, 4 que toca, 3 que oye, 2 que huele, 1 que saborea.",
+      "Poner hielo en las manos o mojarlas con agua fría: activa el nervio vago.",
+      'Decirse en voz baja: "esto pasará, ya lo he sentido antes y se ha calmado".',
     ],
     noRecomendadas: [
       "Evitar las situaciones que generan ansiedad (a largo plazo la aumenta).",
-      "Distraerte con el teléfono para no pensar — pospone, no regula.",
-      "Pedir que otros te tranquilicen constantemente sin trabajar la tolerancia propia.",
+      "Distraerse con el teléfono para no pensar: pospone, no regula.",
+      "Pedir que otros tranquilicen constantemente sin trabajar la tolerancia propia.",
     ],
     noExpresar: [
       "Mantener la ansiedad callada puede generar tensión muscular crónica y problemas digestivos.",
       "No pedir ayuda cuando se necesita aumenta el aislamiento y la sensación de estar solo/a.",
-      "Guardar todo para uno/a mismo puede llevar a crisis de pánico inesperadas.",
+      "Guardar todo para uno/a mismo/a puede llevar a crisis de pánico inesperadas.",
     ],
     consecuencias: {
       fisicas: ["Tensión muscular crónica", "Insomnio frecuente", "Dolores de cabeza recurrentes"],
@@ -123,33 +123,33 @@ const tecnicas = {
     color: "hsl(var(--secondary))",
     emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`,
     sintomas: [
-      "Sientes tensión muscular, mandíbula apretada o calor en la cara ante situaciones cotidianas.",
-      "Cualquier pequeño obstáculo te desborda de manera que parece desproporcionada.",
-      "Después de perder el control, sientes culpa o vergüenza profunda.",
-      "Duermes poco, te irrita el ruido o tienes dolores de cabeza frecuentes.",
+      "Siente tensión muscular, mandíbula apretada o calor en la cara ante situaciones cotidianas.",
+      "Cualquier pequeño obstáculo la desborda de manera que parece desproporcionada.",
+      "Después de perder el control, siente culpa o vergüenza profunda.",
+      "Duerme poco, le irrita el ruido o tiene dolores de cabeza frecuentes.",
     ],
-    tipos: "Estrés crónico (tensión sostenida en el tiempo), frustración (cuando algo bloquea tus metas), rabia reactiva (explosiones rápidas) e ira pasiva (silencio, sarcasmo, 'hacerse el indiferente'). Reconocer tu patrón es el primer paso.",
+    tipos: "Estrés crónico (tensión sostenida en el tiempo), frustración (cuando algo bloquea las metas), rabia reactiva (explosiones rápidas) e ira pasiva (silencio, sarcasmo, 'hacerse el/la indiferente'). Reconocer el patrón es el primer paso.",
     prevencion: [
-      "Identifica tus detonantes: ¿qué personas o situaciones suelen activarte?",
-      "Haz ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
-      'Aprende a decir "no" sin sentir culpa — el estrés crónico viene de cargar más de la cuenta.',
-      "Crea rutinas de descanso: 10 min sin pantalla entre clases o tareas.",
+      "Identificar los detonantes: ¿qué personas o situaciones suelen activarla?",
+      "Hacer ejercicio intenso (correr, bailar, boxear) para liberar tensión acumulada.",
+      'Aprender a decir "no" sin sentir culpa: el estrés crónico viene de cargar más de la cuenta.',
+      "Crear rutinas de descanso: 10 min sin pantalla entre clases o tareas.",
     ],
     inmediato: [
-      "Aléjate físicamente del lugar o la persona durante al menos 5 minutos.",
-      "Cuenta hacia atrás desde 20 en voz baja.",
-      "Aprieta los puños 10 segundos y luego suéltalos — repite 3 veces.",
-      'Usa frases en primera persona: "Yo me siento… cuando pasa X, necesito Y".',
+      "Alejarse físicamente del lugar o la persona durante al menos 5 minutos.",
+      "Contar hacia atrás desde 20 en voz baja.",
+      "Apretar los puños 10 segundos y luego soltarlos: repetir 3 veces.",
+      'Usar frases en primera persona: "Yo me siento… cuando pasa X, necesito Y".',
     ],
     noRecomendadas: [
-      "Explotar verbalmente en el momento — daña relaciones y genera culpa posterior.",
+      "Explotar verbalmente en el momento: daña relaciones y genera culpa posterior.",
       "Rumiar dándole vueltas al mismo pensamiento sin buscar solución.",
-      "Guardar silencio indefinidamente sin comunicar lo que sientes.",
+      "Guardar silencio indefinidamente sin comunicar lo que se siente.",
     ],
     noExpresar: [
       "No decir lo que molesta genera resentimiento acumulado que explota después.",
       "Guardar la ira puede convertirse en dolores de cabeza crónicos y contracturas.",
-      "Callar lo que sientes hace que otros no sepan qué límites respetar.",
+      "Callar lo que se siente hace que otros no sepan qué límites respetar.",
     ],
     consecuencias: {
       fisicas: ["Tensión muscular y contracturas", "Problemas de presión arterial", "Alteraciones digestivas crónicas"],
@@ -199,33 +199,33 @@ const tecnicas = {
     color: "hsl(var(--primary))",
     emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`,
     sintomas: [
-      "Tienes pocas ganas de hacer cosas que antes disfrutabas, aunque intentes forzarte.",
-      "Sientes un peso en el cuerpo, lentitud o ganas de llorar sin una razón clara.",
-      "Te aíslas de amigos o familia y prefieres estar solo/a sin saber bien por qué.",
-      "Tienes pensamientos recurrentes de que 'nada tiene sentido' o 'no sirvo para nada'.",
+      "Tiene pocas ganas de hacer cosas que antes disfrutaba, aunque intente forzarse.",
+      "Siente un peso en el cuerpo, lentitud o ganas de llorar sin una razón clara.",
+      "Se aísla de amigos o familia y prefiere estar solo/a sin saber bien por qué.",
+      "Tiene pensamientos recurrentes de que 'nada tiene sentido' o 'no sirvo para nada'.",
     ],
-    tipos: "Tristeza situacional (ante una pérdida o decepción concreta), tristeza persistente (dura semanas sin mejorar) o depresión, que requiere acompañamiento profesional. Si llevas más de 2 semanas sintiéndote así, es importante buscar apoyo.",
+    tipos: "Tristeza situacional (ante una pérdida o decepción concreta), tristeza persistente (dura semanas sin mejorar) o depresión, que requiere acompañamiento profesional. Si pasan más de 2 semanas sintiéndose así, es importante buscar apoyo.",
     prevencion: [
-      "Mantén contacto frecuente con al menos 2 personas que te hagan sentir bien.",
-      "Sal a caminar 20 minutos al día — la luz natural regula el ánimo.",
-      "Cuida lo que consumes: reduce contenido que te hace comparar o sentir peor.",
-      "Duerme y come con horarios regulares: el cuerpo influye en la mente.",
+      "Mantener contacto frecuente con al menos 2 personas que le hagan sentir bien.",
+      "Salir a caminar 20 minutos al día: la luz natural regula el ánimo.",
+      "Cuidar lo que consume: reducir contenido que haga comparar o sentir peor.",
+      "Dormir y comer con horarios regulares: el cuerpo influye en la mente.",
     ],
     inmediato: [
-      "Permítete llorar si lo necesitas — es una liberación, no una debilidad.",
-      'Envía un mensaje a alguien de confianza: "Necesito hablar un rato".',
-      "Haz una actividad que antes disfrutabas, aunque no tengas ganas (10 min mínimo).",
-      'Escribe una carta a la tristeza: "¿Qué me estás tratando de decir?"',
+      "Permitirse llorar si lo necesita: es una liberación, no una debilidad.",
+      'Enviar un mensaje a alguien de confianza: "Necesito hablar un rato".',
+      "Hacer una actividad que antes disfrutaba, aunque no tenga ganas (10 min mínimo).",
+      'Escribir una carta a la tristeza: "¿Qué me estás tratando de decir?"',
     ],
     noRecomendadas: [
-      "Aislarte y no responder mensajes — prolonga y profundiza el estado.",
-      "Consumir contenido que te haga sentir peor o que te haga compararte.",
-      "Esperar que pase sola sin hacer nada — sin acción, tiende a cronificarse.",
+      "Aislarse y no responder mensajes: prolonga y profundiza el estado.",
+      "Consumir contenido que haga sentir peor o que haga compararse.",
+      "Esperar que pase sola sin hacer nada: sin acción, tiende a cronificarse.",
     ],
     noExpresar: [
       "No contar la tristeza a nadie puede hacer que la soledad se sienta permanente.",
       "Ocultar lo que se siente agota energía que se podría usar para sanar.",
-      "Guardar todo para uno/a mismo dificulta que otros puedan acompañar.",
+      "Guardar todo para uno/a mismo/a dificulta que otros puedan acompañar.",
     ],
     consecuencias: {
       fisicas: ["Fatiga crónica y falta de energía", "Cambios en apetito y sueño", "Sistema inmune debilitado"],
@@ -287,10 +287,10 @@ const tecnicas = {
           style="text-wrap: balance"
         >
           Técnicas para
-          <span class="text-primary">regular lo que sientes</span>.
+          <span class="text-primary">regular lo que se siente</span>.
         </h2>
         <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
-          Ya le pusiste nombre a tu emoción. Elige tu situación y encuentra
+          Ya le pusiste nombre a la emoción. Elige la situación y encuentra
           técnicas, música, videos y retos para acompañarla.
         </p>
       </div>

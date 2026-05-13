@@ -15,6 +15,7 @@ import {
   Shield,
 } from "lucide-vue-next";
 import bgDocentes from "@/img/estudiantes_video_educativo.jpeg";
+import DiagramaDocente from "./docentes/DiagramaDocente.vue";
 
 // ── Mini-quiz ──────────────────────────────────────────────────────────────
 const quizRespuesta = ref<string | null>(null);
@@ -181,7 +182,7 @@ const recursos = [
           Estrategias para <span class="text-secondary">docentes</span>.
         </h2>
         <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
-          Herramientas prácticas para integrar el desarrollo socioemocional en tu práctica diaria de aula.
+          Herramientas prácticas para integrar el desarrollo socioemocional en la práctica diaria de aula.
         </p>
       </div>
 
@@ -317,99 +318,102 @@ const recursos = [
         </div>
       </div>
 
-      <!-- Accordion de actividades -->
+      <!-- 2-column: Actividades + Recursos -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800, delay: 200 } }"
         class="mb-20"
       >
-        <h3 class="text-2xl font-bold text-foreground mb-8 flex items-center gap-3">
-          <Users class="w-7 h-7 text-accent" />
-          Actividades socioemocionales
-        </h3>
-        <div class="space-y-3 max-w-3xl">
-          <div
-            v-for="act in actividades"
-            :key="act.titulo"
-            class="rounded-2xl border border-border/60 bg-surface overflow-hidden"
-          >
-            <button
-              class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-2xl"
-              :aria-expanded="actividadAbierta === act.titulo"
-              @click="actividadAbierta = actividadAbierta === act.titulo ? null : act.titulo"
-            >
-              <div class="flex items-center gap-3">
-                <span class="font-semibold text-foreground">{{ act.titulo }}</span>
-                <span class="hidden sm:inline-block text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{{ act.tiempo }}</span>
-              </div>
-              <ChevronDown
-                class="w-4 h-4 text-muted-foreground flex-shrink-0 motion-safe:transition-transform duration-300"
-                :class="actividadAbierta === act.titulo ? 'rotate-180' : ''"
-              />
-            </button>
-            <Transition name="accord-slide">
-              <div v-if="actividadAbierta === act.titulo" class="px-5 pb-5">
-                <div class="pt-3 border-t border-border/60 space-y-3">
-                  <p class="text-sm text-muted-foreground leading-relaxed">{{ act.descripcion }}</p>
-                  <div class="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                    <span><strong class="text-foreground/75">Materiales:</strong> {{ act.materiales }}</span>
-                    <span><strong class="text-foreground/75">Tiempo:</strong> {{ act.tiempo }}</span>
-                  </div>
-                  <div class="rounded-xl bg-primary/[0.06] border border-primary/15 px-4 py-3">
-                    <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Resultado esperado</p>
-                    <p class="text-sm text-foreground/80 leading-relaxed">{{ act.resultado }}</p>
-                  </div>
-                </div>
-              </div>
-            </Transition>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recursos como chips expandibles -->
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: 30 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800, delay: 300 } }"
-        class="mb-16"
-      >
-        <h3 class="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
-          <BookOpen class="w-7 h-7 text-secondary" />
-          Recursos
-        </h3>
-        <div class="space-y-6 max-w-3xl">
-          <div v-for="recurso in recursos" :key="recurso.titulo">
-            <p class="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-              <component :is="recurso.icon" class="w-4 h-4 text-secondary" />
-              {{ recurso.titulo }}
-            </p>
-            <div class="flex flex-wrap gap-2">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Actividades -->
+          <div>
+            <h3 class="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <Users class="w-7 h-7 text-accent" />
+              Actividades
+            </h3>
+            <div class="space-y-3">
               <div
-                v-for="item in recurso.items"
-                :key="item.label"
-                class="group"
+                v-for="act in actividades"
+                :key="act.titulo"
+                class="rounded-2xl border border-border/60 bg-surface overflow-hidden"
               >
                 <button
-                  class="rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground/80 bg-surface hover:border-secondary hover:text-secondary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  :class="recursoAbierto === item.label ? 'border-secondary text-secondary bg-secondary/5' : ''"
-                  @click="recursoAbierto = recursoAbierto === item.label ? null : item.label"
+                  class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-2xl"
+                  :aria-expanded="actividadAbierta === act.titulo"
+                  @click="actividadAbierta = actividadAbierta === act.titulo ? null : act.titulo"
                 >
-                  {{ item.label }}
+                  <div class="flex items-center gap-3">
+                    <span class="font-semibold text-foreground">{{ act.titulo }}</span>
+                    <span class="hidden sm:inline-block text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{{ act.tiempo }}</span>
+                  </div>
+                  <ChevronDown
+                    class="w-4 h-4 text-muted-foreground flex-shrink-0 motion-safe:transition-transform duration-300"
+                    :class="actividadAbierta === act.titulo ? 'rotate-180' : ''"
+                  />
                 </button>
-                <Transition name="quiz-fade">
-                  <div
-                    v-if="recursoAbierto === item.label"
-                    class="mt-2 rounded-xl border border-secondary/20 bg-secondary/[0.06] px-4 py-3 max-w-sm"
-                  >
-                    <p class="text-sm text-foreground/80 leading-relaxed">{{ item.detalle }}</p>
+                <Transition name="accord-slide">
+                  <div v-if="actividadAbierta === act.titulo" class="px-5 pb-5">
+                    <div class="pt-3 border-t border-border/60 space-y-3">
+                      <p class="text-sm text-muted-foreground leading-relaxed">{{ act.descripcion }}</p>
+                      <div class="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                        <span><strong class="text-foreground/75">Materiales:</strong> {{ act.materiales }}</span>
+                        <span><strong class="text-foreground/75">Tiempo:</strong> {{ act.tiempo }}</span>
+                      </div>
+                      <div class="rounded-xl bg-primary/[0.06] border border-primary/15 px-4 py-3">
+                        <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Resultado esperado</p>
+                        <p class="text-sm text-foreground/80 leading-relaxed">{{ act.resultado }}</p>
+                      </div>
+                    </div>
                   </div>
                 </Transition>
               </div>
             </div>
           </div>
+
+          <!-- Recursos -->
+          <div>
+            <h3 class="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <BookOpen class="w-7 h-7 text-secondary" />
+              Recursos
+            </h3>
+            <div class="space-y-6">
+              <div v-for="recurso in recursos" :key="recurso.titulo">
+                <p class="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <component :is="recurso.icon" class="w-4 h-4 text-secondary" />
+                  {{ recurso.titulo }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="item in recurso.items"
+                    :key="item.label"
+                    class="group"
+                  >
+                    <button
+                      class="rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground/80 bg-surface hover:border-secondary hover:text-secondary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      :class="recursoAbierto === item.label ? 'border-secondary text-secondary bg-secondary/5' : ''"
+                      @click="recursoAbierto = recursoAbierto === item.label ? null : item.label"
+                    >
+                      {{ item.label }}
+                    </button>
+                    <Transition name="quiz-fade">
+                      <div
+                        v-if="recursoAbierto === item.label"
+                        class="mt-2 rounded-xl border border-secondary/20 bg-secondary/[0.06] px-4 py-3 max-w-sm"
+                      >
+                        <p class="text-sm text-foreground/80 leading-relaxed">{{ item.detalle }}</p>
+                      </div>
+                    </Transition>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Diagrama interactivo -->
+      <DiagramaDocente />
 
       <!-- Cita de cierre -->
       <div
@@ -420,7 +424,7 @@ const recursos = [
       >
         <figure class="rounded-3xl px-8 py-10 sm:px-12 bg-primary/[0.05] border border-primary/15">
           <blockquote class="text-lg sm:text-xl text-foreground italic leading-relaxed" style="text-wrap: balance">
-            El mejor regalo que puedes darle a tus estudiantes no es solo conocimiento;
+            El mejor regalo que se le puede dar a los estudiantes no es solo conocimiento;
             son también las herramientas para gestionar sus emociones y construir
             relaciones saludables.
           </blockquote>

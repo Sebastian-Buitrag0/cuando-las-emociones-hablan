@@ -118,14 +118,14 @@ function tick(t: number) {
     // smooth scale toward hover target
     n.scale += ((n.hovered ? 1.25 : 1.0) - n.scale) * 0.14;
 
-    // ── advance orbit ──
-    if (draggingIdx !== i && !n.hovered) {
+    // ── advance orbit (always, even when hovered — so unhover is smooth) ──
+    if (draggingIdx !== i) {
       n.baseAngle += ORBIT_SPEED * dt;
     }
     n.homeX = CX + ORBIT_R * Math.cos(n.baseAngle);
     n.homeY = CY + ORBIT_R * Math.sin(n.baseAngle);
 
-    // Skip physics when hovered — freeze position
+    // Skip physics + positional update when hovered — freeze visual position
     if (n.hovered || draggingIdx === i) continue;
 
     // Tangential spring: pull toward moving home angle

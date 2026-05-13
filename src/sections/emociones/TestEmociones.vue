@@ -77,6 +77,42 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se siente abrumada por no saber qué hacer con tanto tiempo", valor: "ansiedad" },
       ],
     },
+    {
+      pregunta: "Felipe organizó una salida con amigos y todo salió mejor de lo esperado. ¿Qué emoción predomina al volver a casa?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Smiling%20face%20with%20smiling%20eyes/3D/smiling_face_with_smiling_eyes_3d.png`, texto: "Alegría genuina: lo pasó bien y quiere que se repita pronto", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Relieved%20face/3D/relieved_face_3d.png`, texto: "Alivio: disfrutó pero ahora necesita su espacio para recargar", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Empieza a revisar mentalmente si dijo algo que no debía", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Siente un vacío después de la euforia y no sabe por qué", valor: "tristeza" },
+      ],
+    },
+    {
+      pregunta: "Paula lleva semanas sintiéndose bien consigo misma. ¿Qué hábito mantiene una persona con ese equilibrio?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Dedica tiempo a estar consigo misma sin culpa ni urgencia", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`, texto: "Cultiva relaciones cercanas y les dedica atención genuina", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Se fija pequeñas metas y las celebra cuando las alcanza", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "No piensa mucho en eso y deja que las cosas fluyan solas", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Gabriel siente que el grupo de amigos se está distanciando. ¿Qué haría una persona con inteligencia emocional?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Toma la iniciativa y propone un plan para reconectar", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Lo acepta con calma y se enfoca en las personas que sí están", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Se enoja y decide alejarse él/ella primero para no salir lastimado/a", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Se queda pensando qué hizo mal y se siente culpable", valor: "tristeza" },
+      ],
+    },
+    {
+      pregunta: "Nicolás está en un paseo del colegio y se siente pleno. ¿Qué suele hacer una persona que sabe disfrutar el presente?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "Saca fotos para capturar el momento y compartirlo después", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Se queda en silencio unos minutos observando y sintiendo el lugar", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Se acerca a alguien que ve solo/a para incluirlo en la experiencia", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Se preocupa por la hora de regreso y no logra concentrarse en el presente", valor: "ansiedad" },
+      ],
+    },
   ],
   "ansiedad": [
     {
@@ -115,6 +151,42 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Relieved%20face/3D/relieved_face_3d.png`, texto: "Cruza el pasillo sin pensar en lo que otros piensen", valor: "calma" },
       ],
     },
+    {
+      pregunta: "Pedro tiene que exponer frente a toda la clase mañana. ¿Cómo suele sentirse una persona con ansiedad anticipatoria?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "No logra dormir bien la noche anterior pensando en todo lo que podría salir mal", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se despierta cansado/a y con el estómago revuelto", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Ensayó todo pero al pararse frente a todos siente que se le olvidó", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Preparó el tema, respiró antes de empezar y lo manejó con seguridad", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Laura nota que su mente no para de repetir 'algo malo va a pasar'. ¿Qué está experimentando?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Rumiación ansiosa: su cerebro está atrapado en un ciclo de alerta", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Sensación de peligro inminente sin una amenaza real concreta", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Intenta buscarle lógica a cada pensamiento para desarmarlo", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Relieved%20face/3D/relieved_face_3d.png`, texto: "Reconoce que es ansiedad y usa una técnica de grounding para calmarse", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Juan Pablo siente que su corazón se acelera sin razón aparente. ¿Qué necesita más en ese instante?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Sentarse, respirar profundo y recordar que la sensación es pasajera", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Buscar una explicación inmediata para cada síntoma físico", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Convencerse de que es algo grave y asustarse todavía más", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Llamar a alguien que le dé seguridad y lo acompañe a calmarse", valor: "conexion" },
+      ],
+    },
+    {
+      pregunta: "A Susana le cuesta concentrarse en clase porque está pendiente de lo que los demás piensen. ¿Qué le ayudaría más?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Hacer un ejercicio de anclaje: notar 3 cosas que ve, 3 que oye, 3 que siente", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Sentarse cerca de alguien de confianza que le transmita seguridad", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Chequear disimuladamente las reacciones de los demás para asegurarse", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Aislarse y pensar que no encaja en el grupo ni en el colegio", valor: "tristeza" },
+      ],
+    },
   ],
   "ira-tristeza": [
     {
@@ -151,6 +223,42 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Busca culpables externos para no sentirse mal consigo misma", valor: "ira" },
         { emojiImg: `${EMOJI_BASE}/Crying%20face/3D/crying_face_3d.png`, texto: "Llora, se siente vacía y le cuesta encontrar motivación por días", valor: "tristeza" },
         { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Reconoce la decepción pero valora el esfuerzo que hizo", valor: "calma" },
+      ],
+    },
+    {
+      pregunta: "Diana nota que últimamente no disfruta las cosas que antes le encantaban. ¿Qué podría estar pasando?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Tiene un estado de tristeza que le está robando el interés gradualmente", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Hay frustración acumulada que no ha expresado y se convirtió en apatía", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Crying%20face/3D/crying_face_3d.png`, texto: "Perdió algo importante y no se ha permitido procesar la tristeza", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Necesita hablar con alguien que la entienda sin juzgarla", valor: "conexion" },
+      ],
+    },
+    {
+      pregunta: "Martín explotó con un amigo por algo pequeño y ahora se siente muy mal. ¿Qué revela esa reacción desproporcionada?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Había ira acumulada de otras situaciones que se descargó en el momento equivocado", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Debajo de la rabia hay una tristeza que no ha podido expresar", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Viene acumulando estrés de muchas fuentes y ya no puede más", valor: "ansiedad" },
+        { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Necesita disculparse y explicar lo que realmente le está pasando", valor: "conexion" },
+      ],
+    },
+    {
+      pregunta: "Camila se siente frustrada porque sus papás no la dejan salir con sus amigos. ¿Cómo maneja eso una persona con autorregulación?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Respira, espera a calmarse y luego expone sus razones con respeto", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Responde mal, da un portazo y se encierra en su cuarto", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Se calla, se va a su cuarto y siente que no la entienden", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Busca un momento tranquilo para tener una conversación sin interrupciones", valor: "conexion" },
+      ],
+    },
+    {
+      pregunta: "Diego discute con su mejor amigo y dejan de hablarse. ¿Qué hace alguien que valora las relaciones a pesar del conflicto?",
+      opciones: [
+        { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Después de unos días escribe un mensaje para retomar el diálogo", valor: "conexion" },
+        { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Espera a que el otro pida disculpas primero aunque pasen semanas", valor: "ira" },
+        { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Siente que la amistad ya nunca será igual y se resigna a perderla", valor: "tristeza" },
+        { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Reflexiona sobre su parte en el conflicto antes de intentar arreglarlo", valor: "calma" },
       ],
     },
   ],
@@ -211,6 +319,13 @@ const preguntaIdx = ref(0);
 const respuestas = ref<string[]>([]);
 const mostrarResultado = ref(false);
 const ramaActual = ref<string | null>(null);
+const ramaVisual = ref<{ nombre: string; color: string; emoji: string } | null>(null);
+
+const ramaVisualMap: Record<string, { nombre: string; color: string; emoji: string }> = {
+  "ansiedad":     { nombre: "Ansiedad",     color: "#B794F4", emoji: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png` },
+  "ira-tristeza": { nombre: "Ira y Tristeza", color: "#F6AD55", emoji: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png` },
+  "alegria-calma": { nombre: "Alegría y Calma", color: "#F6E05E", emoji: `${EMOJI_BASE}/Smiling%20face%20with%20smiling%20eyes/3D/smiling_face_with_smiling_eyes_3d.png` },
+};
 
 const preguntasActuales = computed<Pregunta[]>(() => {
   if (!ramaActual.value) return preguntasUniversales;
@@ -243,6 +358,9 @@ function handleRespuesta(valor: string) {
   // Después de la 2ª pregunta universal, determinar rama
   if (preguntaIdx.value === 1 && !ramaActual.value) {
     ramaActual.value = determinarRama(respuestas.value);
+    ramaVisual.value = ramaVisualMap[ramaActual.value] ?? null;
+    // Emitir evento para el diagrama de habilidades
+    window.dispatchEvent(new CustomEvent("test-rama", { detail: { rama: ramaActual.value } }));
   }
 
   if (preguntaIdx.value < totalPreguntas.value - 1) {
@@ -262,6 +380,7 @@ function reiniciar() {
   respuestas.value = [];
   mostrarResultado.value = false;
   ramaActual.value = null;
+  ramaVisual.value = null;
 }
 
 function irARegulacion() {
@@ -397,6 +516,14 @@ function hablarConEmilio() {
           class="h-full rounded-full bg-primary transition-[width] duration-500 ease-out"
           :style="{ width: `${progreso}%` }"
         />
+      </div>
+      <!-- Rama indicator -->
+      <div v-if="ramaVisual" class="mt-4 flex items-center gap-2 rounded-2xl px-4 py-2.5 border" :style="{ borderColor: ramaVisual.color + '40', backgroundColor: ramaVisual.color + '10' }">
+        <img :src="ramaVisual.emoji" alt="" class="w-6 h-6" />
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider" :style="{ color: ramaVisual.color }">Explorando</p>
+          <p class="text-xs text-foreground/80 font-medium">{{ ramaVisual.nombre }}</p>
+        </div>
       </div>
     </div>
 

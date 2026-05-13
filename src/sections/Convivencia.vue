@@ -1,16 +1,14 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import {
   MessageCircle,
   Ear,
   Handshake,
   Flame,
-  CheckCircle,
 } from "lucide-vue-next";
-import AppAccordion from "@/components/ui/accordion.vue";
-import AppAccordionItem from "@/components/ui/accordion-item.vue";
-import AppAccordionTrigger from "@/components/ui/accordion-trigger.vue";
-import AppAccordionContent from "@/components/ui/accordion-content.vue";
 import bgImage from "@/img/charla_ruta_convivencia.jpeg";
+
+const abierto = ref<string | null>(null);
 
 const temas = [
   {
@@ -19,14 +17,14 @@ const temas = [
     title: "¿Cómo resolver un conflicto sin que nadie pierda?",
     color: "var(--primary)",
     tips: [
-      "Identifica el problema de manera objetiva, sin culpas.",
-      "Escucha la perspectiva de la otra persona sin interrumpir.",
-      "Busca soluciones en las que ambas partes ganen.",
-      "Mantén la calma y respira antes de responder.",
-      "Si es necesario, toma un tiempo para reflexionar.",
+      "Identificar el problema de manera objetiva, sin culpas.",
+      "Escuchar la perspectiva de la otra persona sin interrumpir.",
+      "Buscar soluciones en las que ambas partes ganen.",
+      "Mantener la calma y respirar antes de responder.",
+      "Si es necesario, tomar un tiempo para reflexionar.",
     ],
     ejercicio:
-      'Practica la técnica "Yo": Expresa tus sentimientos usando "Yo siento... cuando... porque...".',
+      'Practicar la técnica "Yo": expresar los sentimientos usando "Yo siento... cuando... porque...".',
   },
   {
     id: "comunicacion",
@@ -34,14 +32,14 @@ const temas = [
     title: "¿Cómo decir lo que siento sin herir ni ceder?",
     color: "var(--accent)",
     tips: [
-      "Usa frases en primera persona para expresar tus sentimientos.",
-      "Sé claro y directo sin ser agresivo.",
-      "Mantén contacto visual apropiado.",
-      "Respeta el turno de palabra.",
-      'Evita generalizaciones como "siempre" o "nunca".',
+      "Usar frases en primera persona para expresar los sentimientos.",
+      "Ser claro y directo sin ser agresivo.",
+      "Mantener contacto visual apropiado.",
+      "Respetar el turno de palabra.",
+      'Evitar generalizaciones como "siempre" o "nunca".',
     ],
     ejercicio:
-      "Reformula 3 frases agresivas que uses frecuentemente en frases asertivas.",
+      "Reformular 3 frases agresivas que se usen frecuentemente en frases asertivas.",
   },
   {
     id: "escucha",
@@ -49,14 +47,14 @@ const temas = [
     title: "¿Cómo escuchar de verdad a alguien?",
     color: "var(--secondary)",
     tips: [
-      "Presta atención completa a quien habla.",
-      "No interrumpas ni anticipes lo que va a decir.",
-      "Haz preguntas para aclarar lo que no entiendes.",
-      "Parafrasea para confirmar que entendiste.",
-      "Muestra interés genuino con tu lenguaje corporal.",
+      "Prestar atención completa a quien habla.",
+      "No interrumpir ni anticipar lo que va a decir.",
+      "Hacer preguntas para aclarar lo que no se entiende.",
+      "Parafrasear para confirmar que se entendió.",
+      "Mostrar interés genuino con el lenguaje corporal.",
     ],
     ejercicio:
-      "En tu próxima conversación, practica escuchar sin pensar en tu respuesta.",
+      "En la próxima conversación, practicar escuchar sin pensar en la respuesta.",
   },
   {
     id: "ira",
@@ -64,14 +62,14 @@ const temas = [
     title: "¿Cómo manejar la ira antes de que explote?",
     color: "var(--secondary)",
     tips: [
-      "Reconoce cuándo estás empezando a enojarte.",
-      "Respira profundamente antes de reaccionar.",
-      "Cuenta hasta 10 (o 100 si es necesario).",
-      "Identifica qué necesidad no está siendo satisfecha.",
-      "Expresa tu enojo de manera constructiva, no destructiva.",
+      "Reconocer cuándo se está empezando a enojar.",
+      "Respirar profundamente antes de reaccionar.",
+      "Contar hasta 10 (o 100 si es necesario).",
+      "Identificar qué necesidad no está siendo satisfecha.",
+      "Expresar el enojo de manera constructiva, no destructiva.",
     ],
     ejercicio:
-      'Crea un "kit de calma": lista de 5 cosas que puedes hacer cuando sientas ira.',
+      'Crear un "kit de calma": lista de 5 cosas que se pueden hacer cuando se siente ira.',
   },
 ];
 </script>
@@ -86,7 +84,7 @@ const temas = [
       />
     </div>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div
         v-motion
@@ -103,15 +101,15 @@ const temas = [
           class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
           style="text-wrap: balance"
         >
-          Mejora tu <span class="text-secondary">convivencia</span>.
+          Mejora la <span class="text-secondary">convivencia</span>.
         </h2>
         <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
-          Estrategias prácticas para construir relaciones más saludables y manejar
-          los desafíos del día a día.
+          Cuatro preguntas clave para construir relaciones más saludables.
+          Toca cada una para descubrir herramientas prácticas.
         </p>
       </div>
 
-      <!-- Accordion -->
+      <!-- Interactive Question Cards -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 30 }"
@@ -122,7 +120,7 @@ const temas = [
         }"
         class="max-w-3xl mx-auto"
       >
-        <AppAccordion type="single" collapsible class="space-y-4">
+        <div class="space-y-4">
           <div
             v-for="(tema, index) in temas"
             :key="tema.id"
@@ -133,46 +131,57 @@ const temas = [
               x: 0,
               transition: { duration: 500, delay: index * 100 },
             }"
+            class="rounded-2xl bg-surface border border-border/60 shadow-soft overflow-hidden transition-all duration-300 hover:shadow-lift"
           >
-            <AppAccordionItem
-              :value="tema.id"
-              class="bg-surface rounded-2xl border border-border/60 shadow-soft overflow-hidden"
+            <button
+              class="w-full px-6 py-5 flex items-center gap-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              @click="abierto = abierto === tema.id ? null : tema.id"
             >
-              <AppAccordionTrigger class="px-6 py-5 hover:no-underline group">
-                <div class="flex items-center gap-4 text-left">
+              <div
+                class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 motion-safe:transition-transform motion-safe:hover:scale-105 text-2xl"
+                :style="{ backgroundColor: `hsl(${tema.color} / 0.13)` }"
+              >
+                <component
+                  :is="tema.icon"
+                  class="w-7 h-7"
+                  :style="{ color: `hsl(${tema.color})` }"
+                />
+              </div>
+              <div class="flex-1 min-w-0">
+                <span class="text-[10px] font-bold uppercase tracking-wider" :style="{ color: `hsl(${tema.color})` }">
+                  Pregunta {{ index + 1 }}
+                </span>
+                <p class="text-base font-semibold text-foreground mt-0.5">
+                  {{ tema.title }}
+                </p>
+              </div>
+              <div
+                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300"
+                :class="abierto === tema.id ? 'rotate-180' : ''"
+                :style="{ backgroundColor: `hsl(${tema.color} / 0.08)` }"
+              >
+                <svg class="w-4 h-4" :style="{ color: `hsl(${tema.color})` }" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </button>
+
+            <Transition name="collapse">
+              <div v-if="abierto === tema.id" class="px-6 pb-6">
+                <div class="pl-[72px] pt-2">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     <div
-                      class="w-12 h-12 rounded-xl flex items-center justify-center motion-safe:transition-transform motion-safe:group-hover:scale-105"
-                      :style="{ backgroundColor: `hsl(${tema.color} / 0.13)` }"
-                    >
-                    <component
-                      :is="tema.icon"
-                      class="w-6 h-6"
-                      :style="{ color: `hsl(${tema.color})` }"
-                    />
-                  </div>
-                  <span class="text-lg font-semibold text-foreground transition-colors">
-                    {{ tema.title }}
-                  </span>
-                </div>
-              </AppAccordionTrigger>
-              <AppAccordionContent class="px-6 pb-6">
-                <div class="pl-16">
-                  <h4 class="font-semibold text-foreground mb-3">
-                    Tips prácticos
-                  </h4>
-                  <ul class="space-y-2 mb-6">
-                    <li
                       v-for="(tip, i) in tema.tips"
                       :key="i"
-                      class="flex items-start gap-2.5 text-foreground/80"
+                      class="flex items-start gap-2.5 rounded-xl bg-surface/85 p-3 border border-border/40"
                     >
-                      <CheckCircle
-                        class="w-5 h-5 mt-0.5 flex-shrink-0"
-                        :style="{ color: `hsl(${tema.color})` }"
-                      />
-                      <span>{{ tip }}</span>
-                    </li>
-                  </ul>
+                      <span
+                        class="flex h-6 w-6 items-center justify-center rounded-lg flex-shrink-0 text-xs font-bold"
+                        :style="{ backgroundColor: `hsl(${tema.color} / 0.15)`, color: `hsl(${tema.color})` }"
+                      >{{ i + 1 }}</span>
+                      <span class="text-sm text-foreground/80">{{ tip }}</span>
+                    </div>
+                  </div>
                   <div
                     class="rounded-xl p-4"
                     :style="{ backgroundColor: `hsl(${tema.color} / 0.07)` }"
@@ -183,10 +192,10 @@ const temas = [
                     </p>
                   </div>
                 </div>
-              </AppAccordionContent>
-            </AppAccordionItem>
+              </div>
+            </Transition>
           </div>
-        </AppAccordion>
+        </div>
       </div>
 
       <!-- Quote -->
@@ -211,3 +220,24 @@ const temas = [
     </div>
   </section>
 </template>
+
+<style scoped>
+.collapse-enter-active,
+.collapse-leave-active {
+  transition: opacity 0.3s ease, max-height 0.4s ease;
+  overflow: hidden;
+  max-height: 600px;
+}
+.collapse-enter-from,
+.collapse-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapse-enter-active,
+  .collapse-leave-active {
+    transition: none;
+  }
+}
+</style>

@@ -15,12 +15,12 @@ import MindMapHabilidades from "./habilidades/MindMapHabilidades.vue";
     </div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <!-- Header -->
+      <!-- Header compacto -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-        class="text-center mb-16 max-w-3xl mx-auto"
+        class="text-center mb-10 max-w-3xl mx-auto"
       >
         <span
           class="inline-block px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-5"
@@ -28,27 +28,15 @@ import MindMapHabilidades from "./habilidades/MindMapHabilidades.vue";
           Modelo de Daniel Goleman
         </span>
         <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1]"
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-[1.1]"
           style="text-wrap: balance"
         >
           ¿Qué son las
           <span class="text-primary">habilidades socioemocionales</span>?
         </h2>
-        <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
-          Son las
-          <span class="font-semibold text-foreground">competencias que nos hacen humanos</span>:
-          entender lo que sentimos, responder con inteligencia en lugar de impulso, construir
-          relaciones que de verdad importen y tomar decisiones que nos acerquen a quienes queremos ser.
-        </p>
-        <p class="mt-5 text-sm text-muted-foreground/80 max-w-prose-tight mx-auto leading-relaxed">
-          No son emociones; son las
-          <span class="font-semibold text-muted-foreground">cinco herramientas internas</span>
-          que transforman lo que sentimos en cómo actuamos. Se entrenan con práctica
-          y se conectan entre sí como eslabones que empiezan dentro y se expanden hacia afuera.
-        </p>
       </div>
 
-      <!-- Interactive mind map + detail panel -->
+      <!-- Interactive flow diagram (explica + conecta) -->
       <MindMapHabilidades />
 
       <!-- Simulador destacado -->

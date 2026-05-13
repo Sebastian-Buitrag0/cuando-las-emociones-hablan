@@ -41,10 +41,10 @@ const señales = [
 ];
 
 const pasos = [
-  "No responder con agresión — es lo que el agresor busca para justificarse.",
+  "No responder con agresión: es lo que el agresor busca para justificarse.",
   "Alejarse físicamente si es presencial; bloquear y reportar si es digital.",
   "Guardar evidencia desde el primer momento: capturas, mensajes, fechas.",
-  "Hablar hoy con alguien de confianza: orientador, docente, familiar cercano.",
+  "Hablar hoy con alguien de confianza: orientador/a, docente, familiar cercano.",
   "Recordar: pedir ayuda es un acto de fuerza, no de debilidad.",
 ];
 

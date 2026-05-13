@@ -68,7 +68,7 @@ watch(activeTab, () => {
           Reconoce <span class="text-accent">tus emociones</span>.
         </h2>
         <p class="text-lg text-muted-foreground max-w-prose-reading mx-auto leading-relaxed">
-          Antes de regular, ponle nombre. Haz el test o explora la rueda para
+          Antes de regular, hay que ponerle nombre. Haz el test o explora la rueda para
           identificar lo que te pasa hoy.
         </p>
       </div>
