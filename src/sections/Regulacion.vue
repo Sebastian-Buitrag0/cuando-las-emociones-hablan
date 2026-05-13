@@ -311,19 +311,19 @@ const tecnicas = {
           >
             <AppTabsTrigger value="ansiedad" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">
-                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png" alt="Ansiedad" />
+                <img class="w-5 h-5 shrink-0 object-contain drop-shadow-sm" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png" alt="Ansiedad" />
                 Ansiedad
               </span>
             </AppTabsTrigger>
             <AppTabsTrigger value="ira" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">
-                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png" alt="Ira" />
+                <img class="w-5 h-5 shrink-0 object-contain drop-shadow-sm" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png" alt="Ira" />
                 Ira/Estrés
               </span>
             </AppTabsTrigger>
             <AppTabsTrigger value="tristeza" class="rounded-full py-3 text-sm flex-shrink-0 whitespace-nowrap">
               <span class="inline-flex items-center gap-1">
-                <img class="w-4 h-4" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Pensive%20face/3D/pensive_face_3d.png" alt="Tristeza" />
+                <img class="w-5 h-5 shrink-0 object-contain drop-shadow-sm" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Pensive%20face/3D/pensive_face_3d.png" alt="Tristeza" />
                 Tristeza
               </span>
             </AppTabsTrigger>

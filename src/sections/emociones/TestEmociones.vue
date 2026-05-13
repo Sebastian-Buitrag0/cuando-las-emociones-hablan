@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, nextTick } from "vue";
 import { Smile, RefreshCw, Sparkles, ChevronRight, ArrowRight, BotMessageSquare, Eye } from "lucide-vue-next";
 import AppButton from "@/components/ui/button.vue";
 
@@ -45,7 +45,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
       pregunta: "Cuando una persona tiene un buen momento, ¿qué suele hacer con esa energía positiva?",
       opciones: [
         { emojiImg: `${EMOJI_BASE}/Party%20popper/3D/party_popper_3d.png`, texto: "La comparte con otros y busca pasar tiempo con amigos", valor: "alegria" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "La aprovecha en silencio para recargar su energía interna", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "La aprovecha en silencio para recargar su energía interna", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "La canaliza en proyectos o metas que tiene pendientes", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Busca conectar con alguien cercano de forma más profunda", valor: "conexion" },
       ],
@@ -53,8 +53,8 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
     {
       pregunta: "Sara acaba de lograr algo importante. ¿Qué necesita más en ese momento?",
       opciones: [
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Que alguien reconozca su logro y lo celebre con ella", valor: "alegria" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Un momento de calma para procesar lo que logró", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Que alguien reconozca su logro y lo celebre con ella", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Un momento de calma para procesar lo que logró", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Star-struck/3D/star-struck_3d.png`, texto: "Pensar en el próximo reto para no perder el impulso", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Heart%20with%20ribbon/3D/heart_with_ribbon_3d.png`, texto: "Compartirlo con las personas que más importan", valor: "conexion" },
       ],
@@ -71,9 +71,9 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
     {
       pregunta: "Lucía tiene un día libre sin compromisos. ¿Cómo lo disfruta más una persona con bienestar emocional?",
       opciones: [
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Hace lo que le gusta sin culpa: lee, escucha música o simplemente descansa", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Hace lo que le gusta sin culpa: lee, escucha música o simplemente descansa", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`, texto: "Organiza algo con amigos o familia para compartir el tiempo", valor: "conexion" },
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Aprovecha para avanzar en tareas que tenía pendientes", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Aprovecha para avanzar en tareas que tenía pendientes", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se siente abrumada por no saber qué hacer con tanto tiempo", valor: "ansiedad" },
       ],
     },
@@ -89,9 +89,9 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
     {
       pregunta: "Paula lleva semanas sintiéndose bien consigo misma. ¿Qué hábito mantiene una persona con ese equilibrio?",
       opciones: [
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Dedica tiempo a estar consigo misma sin culpa ni urgencia", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Dedica tiempo a estar consigo misma sin culpa ni urgencia", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/People%20hugging/3D/people_hugging_3d.png`, texto: "Cultiva relaciones cercanas y les dedica atención genuina", valor: "conexion" },
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Se fija pequeñas metas y las celebra cuando las alcanza", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Se fija pequeñas metas y las celebra cuando las alcanza", valor: "alegria" },
         { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "No piensa mucho en eso y deja que las cosas fluyan solas", valor: "calma" },
       ],
     },
@@ -99,7 +99,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
       pregunta: "Gabriel siente que el grupo de amigos se está distanciando. ¿Qué haría una persona con inteligencia emocional?",
       opciones: [
         { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Toma la iniciativa y propone un plan para reconectar", valor: "conexion" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Lo acepta con calma y se enfoca en las personas que sí están", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Lo acepta con calma y se enfoca en las personas que sí están", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Se enoja y decide alejarse él/ella primero para no salir lastimado/a", valor: "ira" },
         { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Se queda pensando qué hizo mal y se siente culpable", valor: "tristeza" },
       ],
@@ -108,7 +108,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
       pregunta: "Nicolás está en un paseo del colegio y se siente pleno. ¿Qué suele hacer una persona que sabe disfrutar el presente?",
       opciones: [
         { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "Saca fotos para capturar el momento y compartirlo después", valor: "alegria" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Se queda en silencio unos minutos observando y sintiendo el lugar", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Se queda en silencio unos minutos observando y sintiendo el lugar", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Se acerca a alguien que ve solo/a para incluirlo en la experiencia", valor: "conexion" },
         { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Se preocupa por la hora de regreso y no logra concentrarse en el presente", valor: "ansiedad" },
       ],
@@ -121,7 +121,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Siente el corazón acelerado o el estómago revuelto antes de los exámenes", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Duerme mal, le cuesta apagar la mente de noche", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Thinking%20face/3D/thinking_face_3d.png`, texto: "Se siente bloqueado/a y no sabe por dónde empezar", valor: "ansiedad" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Se mantiene tranquilo/a aunque hay mucho por hacer", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Se mantiene tranquilo/a aunque hay mucho por hacer", valor: "calma" },
       ],
     },
     {
@@ -157,7 +157,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "No logra dormir bien la noche anterior pensando en todo lo que podría salir mal", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Sleeping%20face/3D/sleeping_face_3d.png`, texto: "Se despierta cansado/a y con el estómago revuelto", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Ensayó todo pero al pararse frente a todos siente que se le olvidó", valor: "ansiedad" },
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Preparó el tema, respiró antes de empezar y lo manejó con seguridad", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Preparó el tema, respiró antes de empezar y lo manejó con seguridad", valor: "calma" },
       ],
     },
     {
@@ -172,7 +172,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
     {
       pregunta: "Juan Pablo siente que su corazón se acelera sin razón aparente. ¿Qué necesita más en ese instante?",
       opciones: [
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Sentarse, respirar profundo y recordar que la sensación es pasajera", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Sentarse, respirar profundo y recordar que la sensación es pasajera", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Buscar una explicación inmediata para cada síntoma físico", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Fearful%20face/3D/fearful_face_3d.png`, texto: "Convencerse de que es algo grave y asustarse todavía más", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Llamar a alguien que le dé seguridad y lo acompañe a calmarse", valor: "conexion" },
@@ -181,7 +181,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
     {
       pregunta: "A Susana le cuesta concentrarse en clase porque está pendiente de lo que los demás piensen. ¿Qué le ayudaría más?",
       opciones: [
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Hacer un ejercicio de anclaje: notar 3 cosas que ve, 3 que oye, 3 que siente", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Hacer un ejercicio de anclaje: notar 3 cosas que ve, 3 que oye, 3 que siente", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/Handshake/3D/handshake_3d.png`, texto: "Sentarse cerca de alguien de confianza que le transmita seguridad", valor: "conexion" },
         { emojiImg: `${EMOJI_BASE}/Anxious%20face%20with%20sweat/3D/anxious_face_with_sweat_3d.png`, texto: "Chequear disimuladamente las reacciones de los demás para asegurarse", valor: "ansiedad" },
         { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Aislarse y pensar que no encaja en el grupo ni en el colegio", valor: "tristeza" },
@@ -202,9 +202,9 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
       pregunta: "Cuando una persona siente tristeza profunda, ¿qué le ayuda más a salir de ese estado?",
       opciones: [
         { emojiImg: `${EMOJI_BASE}/Hugging%20face/3D/hugging_face_3d.png`, texto: "Que alguien la escuche sin intentar 'solucionar' nada", valor: "conexion" },
-        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/3D/person_in_lotus_position_3d.png`, texto: "Un poco de tiempo y espacio para procesar sola", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png`, texto: "Un poco de tiempo y espacio para procesar sola", valor: "calma" },
         { emojiImg: `${EMOJI_BASE}/High%20voltage/3D/high_voltage_3d.png`, texto: "Hacer algo activo que corte el ciclo de pensamientos negativos", valor: "alegria" },
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Recordar una fortaleza propia para recuperar la confianza", valor: "alegria" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Recordar una fortaleza propia para recuperar la confianza", valor: "alegria" },
       ],
     },
     {
@@ -222,7 +222,7 @@ const preguntasPorRama: Record<string, Pregunta[]> = {
         { emojiImg: `${EMOJI_BASE}/Pensive%20face/3D/pensive_face_3d.png`, texto: "Siente que no sirve para eso y le cuesta ver sus logros previos", valor: "tristeza" },
         { emojiImg: `${EMOJI_BASE}/Face%20with%20steam%20from%20nose/3D/face_with_steam_from_nose_3d.png`, texto: "Busca culpables externos para no sentirse mal consigo misma", valor: "ira" },
         { emojiImg: `${EMOJI_BASE}/Crying%20face/3D/crying_face_3d.png`, texto: "Llora, se siente vacía y le cuesta encontrar motivación por días", valor: "tristeza" },
-        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/3D/flexed_biceps_3d.png`, texto: "Reconoce la decepción pero valora el esfuerzo que hizo", valor: "calma" },
+        { emojiImg: `${EMOJI_BASE}/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png`, texto: "Reconoce la decepción pero valora el esfuerzo que hizo", valor: "calma" },
       ],
     },
     {
@@ -333,6 +333,14 @@ const preguntasActuales = computed<Pregunta[]>(() => {
 });
 
 const totalPreguntas = computed(() => preguntasActuales.value.length);
+
+const totalDots = computed(() => {
+  const ramaLength = ramaActual.value
+    ? preguntasPorRama[ramaActual.value].length
+    : 8;
+  return preguntasUniversales.length + ramaLength;
+});
+
 const progreso = computed(() => ((preguntaIdx.value + 1) / totalPreguntas.value) * 100);
 
 const resultadoActual = computed(() => {
@@ -372,6 +380,9 @@ function handleRespuesta(valor: string) {
     if (emocion) {
       window.dispatchEvent(new CustomEvent("rueda:select", { detail: { emocion } }));
     }
+    // Auto-cambiar a la pestaña de rueda y hacer scroll
+    window.dispatchEvent(new CustomEvent("emociones-tab", { detail: "rueda" }));
+    document.getElementById("emociones")?.scrollIntoView({ behavior: "smooth" });
   }
 }
 
@@ -393,14 +404,16 @@ function irARegulacion() {
   document.getElementById("regulacion")?.scrollIntoView({ behavior: "smooth" });
 }
 
-function verEnRueda() {
+async function verEnRueda() {
   const emocion = resultadoActual.value?.emocionRueda;
+  // Cambiar a pestaña de rueda y hacer scroll primero
+  window.dispatchEvent(new CustomEvent("emociones-tab", { detail: "rueda" }));
+  document.getElementById("emociones")?.scrollIntoView({ behavior: "smooth" });
+  // Esperar a que la rueda se monte, luego seleccionar la emoción
+  await nextTick();
   if (emocion) {
     window.dispatchEvent(new CustomEvent("rueda:select", { detail: { emocion } }));
   }
-  // Cambiar a pestaña de rueda y hacer scroll
-  window.dispatchEvent(new CustomEvent("emociones-tab", { detail: "rueda" }));
-  document.getElementById("emociones")?.scrollIntoView({ behavior: "smooth" });
 }
 
 function hablarConEmilio() {
@@ -504,10 +517,10 @@ function hablarConEmilio() {
         </div>
         <div class="flex gap-2">
           <div
-            v-for="(_, i) in preguntasActuales"
+            v-for="i in totalDots"
             :key="i"
             class="h-2.5 w-8 rounded-full transition-all duration-300"
-            :class="i <= preguntaIdx ? 'bg-primary' : 'bg-border'"
+            :class="(i - 1) <= preguntaIdx ? 'bg-primary' : 'bg-border'"
           />
         </div>
       </div>
@@ -550,8 +563,8 @@ function hablarConEmilio() {
           >
             <div class="flex items-start justify-between gap-3">
               <div class="flex items-start gap-3">
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-background text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  <img :src="opcion.emojiImg" alt="" class="w-7 h-7 drop-shadow-sm" />
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-background text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <img :src="opcion.emojiImg" alt="" class="w-7 h-7 shrink-0 object-contain drop-shadow-sm" />
                 </div>
                 <p class="text-foreground font-medium leading-relaxed">{{ opcion.texto }}</p>
               </div>

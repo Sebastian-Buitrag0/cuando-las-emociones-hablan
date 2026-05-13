@@ -137,7 +137,7 @@ const activa = () =>
             class="text-xs font-semibold mb-0.5"
             :style="{ color: activa().color }"
           >
-            <img class="w-4 h-4 inline-block" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/3D/flexed_biceps_3d.png" alt="Práctica" />
+            <img class="w-4 h-4 inline-block" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png" alt="Práctica" />
             Práctica de hoy
           </p>
           <p class="text-xs text-foreground/80 leading-relaxed">

@@ -433,7 +433,7 @@ onUnmounted(() => {
             <div class="rounded-2xl border p-4 sm:p-5 mb-5" :style="{ borderColor: `${selected.gf}35`, backgroundColor: `${selected.gf}0A` }">
               <div class="flex items-center gap-2.5 mb-3">
                 <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-surface shadow-sm">
-                  <img class="w-5 h-5" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/3D/flexed_biceps_3d.png" alt="Práctica" />
+                  <img class="w-5 h-5" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Flexed%20biceps/Default/3D/flexed_biceps_3d_default.png" alt="Práctica" />
                 </div>
                 <div>
                   <h4 class="font-bold text-foreground text-sm">Práctica de hoy</h4>

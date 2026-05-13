@@ -48,7 +48,7 @@ import MindMapHabilidades from "./habilidades/MindMapHabilidades.vue";
       >
         <div class="text-center mb-8">
           <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
-            <img class="w-3.5 h-3.5 inline-block" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Performing%20arts/3D/performing_arts_3d.png" alt="" />
+            <img class="w-5 h-5 shrink-0 object-contain inline-block drop-shadow-sm" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Performing%20arts/3D/performing_arts_3d.png" alt="" />
             Simulador
           </span>
           <h3 class="text-2xl sm:text-3xl font-bold text-foreground mb-3" style="text-wrap: balance">

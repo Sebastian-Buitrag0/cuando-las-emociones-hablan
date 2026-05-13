@@ -430,7 +430,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         <Transition name="hint-fade">
           <foreignObject v-if="showHint" x="0" y="375" width="400" height="24">
             <div xmlns="http://www.w3.org/1999/xhtml" class="flex items-center justify-center gap-1 text-[10.5px] text-muted-foreground/60 h-full">
-              <img class="w-3.5 h-3.5" :src="`${EMOJI_BASE}/Backhand%20index%20pointing%20up/3D/backhand_index_pointing_up_3d.png`" alt="" />
+              <img class="w-4 h-4 drop-shadow-sm" :src="`${EMOJI_BASE}/Backhand%20index%20pointing%20up/Default/3D/backhand_index_pointing_up_3d_default.png`" alt="" />
               <span>Toca un nodo para agregar apoyo</span>
             </div>
           </foreignObject>
@@ -501,7 +501,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         >
           <span v-if="mostrarResumen" class="inline-flex items-center gap-1">Ocultar mi red</span>
           <span v-else class="inline-flex items-center gap-1">
-            <img class="w-4 h-4" :src="`${EMOJI_BASE}/Globe%20showing%20Americas/3D/globe_showing_americas_3d.png`" alt="Red" />
+            <img class="w-5 h-5 drop-shadow-sm" :src="`${EMOJI_BASE}/Globe%20showing%20Americas/3D/globe_showing_americas_3d.png`" alt="Red" />
             Ver mi red de apoyo
           </span>
         </button>
@@ -514,7 +514,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         <h4 class="text-center font-bold text-foreground mb-5">
           <span class="inline-flex items-center gap-1">
             Tu red de apoyo
-            <img class="w-4 h-4" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
+            <img class="w-5 h-5 drop-shadow-sm" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
           </span>
         </h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -532,7 +532,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
         </div>
         <p class="text-center text-xs text-muted-foreground mt-5 italic">
           Cuando las emociones sean difíciles, estas personas están ahí para ti.
-          <img class="w-4 h-4 inline-block" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
+          <img class="w-5 h-5 inline-block drop-shadow-sm" :src="`${EMOJI_BASE}/Blue%20heart/3D/blue_heart_3d.png`" alt="Corazón" />
         </p>
       </div>
     </Transition>
