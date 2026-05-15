@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { MessageSquare, Ear, Users, Handshake, ChevronRight } from "lucide-vue-next";
+import { MessageSquare, Ear, Users, Handshake, Target, ChevronRight } from "lucide-vue-next";
 
 const EMOJI_BASE =
   "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
@@ -69,6 +69,22 @@ const subHabilidades = [
     ],
     practica:
       "Recuerda un conflicto reciente. ¿Cuál era el interés del otro? ¿Y el tuyo?",
+  },
+  {
+    id: "toma-decisiones",
+    titulo: "Toma De Decisiones",
+    icon: Target,
+    color: "#48BB78",
+    resumen:
+      "Evaluar opciones, anticipar consecuencias y elegir el camino que se alinea con tus valores y metas personales.",
+    claves: [
+      "Antes de decidir, escribe las opciones posibles y una consecuencia de cada una.",
+      "Consulta a alguien de confianza, pero recuerda que la decisión final es tuya.",
+      "Acepta que equivocarse es parte del aprendizaje: ninguna decisión es definitiva.",
+      "Distingue lo urgente de lo importante para no decidir desde el pánico.",
+    ],
+    practica:
+      "Escoge una decisión pendiente, lista 2 opciones y anota 1 consecuencia de cada una. Elige la que te dé más paz.",
   },
 ];
 
