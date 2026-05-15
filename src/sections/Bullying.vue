@@ -243,45 +243,6 @@ function hablarConEmilio() {
         </ul>
       </div>
 
-      <!-- Líneas de ayuda -->
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: 20 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 700, delay: 250 } }"
-        class="mb-16 max-w-2xl mx-auto"
-      >
-        <h3 class="text-xl font-bold text-foreground mb-6 text-center">Líneas de ayuda</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a
-            href="tel:106"
-            class="flex items-center gap-4 rounded-2xl border border-crisis/20 bg-crisis/[0.06] px-5 py-4 hover:bg-crisis/[0.10] transition-colors duration-200 group"
-          >
-            <div class="w-12 h-12 rounded-xl bg-crisis/15 flex items-center justify-center flex-shrink-0">
-              <Phone class="w-5 h-5 text-crisis" />
-            </div>
-            <div>
-              <p class="font-bold text-crisis text-lg leading-none mb-0.5">106</p>
-              <p class="text-sm text-foreground font-semibold">Línea de Apoyo</p>
-              <p class="text-xs text-muted-foreground">Bogotá · 24 horas</p>
-            </div>
-          </a>
-
-          <a
-            href="tel:141"
-            class="flex items-center gap-4 rounded-2xl border border-calm/30 bg-calm/[0.06] px-5 py-4 hover:bg-calm/[0.10] transition-colors duration-200 group"
-          >
-            <div class="w-12 h-12 rounded-xl bg-calm/20 flex items-center justify-center flex-shrink-0">
-              <Phone class="w-5 h-5 text-calm" />
-            </div>
-            <div>
-              <p class="font-bold text-calm text-lg leading-none mb-0.5">141</p>
-              <p class="text-sm text-foreground font-semibold">ICBF</p>
-              <p class="text-xs text-muted-foreground">Nacional · gratuita · 24 horas</p>
-            </div>
-          </a>
-        </div>
-      </div>
-
       <!-- Emilio CTA -->
       <div class="text-center">
         <button

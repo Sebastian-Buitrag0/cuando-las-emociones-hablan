@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Phone, Mail, MessageCircle, LifeBuoy, Shield, Heart, BotMessageSquare } from "lucide-vue-next";
+import { Phone, Mail, MessageCircle, LifeBuoy, Shield, Heart, BotMessageSquare, Brain } from "lucide-vue-next";
 
 function abrirEmilio() {
   window.dispatchEvent(new CustomEvent('emilio:open'));
@@ -158,7 +158,7 @@ const institucional = [
         </div>
       </div>
 
-      <!-- Líneas nacionales -->
+      <!-- Contactos institucionales (Ruta institución — PRIMERO) -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 30 }"
@@ -170,64 +170,9 @@ const institucional = [
         class="max-w-5xl mx-auto mb-12"
       >
         <div class="flex items-center gap-2.5 mb-5">
-          <Phone class="h-5 w-5 text-primary" />
-          <h3 class="text-xl font-bold text-foreground">
-            Líneas nacionales 24/7
-          </h3>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a
-            v-for="(item, index) in emergencias"
-            :key="item.nombre"
-            v-motion
-            :initial="{ opacity: 0, y: 20 }"
-            :visibleOnce="{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 500, delay: 300 + index * 100 },
-            }"
-            :href="`tel:${item.contacto}`"
-            :aria-label="`Llamar a ${item.nombre}`"
-            class="group rounded-2xl bg-surface border border-border/60 p-5 shadow-soft hover:shadow-lift motion-safe:hover:-translate-y-1 transition-[transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            <div class="flex items-start gap-4">
-              <div
-                class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl text-primary-foreground font-bold text-lg shadow-soft motion-safe:group-hover:scale-105 transition-transform tabular-nums"
-                :class="toneClasses[item.tone as keyof typeof toneClasses].bg"
-              >
-                {{ item.contacto }}
-              </div>
-              <div class="min-w-0">
-                <h4 class="font-bold text-foreground leading-snug">
-                  {{ item.nombre }}
-                </h4>
-                <p class="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-                  {{ item.descripcion }}
-                </p>
-                <p class="mt-2 text-xs font-semibold text-muted-foreground/70">
-                  {{ item.detalle }}
-                </p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Contactos institucionales -->
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: 30 }"
-        :visibleOnce="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 800, delay: 400 },
-        }"
-        class="max-w-5xl mx-auto"
-      >
-        <div class="flex items-center gap-2.5 mb-5">
           <Shield class="h-5 w-5 text-accent" />
           <h3 class="text-xl font-bold text-foreground">
-            Dentro del colegio (GPTP)
+            Ruta De La Institución (GPTP)
           </h3>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -239,7 +184,7 @@ const institucional = [
             :visibleOnce="{
               opacity: 1,
               y: 0,
-              transition: { duration: 500, delay: 500 + index * 100 },
+              transition: { duration: 500, delay: 300 + index * 100 },
             }"
             class="rounded-2xl bg-surface border border-border/60 p-5 shadow-soft"
           >
@@ -269,7 +214,62 @@ const institucional = [
         </div>
       </div>
 
-      <!-- Emilio as additional voice -->
+      <!-- Líneas nacionales (SEGUNDO) -->
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visibleOnce="{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 800, delay: 400 },
+        }"
+        class="max-w-5xl mx-auto mb-12"
+      >
+        <div class="flex items-center gap-2.5 mb-5">
+          <Phone class="h-5 w-5 text-primary" />
+          <h3 class="text-xl font-bold text-foreground">
+            Líneas Nacionales De Atención 24/7
+          </h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a
+            v-for="(item, index) in emergencias"
+            :key="item.nombre"
+            v-motion
+            :initial="{ opacity: 0, y: 20 }"
+            :visibleOnce="{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 500, delay: 500 + index * 100 },
+            }"
+            :href="`tel:${item.contacto}`"
+            :aria-label="`Llamar a ${item.nombre}`"
+            class="group rounded-2xl bg-surface border border-border/60 p-5 shadow-soft hover:shadow-lift motion-safe:hover:-translate-y-1 transition-[transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <div class="flex items-start gap-4">
+              <div
+                class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl text-primary-foreground font-bold text-lg shadow-soft motion-safe:group-hover:scale-105 transition-transform tabular-nums"
+                :class="toneClasses[item.tone as keyof typeof toneClasses].bg"
+              >
+                {{ item.contacto }}
+              </div>
+              <div class="min-w-0">
+                <h4 class="font-bold text-foreground leading-snug">
+                  {{ item.nombre }}
+                </h4>
+                <p class="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                  {{ item.descripcion }}
+                </p>
+                <p class="mt-2 text-xs font-semibold text-muted-foreground/70">
+                  {{ item.detalle }}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Emilio as additional voice (TERCERO) -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 20 }"
@@ -277,8 +277,8 @@ const institucional = [
         class="mt-10 max-w-4xl mx-auto rounded-3xl border border-primary/20 bg-primary/[0.04] p-6 sm:p-8 shadow-soft"
       >
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground text-2xl shadow-soft select-none">
-            🧠
+          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-soft select-none">
+            <Brain class="w-7 h-7" />
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-[10px] font-bold text-primary uppercase tracking-wider mb-1.5">

@@ -91,7 +91,7 @@ watch(activeTab, () => {
               >Test emocional</AppTabsTrigger
             >
             <AppTabsTrigger value="rueda" class="rounded-full py-3"
-              >Rueda de emociones</AppTabsTrigger
+              >Revisemos Tu Resultado</AppTabsTrigger
             >
           </AppTabsList>
 

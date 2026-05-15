@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
-import { X } from "lucide-vue-next";
+import { X, Check } from "lucide-vue-next";
 
 const EMOJI_BASE =
   "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets";
@@ -487,7 +487,7 @@ onUnmounted(() => cancelAnimationFrame(_raf));
             :style="{ backgroundColor: nodoActivoData.color }"
             :disabled="!textoActual.trim()"
             @click="guardar"
-          >Guardar ✓</button>
+          >Guardar <Check class="w-3 h-3 inline-block ml-0.5" /></button>
         </div>
       </div>
     </Transition>

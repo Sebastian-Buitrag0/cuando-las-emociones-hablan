@@ -2,6 +2,7 @@
 import { ref, nextTick, onMounted, watch, computed } from 'vue'
 import { marked } from 'marked'
 import gsap from 'gsap'
+import { Brain, Heart, MessageCircle } from 'lucide-vue-next'
 
 marked.setOptions({ breaks: true, gfm: true })
 
@@ -20,7 +21,6 @@ const personas = {
   emilio: {
     id: 'emilio' as PersonalityId,
     name: 'Emilio',
-    emoji: '\u{1F9E0}',
     tagline: 'Analítico · Técnicas CBT · Regulación',
     pitch: 'Te ayuda a identificar patrones de pensamiento y encontrar herramientas concretas para regularte.',
     bubbleGlow: '0 8px 25px hsl(220 80% 64% / 0.45)',
@@ -30,7 +30,6 @@ const personas = {
   thalia: {
     id: 'thalia' as PersonalityId,
     name: 'Thalía',
-    emoji: '\u{1F338}',
     tagline: 'Cálida · Psicología positiva · Fortalezas',
     pitch: 'Te acompaña desde tus fortalezas con compasión y calidez, ayudándote a encontrar tu propio camino.',
     bubbleGlow: '0 8px 25px hsl(340 40% 58% / 0.40)',
@@ -648,8 +647,10 @@ watch(isLoading, async (loading) => {
 
           <div class="relative z-10 flex items-center gap-3 w-full">
             <div class="relative header-item flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-xl select-none transition-all duration-300">
-                {{ selectedPersonality ? currentPersona.emoji : '\u{1F4AC}' }}
+              <div class="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center select-none transition-all duration-300">
+                <Brain v-if="selectedPersonality === 'emilio'" class="w-5 h-5 text-primary-foreground" />
+                <Heart v-else-if="selectedPersonality === 'thalia'" class="w-5 h-5 text-primary-foreground" />
+                <MessageCircle v-else class="w-5 h-5 text-primary-foreground" />
               </div>
               <span v-if="selectedPersonality" class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-primary-foreground rounded-full"></span>
             </div>
@@ -691,7 +692,9 @@ watch(isLoading, async (loading) => {
           ref="pickerRef"
           class="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-background to-surface overflow-y-auto"
         >
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-muted-foreground to-foreground flex items-center justify-center text-2xl mb-5 shadow-md select-none">💬</div>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-muted-foreground to-foreground flex items-center justify-center mb-5 shadow-md select-none">
+            <MessageCircle class="w-7 h-7 text-primary-foreground" />
+          </div>
           <h3 class="text-base font-bold text-foreground mb-1 text-center">¿Con quién quieres hablar hoy?</h3>
           <p class="text-xs text-muted-foreground text-center mb-7 max-w-[220px] leading-relaxed">Elige tu acompañante emocional. Puedes cambiar en cualquier momento.</p>
 
@@ -701,7 +704,9 @@ watch(isLoading, async (loading) => {
               @click="selectPersonality('emilio')"
               class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-primary/50 hover:bg-primary/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🧠</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-[hsl(220,80%,45%)] flex items-center justify-center shadow-sm select-none flex-shrink-0">
+                <Brain class="w-6 h-6 text-primary-foreground" />
+              </div>
               <div class="flex-1 min-w-0">
                 <p class="font-bold text-foreground text-sm">Emilio</p>
                 <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Analítico · Técnicas CBT · Regulación emocional</p>
@@ -716,7 +721,9 @@ watch(isLoading, async (loading) => {
               @click="selectPersonality('thalia')"
               class="persona-card w-full flex items-center gap-3 rounded-2xl border-2 border-border bg-surface p-4 text-left hover:border-accent/50 hover:bg-accent/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
             >
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] flex items-center justify-center text-2xl shadow-sm select-none flex-shrink-0">🌸</div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-[hsl(340,40%,45%)] flex items-center justify-center shadow-sm select-none flex-shrink-0">
+                <Heart class="w-6 h-6 text-primary-foreground" />
+              </div>
               <div class="flex-1 min-w-0">
                 <p class="font-bold text-foreground text-sm">Thalía</p>
                 <p class="text-xs text-muted-foreground mt-0.5 leading-relaxed">Cálida · Psicología positiva · Fortalezas</p>
@@ -749,11 +756,14 @@ watch(isLoading, async (loading) => {
           <div ref="messagesContainer" class="flex-1 overflow-y-auto bg-gradient-to-b from-background to-surface">
             <div v-if="messages.length === 0" class="h-full flex flex-col items-center justify-center px-4 text-center">
               <div
-                class="w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3 select-none shadow-sm"
+                class="w-12 h-12 rounded-full flex items-center justify-center mb-3 select-none shadow-sm"
                 :class="selectedPersonality === 'thalia'
                   ? 'bg-gradient-to-br from-accent to-[hsl(340,40%,50%)]'
                   : 'bg-gradient-to-br from-primary to-[hsl(220,80%,50%)]'"
-              >{{ currentPersona.emoji }}</div>
+              >
+                <Brain v-if="currentPersona.id === 'emilio'" class="w-6 h-6 text-primary-foreground" />
+                <Heart v-else class="w-6 h-6 text-primary-foreground" />
+              </div>
               <p class="text-sm font-semibold text-foreground mb-1">
                 {{ isAskingName ? `¡Hola! Soy ${currentPersona.name}` : (userName ? `Hola, ${userName}` : 'Hola') }}
               </p>
@@ -772,11 +782,14 @@ watch(isLoading, async (loading) => {
               >
               <div
                 v-if="msg.role === 'assistant'"
-                class="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0 mt-1 select-none"
+                class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-1 select-none"
                 :class="selectedPersonality === 'thalia'
                   ? 'bg-gradient-to-br from-accent to-[hsl(340,40%,50%)]'
                   : 'bg-gradient-to-br from-primary to-[hsl(220,80%,50%)]'"
-              >{{ currentPersona.emoji }}</div>
+              >
+                <Brain v-if="currentPersona.id === 'emilio'" class="w-4 h-4 text-primary-foreground" />
+                <Heart v-else class="w-4 h-4 text-primary-foreground" />
+              </div>
 
               <div
                 :class="[
@@ -863,8 +876,10 @@ watch(isLoading, async (loading) => {
           leave-to-class="opacity-0 -rotate-90 scale-50"
           mode="out-in"
         >
-          <span v-if="!isOpen" key="open" class="select-none">
-            {{ selectedPersonality ? currentPersona.emoji : '\u{1F4AC}' }}
+          <span v-if="!isOpen" key="open" class="select-none flex items-center justify-center">
+            <Brain v-if="selectedPersonality === 'emilio'" class="w-5 h-5 text-primary-foreground" />
+            <Heart v-else-if="selectedPersonality === 'thalia'" class="w-5 h-5 text-primary-foreground" />
+            <MessageCircle v-else class="w-5 h-5 text-primary-foreground" />
           </span>
           <svg v-else key="close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -883,7 +898,7 @@ watch(isLoading, async (loading) => {
         v-if="!isOpen && messages.length === 0"
         class="absolute right-16 bottom-3 bg-surface text-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap pointer-events-none"
       >
-        ¡Habla conmigo! 💬
+        ¡Habla conmigo! <MessageCircle class="w-3 h-3 inline-block align-text-bottom ml-0.5" />
         <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1.5 w-2.5 h-2.5 bg-surface border-r border-t border-border rotate-45"></div>
       </div>
     </Transition>

@@ -402,7 +402,7 @@ const tipoStyle: Record<
   TipoRespuesta,
   { color: string; label: string; bgHex: string }
 > = {
-  asertiva: { color: "#5B8DEE", label: "Respuesta asertiva ✓", bgHex: "12" },
+  asertiva: { color: "#5B8DEE", label: "Respuesta asertiva", bgHex: "12" },
   pasiva:   { color: "#F4A259", label: "Respuesta pasiva",     bgHex: "15" },
   agresiva: { color: "#C2735A", label: "Respuesta agresiva",   bgHex: "14" },
 };

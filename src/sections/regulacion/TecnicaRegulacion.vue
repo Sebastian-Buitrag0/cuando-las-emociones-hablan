@@ -403,8 +403,8 @@ function toggleReto(idx: number) {
     <!-- Emilio CTA -->
     <div class="rounded-2xl border border-primary/20 bg-primary/[0.04] p-5">
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground text-xl shadow-soft select-none">
-          🧠
+        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-soft select-none">
+          <Brain class="w-5 h-5" />
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-bold text-foreground">¿Quieres orientación personalizada?</p>
